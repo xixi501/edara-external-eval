@@ -2,7 +2,7 @@
 
 核对日期：2026-11-17。E-DARA 源码基线：`848cab2a5f`，分支 `codex/trusted-idea-frontier-20261110`。本次仅梳理代码、协议和已有记录；没有修改系统或外挂实现，没有启动新实验。以下代码能力不表示每个历史 run 都启用了相应协议。
 
-后续逐题核对更新：三份 E-DARA 参评文本均已精确映射到原生 Proposal；引用匿名化为 `[REF]` 导致外评证据缺失，旧过度断言减少数不能直接解释为修复了同等数量的真实失实。Workshop 后续恢复已完成 `plan_reviewed`，参评仍使用其 Proposal。具体证据、十五题路由重放及改进优先级见[失败归因报告](analyses/failure_attribution_20261117/REPORT_ZH.md)。下文历史评分保留原值，其解释以该核对结果为补充。
+后续逐题核对更新：三份 E-DARA 参评文本均已精确映射到原生 Proposal；引用匿名化为 `[REF]` 导致外评证据缺失，旧过度断言减少数不能直接解释为修复了同等数量的真实失实。Workshop 后续恢复已完成 `plan_reviewed`，参评仍使用其 Proposal。具体证据、十五题路由重放及改进优先级见[失败归因报告](../analyses/failure_attribution_20261117/REPORT_ZH.md)。下文历史评分保留原值，其解释以该核对结果为补充。
 
 ## 1. 研究主线与目标
 

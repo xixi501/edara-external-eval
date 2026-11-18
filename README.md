@@ -8,7 +8,7 @@
 
 - 仪器版本：协议 v1.2（三次评委投票、配对差判定、混淆项审计与强制落实）。
 - 主样本：15 个 topic、38 份冻结原稿（Direct 15、AI-Scientist 14、E-DARA 9，缺 7 份）。
-- 最近一次正式试验：2026-11-18，结果见 [`results/`](results/) 与 [`HANDOFF.md`](HANDOFF.md)。
+- 最近一次正式试验：2026-11-18，38 份原稿。结构化审计对可信度小幅正向（净胜率 +0.222），完整工作流为负向（−0.167），新颖度无变化，诚实轴未通过校准。结果见 [`results/RESULTS_20261118_ZH.md`](results/RESULTS_20261118_ZH.md) 与 [`HANDOFF.md`](HANDOFF.md)。
 - E-DARA 主体代码在另一个仓库 [`xixi501/edara`](https://github.com/xixi501/edara)，本仓库不修改它。
 
 ## 试验设计（简述）

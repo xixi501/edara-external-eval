@@ -31,6 +31,8 @@ cd /workspace/edara/staging/04_external_eval_refs
 
 For full 3-topic parallel real runs (Direct, Direct+MW, AI-Scientist-v2, and E-DARA), see `HANDOFF_PILOT3_RUN.md`.
 
+> 交接说明：本文件是外挂原型的历史 README，其中的相对路径按原工作区布局书写。本仓库的顶层 README 与 HANDOFF 为准。
+
 Run live against your existing OpenAI-compatible Chat API (reuses E-DARA `ModelProfile` JSON or env vars; supports Chat-only endpoints via BM25 ClaimNov fallback and key-free OpenAlex pre-cutoff search via `--live-search`):
 
 ```bash
