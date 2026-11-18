@@ -6,6 +6,7 @@ import argparse
 import fcntl
 import hashlib
 import json
+import os
 import re
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -31,7 +32,15 @@ from .stage_b_meter import RecordedRunner
 ROOT = Path(__file__).resolve().parents[2]
 PROTOCOL_VERSION = "1.2"
 PROTOCOL_FILE = "EVAL_PROTOCOL_V1_2_ZH.md"
-WORKSPACE = ROOT.parents[2]
+WORKSPACE = Path(os.environ.get("EDARA_WORKSPACE")
+                 or (ROOT.parents[2] if len(ROOT.parents) >= 3 else ROOT.parent))
+
+
+def protocol_path() -> Path:
+    for candidate in (ROOT / PROTOCOL_FILE, ROOT / "docs" / PROTOCOL_FILE):
+        if candidate.is_file():
+            return candidate
+    raise FileNotFoundError(f"protocol file {PROTOCOL_FILE} not found under {ROOT}")
 ARMS = ("A", "B", "C", "D", "E")
 COMPARISONS = {"C_vs_B": ("B", "C"), "E_vs_D": ("D", "E")}
 LIMITS = {"local": {"audit": 64, "editor": 1, "queries": 0, "rounds": 1},
@@ -396,7 +405,7 @@ class Trial:
             self.endpoints["audit"] = replace(auditor, extra_body={"thinking": {"type": "disabled"}})
         manifest = {
             "protocol_version": PROTOCOL_VERSION,
-            "protocol_sha256": path_hash(ROOT / PROTOCOL_FILE),
+            "protocol_sha256": path_hash(protocol_path()),
             "code": {path.name: path_hash(path) for path in sorted(Path(__file__).parent.glob("*.py"))},
             "profiles": {role: path_hash(profile) for role, profile in profiles.items()},
             "models": {role: ep.model for role, ep in self.endpoints.items()},
@@ -421,7 +430,11 @@ class Trial:
 
     def freeze(self, cohort: str) -> dict:
         path = self.out / f"inputs_{cohort}.json"
-        if cohort == "pilot":
+        shipped = ROOT / "data" / f"inputs_{cohort}.json"
+        if not path.exists() and shipped.is_file():
+            # A handoff checkout ships frozen inputs instead of multi-GB host outputs.
+            write_json(path, load(shipped))
+        if cohort == "pilot" and not path.exists():
             inputs = cached(path, lambda: {k: v for k, v in self.freeze("core").items() if v["development"]})
         else:
             inputs = cached(path, lambda: prepare_inputs(ROOT, cohort))
@@ -458,8 +471,13 @@ class Trial:
             write_json(self.out / "calibration.json", result | {"verified_from": source.name})
             print(f"[calibration] verified {source.name}: {result['axes']}", flush=True)
             return result
-        suite = cached(self.out / "calibration_cases.json", lambda: calibration_cases(
-            ROOT, reserve=self.args.calibration_set == "reserve"))
+        def case_suite():
+            try:
+                return calibration_cases(ROOT, reserve=self.args.calibration_set == "reserve")
+            except FileNotFoundError:
+                return load(ROOT / "data" / "calibration_cases.json")
+
+        suite = cached(self.out / "calibration_cases.json", case_suite)
 
         def one(case):
             key = case["id"]
@@ -738,12 +756,15 @@ def main() -> int:
     parser.add_argument("--judge-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
     args = parser.parse_args()
     args.out = args.out.resolve()
-    if args.out.parent != ROOT / "outputs":
-        parser.error("--out must be a new direct child of the staging evaluation outputs directory")
+    outputs_root = ROOT / "outputs"
+    if outputs_root.is_dir() and args.out.parent != outputs_root:
+        parser.error("--out must be a new direct child of the evaluation outputs directory")
+    if not outputs_root.is_dir():
+        args.out.parent.mkdir(parents=True, exist_ok=True)
     if args.calibration_from:
         args.calibration_from = args.calibration_from.resolve()
-        if args.calibration_from.parent != ROOT / "outputs" or args.calibration_from == args.out:
-            parser.error("--calibration-from must identify a different staging evaluation run")
+        if (outputs_root.is_dir() and args.calibration_from.parent != outputs_root) or args.calibration_from == args.out:
+            parser.error("--calibration-from must identify a different evaluation run")
     if args.resume:
         if not (args.out / "manifest.json").is_file():
             parser.error("--resume requires a prior v1 trial manifest")
