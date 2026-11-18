@@ -1,0 +1,1622 @@
+[
+  {
+    "id": "reserve-honesty-01",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The published study of page prefetch used 43 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study of page prefetch used 24 workloads [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of page prefetch used 24 workloads."
+        ],
+        "novelty_passages": [
+          "The study of page prefetch used 24 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-02",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The prior study measured the benefit of tree traversal in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "The prior study measured the benefit of tree traversal only in offline simulations [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for tree traversal was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for tree traversal was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-03",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "We introduce a new controller for task placement, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "We reuse the controller for task placement introduced in [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for task placement was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for task placement was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-04",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The published study of index compaction used 46 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study of index compaction used 27 workloads [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of index compaction used 27 workloads."
+        ],
+        "novelty_passages": [
+          "The study of index compaction used 27 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-05",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The prior study measured the benefit of priority queues in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "The prior study measured the benefit of priority queues only in offline simulations [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for priority queues was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for priority queues was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-06",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "We introduce a new controller for memory allocation, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "We reuse the controller for memory allocation introduced in [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for memory allocation was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for memory allocation was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-07",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The published study of adaptive buffering used 49 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study of adaptive buffering used 30 workloads [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of adaptive buffering used 30 workloads."
+        ],
+        "novelty_passages": [
+          "The study of adaptive buffering used 30 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-08",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The prior study measured the benefit of graph partitioning in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "The prior study measured the benefit of graph partitioning only in offline simulations [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for graph partitioning was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for graph partitioning was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-09",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "We introduce a new controller for error recovery, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "We reuse the controller for error recovery introduced in [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for error recovery was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for error recovery was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-10",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The published study of load balancing used 52 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study of load balancing used 33 workloads [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of load balancing used 33 workloads."
+        ],
+        "novelty_passages": [
+          "The study of load balancing used 33 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-11",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "The prior study measured the benefit of incremental parsing in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "The prior study measured the benefit of incremental parsing only in offline simulations [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for incremental parsing was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for incremental parsing was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-12",
+    "axis": "honesty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "claim": "We introduce a new controller for index rebuilding, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "We reuse the controller for index rebuilding introduced in [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for index rebuilding was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for index rebuilding was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-13",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "The published study of page prefetch used 55 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study used 55 workloads to evaluate page prefetch [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of page prefetch used 36 workloads."
+        ],
+        "novelty_passages": [
+          "The study of page prefetch used 36 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-14",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "The prior study measured the benefit of tree traversal in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "Production deployments were where the prior study measured the benefit of tree traversal [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for tree traversal was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for tree traversal was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-15",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "We introduce a new controller for task placement, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "Our novel contribution is the controller for task placement that [S001] describes."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for task placement was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for task placement was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-16",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "The published study of index compaction used 58 workloads [S001]."
+    },
+    "candidate": {
+      "claim": "The published study used 58 workloads to evaluate index compaction [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The study of index compaction used 39 workloads."
+        ],
+        "novelty_passages": [
+          "The study of index compaction used 39 workloads."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-17",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "The prior study measured the benefit of priority queues in production deployments [S001]."
+    },
+    "candidate": {
+      "claim": "Production deployments were where the prior study measured the benefit of priority queues [S001]."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The reported benefit for priority queues was measured only in offline simulations."
+        ],
+        "novelty_passages": [
+          "The reported benefit for priority queues was measured only in offline simulations."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-honesty-18",
+    "axis": "honesty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "claim": "We introduce a new controller for memory allocation, namely the controller described in [S001]."
+    },
+    "candidate": {
+      "claim": "Our novel contribution is the controller for memory allocation that [S001] describes."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The controller for memory allocation was originally introduced by the team that wrote this paper."
+        ],
+        "novelty_passages": [
+          "The controller for memory allocation was originally introduced by the team that wrote this paper."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-credibility-01",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If DP-BiTFiT largely avoids the head-backbone-misalignment-induced feature distortion seen in DP full fine-tuning, then compared to DP-FFT it should produce significantly smaller backbone representation drift (and less collapse of linear-probe separability) at the same privacy budget, because freezing most weights prevents DP noise from propagating into and reshaping backbone features.",
+      "minimal_test": "Use an open-weight pretrained vision model (e.g., a standard ViT or ResNet available in timm) on a public dataset such as CIFAR-10 or CIFAR-100. Fine-tune under the same DP-SGD privacy target (e.g., epsilon fixed, same delta) with three methods: (1) DP full fine-tuning (DP-FFT baseline from the Langevin paper), (2) DP-LP-FFT (sequential baseline from the Langevin paper), and (3) DP-BiTFiT (bias-only updates baseline from DP-BiTFiT). Keep the same randomly initialized classification head for all methods. For each method, log backbone activations on a fixed held-out probe set before training and after training. Include one ablation diagnostic: repeat DP-BiTFiT with (a) random head init vs (b) head initialized by non-private linear probe to explicitly test head-backbone alignment sensitivity.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "At matched epsilon, DP-BiTFiT shows substantially smaller feature drift than DP-FFT (e.g., higher pre/post feature cosine similarity and much smaller drop in linear-probe accuracy), and is comparable to DP-LP-FFT. Additionally, the head-alignment ablation shows DP-BiTFiT is relatively insensitive: random-head vs LP-initialized head yields similar low drift, indicating freezing most weights mitigates misalignment-driven distortion.",
+      "falsifying_result": "At matched epsilon, DP-BiTFiT exhibits feature drift and linear-probe separability drop comparable to DP-FFT (and clearly worse than DP-LP-FFT), and/or DP-BiTFiT becomes highly sensitive to head initialization (random head causes large drift that LP-initialization fixes). This would weaken the claim that bias-only DP fine-tuning meaningfully avoids the backbone distortion mechanism and make the direction less worth pursuing as a mechanism-level advantage beyond efficiency."
+    },
+    "candidate": {
+      "hypothesis": "If DP-BiTFiT largely avoids the head-backbone-misalignment-induced feature distortion seen in DP full fine-tuning, then compared to DP-FFT it should produce significantly smaller backbone representation drift (and less collapse of linear-probe separability) at the same privacy budget, because freezing most weights prevents DP noise from propagating into and reshaping backbone features.",
+      "minimal_test": "Use an open-weight pretrained vision model (e.g., a standard ViT or ResNet available in timm) on a public dataset such as CIFAR-10 or CIFAR-100. Fine-tune under the same DP-SGD privacy target (e.g., epsilon fixed, same delta) with three methods: (1) DP full fine-tuning (DP-FFT baseline from the Langevin paper), (2) DP-LP-FFT (sequential baseline from the Langevin paper), and (3) DP-BiTFiT (bias-only updates baseline from DP-BiTFiT). Keep the same randomly initialized classification head for all methods. For each method, log backbone activations on a fixed held-out probe set before training and after training. Include one ablation diagnostic: repeat DP-BiTFiT with (a) random head init vs (b) head initialized by non-private linear probe to explicitly test head-backbone alignment sensitivity.",
+      "decisive_metric": "Backbone feature distortion diagnostic measured on the held-out probe set: (i) cosine similarity between pre- and post-training penultimate-layer features averaged over examples (or equivalently mean feature drift norm), and (ii) change in linear-probe accuracy when training a non-private linear classifier on frozen backbone features extracted before vs after DP training (drop indicates loss of separability attributable to backbone drift). These directly test the claimed mechanism of backbone distortion rather than just final task accuracy.",
+      "supporting_result": "At matched epsilon, DP-BiTFiT shows substantially smaller feature drift than DP-FFT (e.g., higher pre/post feature cosine similarity and much smaller drop in linear-probe accuracy), and is comparable to DP-LP-FFT. Additionally, the head-alignment ablation shows DP-BiTFiT is relatively insensitive: random-head vs LP-initialized head yields similar low drift, indicating freezing most weights mitigates misalignment-driven distortion.",
+      "falsifying_result": "At matched epsilon, DP-BiTFiT exhibits feature drift and linear-probe separability drop comparable to DP-FFT (and clearly worse than DP-LP-FFT), and/or DP-BiTFiT becomes highly sensitive to head initialization (random head causes large drift that LP-initialization fixes). This would weaken the claim that bias-only DP fine-tuning meaningfully avoids the backbone distortion mechanism and make the direction less worth pursuing as a mechanism-level advantage beyond efficiency."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_016_private_differentially_foundation_fine_tuning_pr__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-02",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If BEEF’s SNN trigger is capturing motion-dependent temporal structure (not just providing an alternate training distribution), then using BEEF-adaptive slicing as the input windowing policy for a fixed detector should reduce the detector’s sensitivity to event-rate/motion changes compared to fixed slicing, because adaptive slice boundaries should stabilize per-slice event content across speeds.",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If BEEF’s SNN trigger is capturing motion-dependent temporal structure (not just providing an alternate training distribution), then using BEEF-adaptive slicing as the input windowing policy for a fixed detector should reduce the detector’s sensitivity to event-rate/motion changes compared to fixed slicing, because adaptive slice boundaries should stabilize per-slice event content across speeds.",
+      "minimal_test": "On the public Prophesee Gen1 Automotive Detection dataset, take Sequence-SOD as the baseline detector and evaluate it under two input windowing policies that preserve the same average compute: (A) standard fixed-size event windows used by prior spiking detectors (fixed duration or fixed event count, whichever Sequence-SOD uses), (B) BEEF-style adaptive slice boundaries produced by an SNN trigger trained with SPA-loss, but with the downstream detector architecture and weights kept identical within each condition (train Sequence-SOD from scratch once per policy, same epochs/augmentations). Add one ablation diagnostic: replace the SNN trigger with a non-learned adaptive heuristic that matches average slice frequency (e.g., threshold on global event count rate) to check whether any benefit is specifically from learned spiking-based triggering.",
+      "decisive_metric": "Robustness slope of detection quality versus event-rate/motion proxy: compute mAP separately in bins of event rate (events/sec) or estimated ego-motion proxy (e.g., average optical flow magnitude from provided boxes/frames if available; otherwise events/sec) and report delta-mAP between lowest and highest bins (smaller drop is better). Also report slice-content stability: coefficient of variation of events-per-slice (and optionally spatial entropy) across the same bins to directly test whether adaptive slicing stabilizes slice information content.",
+      "supporting_result": "Compared to fixed slicing, BEEF-adaptive slicing yields a meaningfully smaller delta-mAP between low and high event-rate/motion bins (e.g., reduced drop by >=20% relative), and simultaneously reduces events-per-slice variability across bins; the learned SNN trigger outperforms the non-learned adaptive heuristic on both robustness slope and slice stability.",
+      "falsifying_result": "BEEF-adaptive slicing does not improve (or worsens) delta-mAP across event-rate/motion bins relative to fixed slicing, or any small robustness change is matched by the non-learned heuristic while slice-content stability shows no improvement; this would indicate adaptive learned spiking-based slicing is not providing a distinct mechanism beyond generic rate-based windowing or retraining effects."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_017_event_spiking_cameras_however_recognition__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-03",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If BDQL's collapse is caused by the Q-guided diffusion policy increasingly sampling low-support (OOD) actions, then applying ODPR-style prioritized resampling during BDQL's SARSA/Q updates to upweight high-support/high-advantage data should reduce the growth of OOD action mass and prevent (or delay) the second-stage collapse because the learned Q will be anchored to well-supported regions of the dataset.",
+      "minimal_test": "On a small D4RL subset (e.g., halfcheetah-medium-v2 and walker2d-medium-v2), run: (1) vanilla BDQL (baseline from BDQL paper), (2) BDQL + ODPR-R resampling applied only to the critic/SARSA updates (use ODPR paper's return-based priorities; keep policy update identical), and (3) BDQL + uniform resampling control with same batch size and training steps. Use public codebases/open weights; budget: 3 seeds, fixed total gradient steps, <=8 A100 GPU-days. Include one ablation diagnostic: sweep priority strength (e.g., temperature/exponent 0, 0.5, 1.0) to check monotonicity.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "Compared to vanilla BDQL, BDQL+ODPR-R shows (i) substantially lower or non-increasing OOD action mass over training, (ii) reduced or absent TD-error spikes, and (iii) either avoids performance collapse or shifts the collapse point to much later while maintaining similar early-stage gains (two-stage becomes one stable stage). Priority-strength sweep shows more priority (up to a point) yields lower OOD mass and improved stability.",
+      "falsifying_result": "BDQL+ODPR-R does not reduce OOD action mass or TD-error spikes relative to vanilla BDQL, or it reduces OOD mass but still collapses at the same time/performance level (indicating collapse is not driven by low-support action sampling), or it prevents collapse only by harming the early-stage improvement (suggesting sampling acts like an implicit constraint that negates BDQL's claimed advantage)."
+    },
+    "candidate": {
+      "hypothesis": "If BDQL's collapse is caused by the Q-guided diffusion policy increasingly sampling low-support (OOD) actions, then applying ODPR-style prioritized resampling during BDQL's SARSA/Q updates to upweight high-support/high-advantage data should reduce the growth of OOD action mass and prevent (or delay) the second-stage collapse because the learned Q will be anchored to well-supported regions of the dataset.",
+      "minimal_test": "On a small D4RL subset (e.g., halfcheetah-medium-v2 and walker2d-medium-v2), run: (1) vanilla BDQL (baseline from BDQL paper), (2) BDQL + ODPR-R resampling applied only to the critic/SARSA updates (use ODPR paper's return-based priorities; keep policy update identical), and (3) BDQL + uniform resampling control with same batch size and training steps. Use public codebases/open weights; budget: 3 seeds, fixed total gradient steps, <=8 A100 GPU-days. Include one ablation diagnostic: sweep priority strength (e.g., temperature/exponent 0, 0.5, 1.0) to check monotonicity.",
+      "decisive_metric": "OOD action mass over training: at regular checkpoints, sample actions from the current diffusion policy at states from the dataset, estimate log-likelihood under a behavior model fit to the dataset (can reuse BDQL's diffusion behavior model frozen at start), and report the fraction of sampled actions with logp below a fixed percentile threshold (e.g., bottom 5% of dataset action likelihood). Plot this OOD mass alongside Q-target TD error spikes (e.g., moving average absolute TD error) to detect collapse onset.",
+      "supporting_result": "Compared to vanilla BDQL, BDQL+ODPR-R shows (i) substantially lower or non-increasing OOD action mass over training, (ii) reduced or absent TD-error spikes, and (iii) either avoids performance collapse or shifts the collapse point to much later while maintaining similar early-stage gains (two-stage becomes one stable stage). Priority-strength sweep shows more priority (up to a point) yields lower OOD mass and improved stability.",
+      "falsifying_result": "BDQL+ODPR-R does not reduce OOD action mass or TD-error spikes relative to vanilla BDQL, or it reduces OOD mass but still collapses at the same time/performance level (indicating collapse is not driven by low-support action sampling), or it prevents collapse only by harming the early-stage improvement (suggesting sampling acts like an implicit constraint that negates BDQL's claimed advantage)."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_018_policy_offline_behavior_reinforcement_diffusion__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-04",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If explicit cross-channel interaction is truly a key missing mechanism for multivariate long-horizon forecasting, then adding GRformer’s graph-based cross-channel module should yield disproportionately larger gains on spike-heavy series (NiTH synthetic/real) than on non-spiky versions, because shocks propagate across channels and require coordinated multivariate modeling beyond independent patch embeddings.",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If explicit cross-channel interaction is truly a key missing mechanism for multivariate long-horizon forecasting, then adding GRformer’s graph-based cross-channel module should yield disproportionately larger gains on spike-heavy series (NiTH synthetic/real) than on non-spiky versions, because shocks propagate across channels and require coordinated multivariate modeling beyond independent patch embeddings.",
+      "minimal_test": "Train three models with matched capacity on one public multivariate dataset available/used in NiTH (or a standard public multivariate benchmark like electricity/traffic if NiTH data is not directly released) augmented with NiTH-style synthetic spikes at controlled rates: (1) PITS-style patch-independent forecaster head (baseline from PITS), (2) GRformer (baseline from GRformer), and (3) an ablation of GRformer with the GNN cross-channel mix-hop layer removed (channel-wise FFN only) while keeping the RNN positional encoding intact. Evaluate each model on paired test sets: clean (no injected spikes) and spiky (injected spikes) with the same underlying series and forecasting horizon. Keep training budget within <=8 A100 GPU-days by using one dataset, one horizon, and a small hyperparameter sweep (or reuse paper defaults).",
+      "decisive_metric": "Spike-localization error measured by NiTH’s spike-aware Dynamic Time Warping-based metric (the metric introduced for spiky data) computed only on windows around spike events (event-centered windows), plus the delta between spiky and clean performance: (metric_spiky - metric_clean) for each model. The key diagnostic is whether the cross-channel module specifically reduces event-window error under spikes relative to its own ablation.",
+      "supporting_result": "On the spiky test set, full GRformer significantly outperforms its no-GNN ablation and the PITS-style independent baseline on event-centered windows (lower NiTH spike-aware DTW), while differences on the clean test set are small; equivalently, GRformer shows the smallest performance degradation from clean to spiky conditions.",
+      "falsifying_result": "Full GRformer does not improve event-window spike-aware DTW versus the no-GNN ablation (or improves only similarly on clean and spiky), and/or PITS-style patch-independent modeling matches or beats GRformer on the spiky set; additionally, the clean-to-spiky degradation is not reduced by the cross-channel module. This would weaken the claim that explicit cross-channel interaction is the missing mechanism worth pursuing for long-horizon multivariate forecasting under shocks."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_019_series_time_forecasting_long_term_multivariate__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-05",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If ProteinWeaver’s divide-and-assembly mechanism truly improves long-protein generation by resolving the rugged inter-domain interaction landscape, then (compared to a strong single-shot backbone generator baseline like Proteina) it should reduce interface-specific geometric/energetic pathologies at domain boundaries even when overall fold-class distributional similarity is matched.",
+      "minimal_test": "Generate an equal number of length-400 to length-600 backbones from (A) ProteinWeaver (domain generation + assembly) and (B) Proteina (conditioned on matched high-level secondary-structure / fold-class distributions to approximate the same domain composition). Use a public domain parser (e.g., SWORD/CATH-ED domain segmentation on generated structures, or a simple secondary-structure-based split into 2-3 domains) to identify domain boundaries post hoc for both sets. Then run the same fast structure diagnostics on both: (1) steric clash and chain-break checks (MolProbity or openmm-based clash count proxy), and (2) interface contact quality between adjacent domains (contact density and unsatisfied polar atoms at the interface using a public Rosetta/PyRosetta relax-without-design script limited to backbone and sidechain repack). Include one ablation/failure-mode diagnostic: for ProteinWeaver, disable preference alignment (or replace preference-aligned assembly scoring with uniform sampling) and re-measure interface pathologies to see if the claimed mechanism is the driver. Budget: keep sample size small (e.g., 200 structures per method) and minimal relax steps to fit <=8 A100 GPU-days plus CPU time.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "ProteinWeaver shows a materially lower interface pathology rate than Proteina at similar distributional similarity (e.g., >=20% relative reduction in interface pathology rate), and the ProteinWeaver ablation without preference alignment partially or fully loses this advantage (pathology rate moves toward Proteina), indicating the assembly + preference alignment mechanism specifically improves inter-domain interfaces.",
+      "falsifying_result": "ProteinWeaver does not reduce interface pathology rate versus Proteina (rates are similar or worse) when distributional similarity is matched, and/or the preference-alignment ablation has no meaningful effect on interface pathology, implying the claimed long-protein gains are not driven by better inter-domain interaction handling and the divide-and-assembly direction is not providing the expected mechanism-level benefit."
+    },
+    "candidate": {
+      "hypothesis": "If ProteinWeaver’s divide-and-assembly mechanism truly improves long-protein generation by resolving the rugged inter-domain interaction landscape, then (compared to a strong single-shot backbone generator baseline like Proteina) it should reduce interface-specific geometric/energetic pathologies at domain boundaries even when overall fold-class distributional similarity is matched.",
+      "minimal_test": "Generate an equal number of length-400 to length-600 backbones from (A) ProteinWeaver (domain generation + assembly) and (B) Proteina (conditioned on matched high-level secondary-structure / fold-class distributions to approximate the same domain composition). Use a public domain parser (e.g., SWORD/CATH-ED domain segmentation on generated structures, or a simple secondary-structure-based split into 2-3 domains) to identify domain boundaries post hoc for both sets. Then run the same fast structure diagnostics on both: (1) steric clash and chain-break checks (MolProbity or openmm-based clash count proxy), and (2) interface contact quality between adjacent domains (contact density and unsatisfied polar atoms at the interface using a public Rosetta/PyRosetta relax-without-design script limited to backbone and sidechain repack). Include one ablation/failure-mode diagnostic: for ProteinWeaver, disable preference alignment (or replace preference-aligned assembly scoring with uniform sampling) and re-measure interface pathologies to see if the claimed mechanism is the driver. Budget: keep sample size small (e.g., 200 structures per method) and minimal relax steps to fit <=8 A100 GPU-days plus CPU time.",
+      "decisive_metric": "Interface pathology rate: percentage of generated proteins where at least one inter-domain interface exceeds a threshold of (a) severe steric clashes localized within 8A of the domain boundary, and/or (b) poor interface packing measured by interface contact density below a threshold AND high unsatisfied polar count after standardized repack/relax. Report as a paired diagnostic: (interface pathology rate vs Proteina distributional similarity score) to ensure we are testing the interface mechanism rather than overall distribution match.",
+      "supporting_result": "ProteinWeaver shows a materially lower interface pathology rate than Proteina at similar distributional similarity (e.g., >=20% relative reduction in interface pathology rate), and the ProteinWeaver ablation without preference alignment partially or fully loses this advantage (pathology rate moves toward Proteina), indicating the assembly + preference alignment mechanism specifically improves inter-domain interfaces.",
+      "falsifying_result": "ProteinWeaver does not reduce interface pathology rate versus Proteina (rates are similar or worse) when distributional similarity is matched, and/or the preference-alignment ablation has no meaningful effect on interface pathology, implying the claimed long-protein gains are not driven by better inter-domain interaction handling and the divide-and-assembly direction is not providing the expected mechanism-level benefit."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_020_protein_structure_design_proteins_backbone__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-06",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If we apply the genetic-evolutionary diversity operations to a baseline MPNN on an oversquashing-sensitive long-range benchmark, then long-range dependency accuracy should improve because maintaining pairwise embedding diversity across distant nodes preserves distinguishable signals that would otherwise be compressed by bottleneck message aggregation.",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If we apply the genetic-evolutionary diversity operations to a baseline MPNN on an oversquashing-sensitive long-range benchmark, then long-range dependency accuracy should improve because maintaining pairwise embedding diversity across distant nodes preserves distinguishable signals that would otherwise be compressed by bottleneck message aggregation.",
+      "minimal_test": "On a public long-range graph benchmark designed to stress oversquashing (e.g., LRGB Peptides-func or a standard long-range synthetic such as long-range graph classification used in oversquashing literature), train the same base MPNN architecture under three conditions with matched parameter count and training budget: (1) vanilla MPNN baseline, (2) Curvature MPNN modification as an oversquashing-targeted positive control from the neighborhood, (3) Genetic-evolutionary GNN operations inserted into the same baseline MPNN (mutation/crossover as described). Include one ablation diagnostic for (3): run with mutation/crossover disabled (identity operations) to control for implementation overhead. Keep depth fixed (e.g., 8-12 layers) where oversquashing typically manifests. Limit to a single dataset and 3 seeds to fit <=8 A100 GPU-days.",
+      "decisive_metric": "Mechanism-level diagnostic: correlation between (a) per-edge (or per-cut) curvature/bottleneck score and (b) the mutual information proxy between target labels and node embeddings at increasing hop distances (operationalized as linear probe accuracy on k-hop pooled embeddings, k increasing), plus embedding diversity (mean pairwise cosine distance across nodes) as the claimed driver. The key decisive readout is whether genetic-evolution increases long-range probe accuracy at large k without merely increasing shallow (small k) diversity.",
+      "supporting_result": "Compared to vanilla, the genetic-evolution condition shows a clear increase in large-k (e.g., k>=6) probe accuracy (or task accuracy attributable to long-range signal) alongside maintained or increased embedding diversity, and this improvement is comparable in pattern to Curvature MPNN (even if smaller). The identity-operations ablation matches vanilla, indicating the effect comes from diversity operations rather than extra computation.",
+      "falsifying_result": "Genetic-evolution increases embedding diversity but does not improve (or worsens) large-k probe accuracy / long-range task performance relative to vanilla, while Curvature MPNN improves large-k probe accuracy. Alternatively, genetic-evolution gains vanish in the identity-operations ablation or are confined to small k only, indicating it addresses over-smoothing but not oversquashing, making the direction not worth pursuing for oversquashing-sensitive settings."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_022_graph_networks_message_passing_paradigm__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-07",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If we replace a scalar 2D-vs-3D prior trade-off (as in Magic123) with frequency-domain gating of the 2D prior (as in hy-FSD), then cross-view consistency of high-frequency texture should improve at matched single-view detail, because the 3D prior dominates low frequencies (shape/albedo layout) while the 2D prior only contributes high-frequency residuals that are less geometry-entangling.",
+      "minimal_test": "On a small public single-image-to-3D set (e.g., 20–50 objects from Objaverse subset used by prior works or a comparable public subset), run a controlled 3D Gaussian optimization for a fixed compute budget per object with the same 3D prior (a public novel-view diffusion model such as Zero-1-to-3) and the same 2D image diffusion prior. Compare three conditions: (A) Magic123-style scalar mixing between 2D and 3D score distillation losses (tune the trade-off on 5 held-out objects, then freeze), (B) hy-FSD-style Fourier-domain application of the 2D prior with the 3D prior in spatial domain, and (C) ablation: hy-FSD with frequency gating removed (i.e., apply 2D prior in spatial domain as in naive combination) to expose the claimed conflict. Render 16 fixed novel views per object. Keep seeds, steps, and render settings identical across conditions. Total budget: <=8 A100 GPU-days by limiting object count and steps.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "Method (B) achieves significantly lower high-frequency cross-view inconsistency than (A) at matched or higher single-view high-frequency energy/detail, and (C) is worse than (B), showing that the improvement comes from Fourier-domain gating rather than other implementation differences.",
+      "falsifying_result": "Method (B) does not reduce high-frequency cross-view inconsistency relative to (A) when matched for single-view detail (or only improves by noticeably reducing high-frequency energy/detail), and (C) is similar to (B), indicating Fourier-domain separation is not the causal mechanism and the direction is not worth pursuing over simpler scalar 2D/3D weighting."
+    },
+    "candidate": {
+      "hypothesis": "If we replace a scalar 2D-vs-3D prior trade-off (as in Magic123) with frequency-domain gating of the 2D prior (as in hy-FSD), then cross-view consistency of high-frequency texture should improve at matched single-view detail, because the 3D prior dominates low frequencies (shape/albedo layout) while the 2D prior only contributes high-frequency residuals that are less geometry-entangling.",
+      "minimal_test": "On a small public single-image-to-3D set (e.g., 20–50 objects from Objaverse subset used by prior works or a comparable public subset), run a controlled 3D Gaussian optimization for a fixed compute budget per object with the same 3D prior (a public novel-view diffusion model such as Zero-1-to-3) and the same 2D image diffusion prior. Compare three conditions: (A) Magic123-style scalar mixing between 2D and 3D score distillation losses (tune the trade-off on 5 held-out objects, then freeze), (B) hy-FSD-style Fourier-domain application of the 2D prior with the 3D prior in spatial domain, and (C) ablation: hy-FSD with frequency gating removed (i.e., apply 2D prior in spatial domain as in naive combination) to expose the claimed conflict. Render 16 fixed novel views per object. Keep seeds, steps, and render settings identical across conditions. Total budget: <=8 A100 GPU-days by limiting object count and steps.",
+      "decisive_metric": "High-frequency cross-view inconsistency: for each object, compute per-view high-pass filtered images (e.g., apply a fixed Laplacian or band-pass filter) and measure the variance across views after reprojecting to a canonical UV proxy derived from the optimized 3D representation (or, if UV is unavailable, measure pairwise high-frequency patch similarity across adjacent viewpoints using feature matching on rendered images and report the fraction of unmatched high-frequency keypoints). Report (i) mean high-frequency inconsistency (lower is better) and (ii) mean single-view high-frequency energy/detail (to ensure detail is not simply suppressed). The key diagnostic is the Pareto relationship between detail and inconsistency across methods.",
+      "supporting_result": "Method (B) achieves significantly lower high-frequency cross-view inconsistency than (A) at matched or higher single-view high-frequency energy/detail, and (C) is worse than (B), showing that the improvement comes from Fourier-domain gating rather than other implementation differences.",
+      "falsifying_result": "Method (B) does not reduce high-frequency cross-view inconsistency relative to (A) when matched for single-view detail (or only improves by noticeably reducing high-frequency energy/detail), and (C) is similar to (B), indicating Fourier-domain separation is not the causal mechanism and the direction is not worth pursuing over simpler scalar 2D/3D weighting."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_023_generation_image_object_priors_diffusion__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-08",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If we use ConML-style task-level contrastive separation as a proxy for task harmfulness, then excluding or down-weighting tasks with highest inter-task separation during MAML meta-training should improve held-out task adaptation because those tasks cause negative transfer (they produce meta-gradients that conflict with the majority).",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If we use ConML-style task-level contrastive separation as a proxy for task harmfulness, then excluding or down-weighting tasks with highest inter-task separation during MAML meta-training should improve held-out task adaptation because those tasks cause negative transfer (they produce meta-gradients that conflict with the majority).",
+      "minimal_test": "On mini-ImageNet few-shot classification (5-way 1-shot, standard split), run MAML meta-training for a fixed budget (e.g., same number of meta-updates) under three conditions using an open-source MAML implementation: (1) Baseline: uniform task sampling (standard MAML). (2) TIML-style gating (simplified): per meta-batch, compute each task’s gradient direction; down-weight tasks with most negative average cosine similarity to the batch mean gradient (a direct harmfulness proxy aligned with TIML’s idea). (3) ConML-proxy gating: first train a lightweight ConML head for a short warmup (or compute task separation online using ConML loss on model outputs across tasks in the meta-batch), then down-weight tasks with highest inter-task contrastive score (most separated). Keep compute comparable by using the same backbone and total steps; only add small scoring overhead. Evaluate all methods on held-out test tasks with the same number of inner-loop adaptation steps. Include an ablation diagnostic: swap the ConML-proxy rule to instead down-weight tasks with lowest inter-task contrastive score (reverse gating) to test specificity.",
+      "decisive_metric": "Mechanism metric: correlation across meta-training between (a) ConML inter-task contrastive separation score per task and (b) that task’s negative transfer score measured as negative cosine similarity between the task’s meta-gradient and the meta-batch mean gradient (or increase in outer loss when including that task vs leaving it out in a small leave-one-out estimate). Primary outcome: test-time adaptation improvement (Δ accuracy) as a function of gating threshold; but decisive is whether ConML separation predicts gradient conflict and whether gating based on it reduces aggregate gradient conflict without hurting test adaptation.",
+      "supporting_result": "ConML separation score significantly predicts gradient conflict (e.g., positive correlation with negative cosine similarity / leave-one-out harm), and ConML-proxy gating reduces average gradient conflict versus baseline and yields higher mean test accuracy after adaptation than uniform MAML; reverse gating worsens conflict and/or accuracy.",
+      "falsifying_result": "ConML separation score shows near-zero or opposite correlation with gradient conflict/leave-one-out harm, and ConML-proxy gating does not reduce gradient conflict or does not improve (or degrades) test-time adaptation accuracy relative to uniform MAML; reverse gating performs similarly to ConML-proxy gating, indicating the effect is not specific to the proposed mechanism."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_025_meta_learning_demonstrate_universal_representati__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-09",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If sample-level fake-data generation is a meaningful privacy defense rather than an average-metric hack, then augmenting training with high-risk decoy samples should reduce membership inference advantage specifically for the most vulnerable spurious group because the model will rely less on group-linked memorized signals and the attack will face more confusing near-neighbor training points.",
+      "minimal_test": "Use a public spurious-correlation benchmark (e.g., Waterbirds or CelebA attribute split) with a standard open-weight vision model (e.g., ResNet-18). Train three models: (1) ERM baseline (as in Spurious Privacy Leakage), (2) robust training baseline that equalizes accuracy across groups (e.g., GroupDRO/IRM; baseline from Spurious Privacy Leakage), (3) ERM + the fake-data method from Generating Fake Data to Fake Privacy Pryers adapted to generate/augment decoy samples targeted to high privacy-risk training points (identified via their sample-level valuation). Evaluate membership inference attacks (shadow-model or LiRA-style) separately on spurious vs non-spurious groups, using equal-sized member/non-member sets per group. Include an ablation diagnostic: fake-data augmentation without targeting (same number of synthetic samples but random/low-risk points) to test whether any effect is due to the sample-level risk mechanism.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "Compared to ERM and robust-training baseline, the fake-data targeted model reduces spurious-group MIA AUC (and worst-group AUC) by a meaningful margin (e.g., >= 0.05 absolute AUC) without increasing it for other groups, and the targeted version outperforms the untargeted fake-data ablation at the same synthetic-data budget, indicating the sample-level risk mechanism matters.",
+      "falsifying_result": "The spurious-group (and worst-group) MIA AUC is unchanged or increases relative to ERM, or any reduction is matched by the untargeted fake-data ablation (no benefit from sample-level targeting), indicating the fake-data approach does not address spurious privacy leakage and is not worth pursuing for group-concentrated vulnerabilities."
+    },
+    "candidate": {
+      "hypothesis": "If sample-level fake-data generation is a meaningful privacy defense rather than an average-metric hack, then augmenting training with high-risk decoy samples should reduce membership inference advantage specifically for the most vulnerable spurious group because the model will rely less on group-linked memorized signals and the attack will face more confusing near-neighbor training points.",
+      "minimal_test": "Use a public spurious-correlation benchmark (e.g., Waterbirds or CelebA attribute split) with a standard open-weight vision model (e.g., ResNet-18). Train three models: (1) ERM baseline (as in Spurious Privacy Leakage), (2) robust training baseline that equalizes accuracy across groups (e.g., GroupDRO/IRM; baseline from Spurious Privacy Leakage), (3) ERM + the fake-data method from Generating Fake Data to Fake Privacy Pryers adapted to generate/augment decoy samples targeted to high privacy-risk training points (identified via their sample-level valuation). Evaluate membership inference attacks (shadow-model or LiRA-style) separately on spurious vs non-spurious groups, using equal-sized member/non-member sets per group. Include an ablation diagnostic: fake-data augmentation without targeting (same number of synthetic samples but random/low-risk points) to test whether any effect is due to the sample-level risk mechanism.",
+      "decisive_metric": "Worst-group membership inference advantage (or AUC) across groups, reported as max_g AUC_g (or max_g TPR@fixed FPR) with emphasis on the spurious group identified in the benchmark. Also report the gap AUC_spurious - AUC_nonspurious to directly measure spurious privacy leakage concentration.",
+      "supporting_result": "Compared to ERM and robust-training baseline, the fake-data targeted model reduces spurious-group MIA AUC (and worst-group AUC) by a meaningful margin (e.g., >= 0.05 absolute AUC) without increasing it for other groups, and the targeted version outperforms the untargeted fake-data ablation at the same synthetic-data budget, indicating the sample-level risk mechanism matters.",
+      "falsifying_result": "The spurious-group (and worst-group) MIA AUC is unchanged or increases relative to ERM, or any reduction is matched by the untargeted fake-data ablation (no benefit from sample-level targeting), indicating the fake-data approach does not address spurious privacy leakage and is not worth pursuing for group-concentrated vulnerabilities."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_026_privacy_attacks_leakage_privacy_preserving_fake__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-10",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If Free-MoE's purported domain-oriented routing mechanism is real (not just generic pruning), then for the same base open-weight LLM and same compute budget, Free-MoE should (a) increase domain-conditioned routing specialization and (b) improve in-domain performance without increasing cross-domain interference, because the selected subnetworks are consistently and distinctly activated for different domains rather than being a single globally good sparse subnetwork.",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If Free-MoE's purported domain-oriented routing mechanism is real (not just generic pruning), then for the same base open-weight LLM and same compute budget, Free-MoE should (a) increase domain-conditioned routing specialization and (b) improve in-domain performance without increasing cross-domain interference, because the selected subnetworks are consistently and distinctly activated for different domains rather than being a single globally good sparse subnetwork.",
+      "minimal_test": "Use an open-weight dense LLM (e.g., Llama-3.1-8B-Instruct or Qwen2.5-7B-Instruct) and implement a minimal Free-MoE-style subnetwork selection at inference: choose a fixed top-k subset of FFN neurons (or FFN channels) per layer based on a simple weight-stat proxy (e.g., L2 norm) and a domain tag that selects among 4 precomputed masks (domains: code, math, general QA, summarization). Baselines: (1) original dense model, (2) domain-agnostic top-k mask shared across all domains with same sparsity and compute. Evaluate on public small sets: HumanEval (code), GSM8K (math), BoolQ (QA), and CNN/DailyMail (summarization), using 200 examples each to fit within <=8 A100 GPU-days. Include one failure-mode ablation diagnostic: shuffle domain tags at inference (apply wrong domain mask) while keeping sparsity/computation identical.",
+      "decisive_metric": "Routing specialization and its causal link to performance: (1) mask dissimilarity across domains measured by average pairwise Jaccard distance of selected neurons per layer; (2) sensitivity to domain-tag shuffling measured as delta accuracy/pass@1/ROUGE when using correct vs shuffled domain masks at identical sparsity; report these alongside task metrics to show mechanism, not just aggregate score.",
+      "supporting_result": "Compared to the domain-agnostic mask baseline at equal sparsity, the domain-conditioned Free-MoE masks show high cross-domain dissimilarity (e.g., mean Jaccard distance substantially > 0.3 across domains in multiple mid/high layers) and using the correct domain mask yields consistent task gains (e.g., +2-5% absolute on BoolQ, +2-5% on GSM8K, +2-5% ROUGE-L on CNN/DM, +2-5% pass@1 on HumanEval) while shuffling domain tags causes a clear drop back toward or below the domain-agnostic baseline.",
+      "falsifying_result": "If (a) domain masks are highly similar across domains (low Jaccard distance, e.g., < 0.1 across most layers), and/or (b) shuffling domain tags changes performance negligibly (e.g., < 0.5% absolute on classification, < 0.5 ROUGE-L, < 0.5% pass@1) while any improvements over the dense model are matched by the domain-agnostic mask at the same sparsity, then the evidence suggests Free-MoE-style 'domain routing' is not the operative mechanism and the direction is not worth pursuing beyond generic structured sparsification/compression."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_027_mixture_of_experts_llms_across_any_moe__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-11",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If variance feature attribution truly captures aleatoric drivers, then when epistemic uncertainty is selectively increased (without changing data noise), the variance-head attributions should remain stable, while epistemic-uncertainty attributions (from an epistemic measure) should shift toward features/regions causing distribution shift because the method is source-specific.",
+      "minimal_test": "Use a public synthetic heteroscedastic regression dataset with known noise drivers (as in the synthetic-known-DGP setting claimed by the aleatoric-drivers paper) and create two test regimes: (A) in-distribution and (B) covariate-shifted inputs that increase epistemic uncertainty but keep the conditional noise function unchanged (e.g., shift a nuisance feature distribution while keeping the heteroscedastic noise dependent only on a designated feature subset). Train (or fine-tune from a public checkpoint) a small MLP with Gaussian output (mean+variance head) as in the variance-feature-attribution papers. Add an epistemic baseline from the Bayesian-estimation/risk-decomposition paper: approximate epistemic uncertainty via a Bayesian approximation available in open weights (e.g., MC dropout ensemble for posterior predictive variance decomposition), yielding an epistemic score per sample. Compute feature attributions for (i) the variance head output (aleatoric explanation) and (ii) the epistemic score (epistemic explanation) using the same off-the-shelf explainer (e.g., Integrated Gradients). Failure-mode/ablation diagnostic: randomize the variance head by freezing the trunk and reinitializing only the variance neuron layer, then recompute variance attributions to ensure metrics drop to chance.",
+      "decisive_metric": "Count the characters in the project title.",
+      "supporting_result": "Under regime B, variance-head attribution selectivity remains high (e.g., noise-feature mass ratio similar to regime A and substantially higher than for epistemic-score attributions), and variance-head attribution patterns on noise-driving features remain stable (high A-vs-B rank correlation). Epistemic-score attributions, in contrast, shift toward the shifted/nuisance features (reduced stability and different mass distribution). After variance-head reinit, variance-head selectivity drops near 1 (chance) and stability degrades, confirming the diagnostic.",
+      "falsifying_result": "When moving from A to B, variance-head attributions change substantially (low A-vs-B correlation) and/or attribution mass shifts to the shifted/nuisance features similarly to epistemic-score attributions, indicating confounding with epistemic uncertainty. If variance-head selectivity does not exceed epistemic-score selectivity for the known noise-driving features, or if the variance-head reinit ablation does not reduce selectivity toward chance, the approach is not isolating aleatoric drivers and the direction is weakened."
+    },
+    "candidate": {
+      "hypothesis": "If variance feature attribution truly captures aleatoric drivers, then when epistemic uncertainty is selectively increased (without changing data noise), the variance-head attributions should remain stable, while epistemic-uncertainty attributions (from an epistemic measure) should shift toward features/regions causing distribution shift because the method is source-specific.",
+      "minimal_test": "Use a public synthetic heteroscedastic regression dataset with known noise drivers (as in the synthetic-known-DGP setting claimed by the aleatoric-drivers paper) and create two test regimes: (A) in-distribution and (B) covariate-shifted inputs that increase epistemic uncertainty but keep the conditional noise function unchanged (e.g., shift a nuisance feature distribution while keeping the heteroscedastic noise dependent only on a designated feature subset). Train (or fine-tune from a public checkpoint) a small MLP with Gaussian output (mean+variance head) as in the variance-feature-attribution papers. Add an epistemic baseline from the Bayesian-estimation/risk-decomposition paper: approximate epistemic uncertainty via a Bayesian approximation available in open weights (e.g., MC dropout ensemble for posterior predictive variance decomposition), yielding an epistemic score per sample. Compute feature attributions for (i) the variance head output (aleatoric explanation) and (ii) the epistemic score (epistemic explanation) using the same off-the-shelf explainer (e.g., Integrated Gradients). Failure-mode/ablation diagnostic: randomize the variance head by freezing the trunk and reinitializing only the variance neuron layer, then recompute variance attributions to ensure metrics drop to chance.",
+      "decisive_metric": "Source-specificity under epistemic shift: (1) Stability of variance-head attributions across regimes measured by rank correlation (Spearman) between mean absolute attribution vectors in A vs B restricted to the true noise-driving features; (2) Selectivity measured by the attribution mass ratio on true noise-driving features vs non-noise features for variance-head attributions, compared to the same ratio for epistemic-score attributions. Also report the ablation drop: selectivity should collapse after variance-head reinit.",
+      "supporting_result": "Under regime B, variance-head attribution selectivity remains high (e.g., noise-feature mass ratio similar to regime A and substantially higher than for epistemic-score attributions), and variance-head attribution patterns on noise-driving features remain stable (high A-vs-B rank correlation). Epistemic-score attributions, in contrast, shift toward the shifted/nuisance features (reduced stability and different mass distribution). After variance-head reinit, variance-head selectivity drops near 1 (chance) and stability degrades, confirming the diagnostic.",
+      "falsifying_result": "When moving from A to B, variance-head attributions change substantially (low A-vs-B correlation) and/or attribution mass shifts to the shifted/nuisance features similarly to epistemic-score attributions, indicating confounding with epistemic uncertainty. If variance-head selectivity does not exceed epistemic-score selectivity for the known noise-driving features, or if the variance-head reinit ablation does not reduce selectivity toward chance, the approach is not isolating aleatoric drivers and the direction is weakened."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_028_uncertainty_predictive_estimation_identifying_dr__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-12",
+    "axis": "credibility",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "hypothesis": "If we apply ConDS-style candidate-set revision before DP-ICL, then DP-ICL will recover more utility at the same privacy budget because ConDS will concentrate each disjoint exemplar set on truly task-relevant demonstrations, reducing the variance introduced by DP-ICL’s noisy consensus mechanism.",
+      "minimal_test": "",
+      "decisive_metric": "",
+      "supporting_result": "",
+      "falsifying_result": ""
+    },
+    "candidate": {
+      "hypothesis": "If we apply ConDS-style candidate-set revision before DP-ICL, then DP-ICL will recover more utility at the same privacy budget because ConDS will concentrate each disjoint exemplar set on truly task-relevant demonstrations, reducing the variance introduced by DP-ICL’s noisy consensus mechanism.",
+      "minimal_test": "On one public text classification benchmark used in DP-ICL (e.g., SST-2 or AG News) with an open-weight instruction-tuned LLM (e.g., Llama-3-8B-Instruct), implement DP-ICL’s core protocol: split a fixed-size candidate exemplar pool into k disjoint sets (e.g., k=8), run ICL per set, then aggregate by noisy vote (or noised confidence) to meet a fixed epsilon. Compare two pipelines under identical epsilon, k, total exemplars, and retriever: (A) DP-ICL baseline with standard top-K retrieval per query from the raw pool, (B) ConDS+DP-ICL where ConDS is used once to revise/reweight the candidate pool (or filter down to an emphasized subset) before forming the k disjoint sets and retrieving top-K. Ablation/failure-mode diagnostic: keep pipeline (B) but remove the LLM-feedback term from ConDS (use retriever ranking only) to test whether DP-ICL breaks the feedback-based informativeness signal.",
+      "decisive_metric": "Utility-at-fixed-privacy plus mechanism diagnostic: (1) classification accuracy of the final aggregated DP-ICL prediction at a fixed epsilon, and (2) exemplar-set agreement/variance across disjoint sets measured as the mean pairwise disagreement rate (or entropy) of per-set predictions before noisy aggregation. The key mechanism metric is whether ConDS reduces cross-set disagreement at the same epsilon (indicating more consistently informative demonstrations despite DP noise).",
+      "supporting_result": "At the same epsilon, ConDS+DP-ICL (B) yields higher final accuracy than DP-ICL baseline (A) and also shows a clear reduction in pre-aggregation cross-set disagreement/entropy. The ablation (no LLM-feedback in ConDS) loses most of the gain and does not reduce disagreement as much, indicating the feedback-based informativeness signal remains usable and is the driver.",
+      "falsifying_result": "At the same epsilon, ConDS+DP-ICL does not improve (or worsens) final accuracy relative to DP-ICL baseline and does not reduce pre-aggregation cross-set disagreement/entropy; additionally, the full ConDS behaves similarly to the retriever-only ablation, implying ConDS’s feedback-driven candidate revision is not effective under DP-ICL’s privacy-induced noise and the direction is not worth pursuing."
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_029_in_context_language_context_however_information__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-13",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If spacing (teacher trained ahead) is the main driver of generalization improvements, then adding a spaced teacher schedule to FM-KD (keeping FM-KD loss identical) should measurably increase student flatness and test accuracy more than increasing FM-KD sampling steps alone, because spacing provides a qualitatively different teacher signal that biases SGD toward flatter minima.",
+      "minimal_test": "On CIFAR-100 with public models (e.g., ResNet-56 teacher, ResNet-20 student), train four students for the same total epochs and augmentation: (A) vanilla offline KD baseline, (B) FM-KD as in the paper with the recommended multi-step sampling, (C) Spaced KD (teacher snapshot from t epochs ahead; otherwise same KD loss as A), (D) FM-KD + spacing (use the same FM-KD loss as B but the teacher is a snapshot t epochs ahead, matching C’s spacing interval). Include one ablation diagnostic: vary spacing interval t in {0, 10, 30} while holding compute constant by reducing teacher training updates accordingly (so the test isolates spacing vs extra training).",
+      "decisive_metric": "Student flatness/sharpness change measured directly via (i) sharpness: max increase in training loss under an L2-bounded weight perturbation (e.g., epsilon=1e-3 to 5e-3) and (ii) local curvature proxy: top Hessian eigenvalue estimated by power iteration, both evaluated at convergence; relate these to (iii) test accuracy. The key diagnostic is whether spacing reduces sharpness/curvature and whether that reduction predicts accuracy improvements across conditions.",
+      "supporting_result": "Compared to FM-KD without spacing (B), FM-KD+spacing (D) shows a consistent reduction in sharpness/curvature (e.g., lower sharpness and lower top Hessian eigenvalue) and a corresponding test accuracy gain, while increasing FM-KD sampling steps without spacing yields little/no sharpness reduction and little/no accuracy gain; additionally, larger spacing intervals (t=10,30) monotonically reduce sharpness and improve accuracy up to a point.",
+      "falsifying_result": "FM-KD+spacing (D) does not reduce sharpness/curvature relative to FM-KD (B), or any sharpness/curvature reductions do not correlate with accuracy (e.g., spacing changes sharpness but accuracy stays flat, or accuracy changes without sharpness changes); or FM-KD step increases alone match or exceed D’s accuracy gains without producing flatter minima, undermining the claim that spacing-driven flat minima is the decisive mechanism worth pursuing."
+    },
+    "candidate": {
+      "falsifying_result": "\nFM-KD+spacing (D) does not reduce sharpness/curvature relative to FM-KD (B), or any sharpness/curvature reductions do not correlate with accuracy (e.g., spacing changes sharpness but accuracy stays flat, or accuracy changes without sharpness changes); or FM-KD step increases alone match or exceed D’s accuracy gains without producing flatter minima, undermining the claim that spacing-driven flat minima is the decisive mechanism worth pursuing.\n",
+      "supporting_result": "\nCompared to FM-KD without spacing (B), FM-KD+spacing (D) shows a consistent reduction in sharpness/curvature (e.g., lower sharpness and lower top Hessian eigenvalue) and a corresponding test accuracy gain, while increasing FM-KD sampling steps without spacing yields little/no sharpness reduction and little/no accuracy gain; additionally, larger spacing intervals (t=10,30) monotonically reduce sharpness and improve accuracy up to a point.\n",
+      "decisive_metric": "\nStudent flatness/sharpness change measured directly via (i) sharpness: max increase in training loss under an L2-bounded weight perturbation (e.g., epsilon=1e-3 to 5e-3) and (ii) local curvature proxy: top Hessian eigenvalue estimated by power iteration, both evaluated at convergence; relate these to (iii) test accuracy. The key diagnostic is whether spacing reduces sharpness/curvature and whether that reduction predicts accuracy improvements across conditions.\n",
+      "minimal_test": "\nOn CIFAR-100 with public models (e.g., ResNet-56 teacher, ResNet-20 student), train four students for the same total epochs and augmentation: (A) vanilla offline KD baseline, (B) FM-KD as in the paper with the recommended multi-step sampling, (C) Spaced KD (teacher snapshot from t epochs ahead; otherwise same KD loss as A), (D) FM-KD + spacing (use the same FM-KD loss as B but the teacher is a snapshot t epochs ahead, matching C’s spacing interval). Include one ablation diagnostic: vary spacing interval t in {0, 10, 30} while holding compute constant by reducing teacher training updates accordingly (so the test isolates spacing vs extra training).\n",
+      "hypothesis": "\nIf spacing (teacher trained ahead) is the main driver of generalization improvements, then adding a spaced teacher schedule to FM-KD (keeping FM-KD loss identical) should measurably increase student flatness and test accuracy more than increasing FM-KD sampling steps alone, because spacing provides a qualitatively different teacher signal that biases SGD toward flatter minima.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_031_knowledge_distillation_student_effect_teacher__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-14",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If SINet's scalar interaction is expressivity-limited in the same way as other accelerated tensor products, then on a task that requires antisymmetric E(3)-equivariant interactions (chirality/orientation sensitivity), SINet will show a specific failure mode (inability to fit or generalize an antisymmetric target) compared to a full Clebsch-Gordan tensor product baseline, because scalarization via an input-feature basis under-parameterizes antisymmetric couplings.",
+      "minimal_test": "Construct a synthetic E(3)-equivariant regression dataset where the target is explicitly antisymmetric: for each sample, draw two 3D vectors a,b (or 3D point triples), apply a random rotation R, and define the target vector y = R(a x b) (equivariant, changes sign under reflection and swaps a,b). Train (1) SINet as described in the SINet paper and (2) a standard E(3) equivariant GNN layer using full Clebsch-Gordan tensor products (baseline referenced in both SINet and The Price of Freedom), matching parameter count and using the same max degree L and same training setup. Add an ablation diagnostic: swap inputs (a,b)->(b,a) at test time and measure whether the model output flips sign as required by antisymmetry. Keep this to a small setup (e.g., 50k train / 10k test) so it fits within <=8 A100 GPU-days.",
+      "decisive_metric": "Antisymmetry violation score: mean over test samples of ||f(a,b) + f(b,a)|| / (||f(a,b)|| + eps), alongside test MSE on y. This directly measures the mechanism (ability to represent antisymmetric coupling), not just aggregate accuracy.",
+      "supporting_result": "Compared to full CG baseline, SINet shows substantially higher antisymmetry violation (near 1 rather than near 0) and correspondingly worse test MSE even when train loss is driven low, while the CG baseline achieves low violation and low MSE; this pattern persists when matching params/L and across multiple random seeds/rotations.",
+      "falsifying_result": "SINet matches the CG baseline on both low antisymmetry violation (close to 0) and test MSE at comparable params/L, indicating scalar interaction does not incur the antisymmetric/chirality expressivity loss suggested by The Price of Freedom and undermining the claim that SINet's efficiency likely trades off this specific expressivity."
+    },
+    "candidate": {
+      "falsifying_result": "\nSINet matches the CG baseline on both low antisymmetry violation (close to 0) and test MSE at comparable params/L, indicating scalar interaction does not incur the antisymmetric/chirality expressivity loss suggested by The Price of Freedom and undermining the claim that SINet's efficiency likely trades off this specific expressivity.\n",
+      "supporting_result": "\nCompared to full CG baseline, SINet shows substantially higher antisymmetry violation (near 1 rather than near 0) and correspondingly worse test MSE even when train loss is driven low, while the CG baseline achieves low violation and low MSE; this pattern persists when matching params/L and across multiple random seeds/rotations.\n",
+      "decisive_metric": "\nAntisymmetry violation score: mean over test samples of ||f(a,b) + f(b,a)|| / (||f(a,b)|| + eps), alongside test MSE on y. This directly measures the mechanism (ability to represent antisymmetric coupling), not just aggregate accuracy.\n",
+      "minimal_test": "\nConstruct a synthetic E(3)-equivariant regression dataset where the target is explicitly antisymmetric: for each sample, draw two 3D vectors a,b (or 3D point triples), apply a random rotation R, and define the target vector y = R(a x b) (equivariant, changes sign under reflection and swaps a,b). Train (1) SINet as described in the SINet paper and (2) a standard E(3) equivariant GNN layer using full Clebsch-Gordan tensor products (baseline referenced in both SINet and The Price of Freedom), matching parameter count and using the same max degree L and same training setup. Add an ablation diagnostic: swap inputs (a,b)->(b,a) at test time and measure whether the model output flips sign as required by antisymmetry. Keep this to a small setup (e.g., 50k train / 10k test) so it fits within <=8 A100 GPU-days.\n",
+      "hypothesis": "\nIf SINet's scalar interaction is expressivity-limited in the same way as other accelerated tensor products, then on a task that requires antisymmetric E(3)-equivariant interactions (chirality/orientation sensitivity), SINet will show a specific failure mode (inability to fit or generalize an antisymmetric target) compared to a full Clebsch-Gordan tensor product baseline, because scalarization via an input-feature basis under-parameterizes antisymmetric couplings.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_032_equivariant_networks_tensor_invariant_scalar__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-15",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If noise-injection stability is a better proxy for true instruction usefulness than the multimodal quality score used in InstructionGPT-4, then selecting vision-language instructions by (adapted) noise-injection stability will yield higher per-example training utility and better downstream generalization than selecting by InstructionGPT-4’s score at the same subset size, because stability reflects consistent supervision signal under perturbation rather than superficial “easy” examples.",
+      "minimal_test": "Use an open-weight MLLM fine-tuning setup (e.g., MiniGPT-4 or a LLaVA-1.5 7B-style open checkpoint) on a public vision-language instruction dataset used for tuning (e.g., LLaVA-Instruct-150k or a public subset). Create three equal-size subsets at 5% and 10% of the training set: (A) InstructionGPT-4-style selector score (baseline from that paper; implement their published/closest-available scoring features), (B) noise-injection stability score adapted from Priority on High-Quality by applying controlled perturbations to the text instruction (typos, word drop) and/or image (light augmentations) and ranking examples by minimal change in the model’s response distribution, and (C) random. Fine-tune for a fixed small compute budget (same steps, same batch, same seed set) and evaluate. Include one failure-mode diagnostic: compare the distributions of instruction length, answer length, and perplexity under the base model across the selected subsets to detect “easiness/shortness” confounds.",
+      "decisive_metric": "Per-example training utility correlation: for a held-out probe set of 2k candidate training examples, measure each example’s one-step influence proxy (delta in validation loss on a fixed small validation set after one SGD step on that example, averaged over a few checkpoints) and compute Spearman correlation between each selector’s score and this delta-utility. Secondary decision check: validation loss vs. steps curves for fine-tuning on each subset at matched compute. Failure-mode diagnostic: effect persists after matching for instruction length (stratified selection within length bins).",
+      "supporting_result": "Noise-injection stability score shows significantly higher Spearman correlation with per-example utility than the InstructionGPT-4-style score (e.g., +0.1 or more) and the stability-selected subset achieves lower validation loss throughout training and better final generalization than the baseline selector at both 5% and 10%, with gains remaining when controlling for length/easiness via stratified selection.",
+      "falsifying_result": "Noise-injection stability has near-zero or lower correlation with per-example utility than the InstructionGPT-4-style score, and fine-tuning on stability-selected subsets matches random or underperforms the InstructionGPT-4-style selected subsets; additionally, any apparent benefit disappears after controlling for instruction/answer length (indicating the score mainly selects easy/short examples rather than higher-utility ones)."
+    },
+    "candidate": {
+      "falsifying_result": "\nNoise-injection stability has near-zero or lower correlation with per-example utility than the InstructionGPT-4-style score, and fine-tuning on stability-selected subsets matches random or underperforms the InstructionGPT-4-style selected subsets; additionally, any apparent benefit disappears after controlling for instruction/answer length (indicating the score mainly selects easy/short examples rather than higher-utility ones).\n",
+      "supporting_result": "\nNoise-injection stability score shows significantly higher Spearman correlation with per-example utility than the InstructionGPT-4-style score (e.g., +0.1 or more) and the stability-selected subset achieves lower validation loss throughout training and better final generalization than the baseline selector at both 5% and 10%, with gains remaining when controlling for length/easiness via stratified selection.\n",
+      "decisive_metric": "\nPer-example training utility correlation: for a held-out probe set of 2k candidate training examples, measure each example’s one-step influence proxy (delta in validation loss on a fixed small validation set after one SGD step on that example, averaged over a few checkpoints) and compute Spearman correlation between each selector’s score and this delta-utility. Secondary decision check: validation loss vs. steps curves for fine-tuning on each subset at matched compute. Failure-mode diagnostic: effect persists after matching for instruction length (stratified selection within length bins).\n",
+      "minimal_test": "\nUse an open-weight MLLM fine-tuning setup (e.g., MiniGPT-4 or a LLaVA-1.5 7B-style open checkpoint) on a public vision-language instruction dataset used for tuning (e.g., LLaVA-Instruct-150k or a public subset). Create three equal-size subsets at 5% and 10% of the training set: (A) InstructionGPT-4-style selector score (baseline from that paper; implement their published/closest-available scoring features), (B) noise-injection stability score adapted from Priority on High-Quality by applying controlled perturbations to the text instruction (typos, word drop) and/or image (light augmentations) and ranking examples by minimal change in the model’s response distribution, and (C) random. Fine-tune for a fixed small compute budget (same steps, same batch, same seed set) and evaluate. Include one failure-mode diagnostic: compare the distributions of instruction length, answer length, and perplexity under the base model across the selected subsets to detect “easiness/shortness” confounds.\n",
+      "hypothesis": "\nIf noise-injection stability is a better proxy for true instruction usefulness than the multimodal quality score used in InstructionGPT-4, then selecting vision-language instructions by (adapted) noise-injection stability will yield higher per-example training utility and better downstream generalization than selecting by InstructionGPT-4’s score at the same subset size, because stability reflects consistent supervision signal under perturbation rather than superficial “easy” examples.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_033_instruction_high_quality_tuning_fine_tuning_sele__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-16",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If ALR2’s key advantage is reducing 'retrieved-fact hallucination' via retrieval-reason alignment, then ALR2 should show higher evidence-groundedness of cited facts than a standard RAG baseline even when both are given the same top-k retrieved chunks; merely increasing k for the baseline should not close this grounding gap.",
+      "minimal_test": "Use the public LooGLE long-document QA benchmark as the evaluation set. Use an open-weight long-context model as the reasoner (e.g., Llama-3-8B-Instruct or an open ChatQA-2 variant if weights are available) and a standard public retriever baseline (DPR or BM25) to implement a classic RAG retrieve-then-generate pipeline. Implement ALR2’s retrieve-then-reason alignment on the same base model (lightweight SFT/LoRA within budget) and keep the retriever fixed. For both systems, run with identical retrieved evidence sets at k in {4, 16, 64} (same passages fed to the reasoner) and require the model to output (a) final answer and (b) quoted supporting spans (or passage IDs) for each atomic claim in the answer. Include one ablation diagnostic: no-retrieval (full-context direct prompting) to confirm the task needs cross-segment evidence rather than short dependency.",
+      "decisive_metric": "Retrieved-fact hallucination rate: proportion of atomic claims in the model’s answer that cannot be verified by the provided retrieved passages (claim-span support), measured by an automatic entailment check using an open NLI model plus a small manual audit on a random 100-claim sample to validate the automatic scorer. Report hallucination rate as a function of k, and the gap between ALR2 and standard RAG at matched k.",
+      "supporting_result": "Across k values, ALR2 consistently yields a materially lower hallucination rate than standard RAG at the same k (e.g., >=10 absolute points lower), and the gap does not disappear when the baseline increases k to 64; additionally, the no-retrieval ablation shows higher hallucination than retrieval-based methods, indicating the metric is sensitive to evidence collection.",
+      "falsifying_result": "At matched k, ALR2 does not reduce hallucination rate versus standard RAG (difference <=2 points or reverses), and/or increasing k for standard RAG closes any initial gap, indicating ALR2’s benefit is explainable by retrieval quantity/context exposure rather than alignment reducing retrieved-fact hallucination."
+    },
+    "candidate": {
+      "falsifying_result": "\nAt matched k, ALR2 does not reduce hallucination rate versus standard RAG (difference <=2 points or reverses), and/or increasing k for standard RAG closes any initial gap, indicating ALR2’s benefit is explainable by retrieval quantity/context exposure rather than alignment reducing retrieved-fact hallucination.\n",
+      "supporting_result": "\nAcross k values, ALR2 consistently yields a materially lower hallucination rate than standard RAG at the same k (e.g., >=10 absolute points lower), and the gap does not disappear when the baseline increases k to 64; additionally, the no-retrieval ablation shows higher hallucination than retrieval-based methods, indicating the metric is sensitive to evidence collection.\n",
+      "decisive_metric": "\nRetrieved-fact hallucination rate: proportion of atomic claims in the model’s answer that cannot be verified by the provided retrieved passages (claim-span support), measured by an automatic entailment check using an open NLI model plus a small manual audit on a random 100-claim sample to validate the automatic scorer. Report hallucination rate as a function of k, and the gap between ALR2 and standard RAG at matched k.\n",
+      "minimal_test": "\nUse the public LooGLE long-document QA benchmark as the evaluation set. Use an open-weight long-context model as the reasoner (e.g., Llama-3-8B-Instruct or an open ChatQA-2 variant if weights are available) and a standard public retriever baseline (DPR or BM25) to implement a classic RAG retrieve-then-generate pipeline. Implement ALR2’s retrieve-then-reason alignment on the same base model (lightweight SFT/LoRA within budget) and keep the retriever fixed. For both systems, run with identical retrieved evidence sets at k in {4, 16, 64} (same passages fed to the reasoner) and require the model to output (a) final answer and (b) quoted supporting spans (or passage IDs) for each atomic claim in the answer. Include one ablation diagnostic: no-retrieval (full-context direct prompting) to confirm the task needs cross-segment evidence rather than short dependency.\n",
+      "hypothesis": "\nIf ALR2’s key advantage is reducing 'retrieved-fact hallucination' via retrieval-reason alignment, then ALR2 should show higher evidence-groundedness of cited facts than a standard RAG baseline even when both are given the same top-k retrieved chunks; merely increasing k for the baseline should not close this grounding gap.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_034_long_long_context_context_language_llms__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-17",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If the mixture-of-SCM approach is capturing real regime/graph changes rather than overfitting, then training on pre-event CausalRivers data and evaluating on held-out post-event (flood) data should yield stable mixture assignment behavior and higher out-of-sample causal edge recovery than a single-graph baseline, because the learned mixture components act as reusable regime-specific causal graphs.",
+      "minimal_test": "Use CausalRivers to sample a fixed set of subgraphs (e.g., 50 subgraphs of 20-50 nodes each from one region ground truth). Create a temporal split: train on a pre-flood window, validate on a disjoint pre-flood window, and test on the flood/post-flood window (distribution shift). Compare (1) the mixture-of-SCM method from gusHSc09zj versus (2) the same method with number of mixture components forced to 1 (single-graph ablation baseline). Keep architecture/training budget matched and use only public code/weights. Include a failure-mode diagnostic: also evaluate on a random time split that ignores the event (i.i.d.-like split) to see whether any gains disappear when shift is removed.",
+      "decisive_metric": "Out-of-sample edge recovery degradation across the shift: delta-SHDis = SHD(test_post_flood) minus SHD(val_pre_flood), computed against the CausalRivers ground-truth graph for each sampled subgraph, and the corresponding delta-AUPRC for directed edges. Mechanism diagnostic: mutual information between mixture assignment and the event indicator (pre vs post) on the test set, plus assignment entropy (to detect collapse to one component).",
+      "supporting_result": "Mixture model shows substantially smaller degradation than the single-component ablation (e.g., median delta-SHDis lower by a meaningful margin across subgraphs, and/or delta-AUPRC drops less), while mixture assignments on held-out data are non-degenerate (assignment entropy not near zero) and correlate with the event indicator (MI > 0), indicating it is using different components across regimes rather than collapsing.",
+      "falsifying_result": "On post-flood test, the mixture model does not improve (or is worse than) the single-component ablation in delta-SHDis and delta-AUPRC, and/or mixture assignments collapse (near-zero entropy or effectively one component) or show no relationship to the event indicator (MI approximately 0). This would indicate the mixture mechanism is not providing generalizable regime/graph separation under real distribution shift and the direction is not worth pursuing without major changes."
+    },
+    "candidate": {
+      "falsifying_result": "\nOn post-flood test, the mixture model does not improve (or is worse than) the single-component ablation in delta-SHDis and delta-AUPRC, and/or mixture assignments collapse (near-zero entropy or effectively one component) or show no relationship to the event indicator (MI approximately 0). This would indicate the mixture mechanism is not providing generalizable regime/graph separation under real distribution shift and the direction is not worth pursuing without major changes.\n",
+      "supporting_result": "\nMixture model shows substantially smaller degradation than the single-component ablation (e.g., median delta-SHDis lower by a meaningful margin across subgraphs, and/or delta-AUPRC drops less), while mixture assignments on held-out data are non-degenerate (assignment entropy not near zero) and correlate with the event indicator (MI > 0), indicating it is using different components across regimes rather than collapsing.\n",
+      "decisive_metric": "\nOut-of-sample edge recovery degradation across the shift: delta-SHDis = SHD(test_post_flood) minus SHD(val_pre_flood), computed against the CausalRivers ground-truth graph for each sampled subgraph, and the corresponding delta-AUPRC for directed edges. Mechanism diagnostic: mutual information between mixture assignment and the event indicator (pre vs post) on the test set, plus assignment entropy (to detect collapse to one component).\n",
+      "minimal_test": "\nUse CausalRivers to sample a fixed set of subgraphs (e.g., 50 subgraphs of 20-50 nodes each from one region ground truth). Create a temporal split: train on a pre-flood window, validate on a disjoint pre-flood window, and test on the flood/post-flood window (distribution shift). Compare (1) the mixture-of-SCM method from gusHSc09zj versus (2) the same method with number of mixture components forced to 1 (single-graph ablation baseline). Keep architecture/training budget matched and use only public code/weights. Include a failure-mode diagnostic: also evaluate on a random time split that ignores the event (i.i.d.-like split) to see whether any gains disappear when shift is removed.\n",
+      "hypothesis": "\nIf the mixture-of-SCM approach is capturing real regime/graph changes rather than overfitting, then training on pre-event CausalRivers data and evaluating on held-out post-event (flood) data should yield stable mixture assignment behavior and higher out-of-sample causal edge recovery than a single-graph baseline, because the learned mixture components act as reusable regime-specific causal graphs.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_035_causal_discovering_structural_real_world_discove__v02_fifth40"
+  },
+  {
+    "id": "reserve-credibility-18",
+    "axis": "credibility",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "hypothesis": "If low-rank KV-cache compression is practically worthwhile for serving, then at the same KV-memory footprint it should reduce end-to-end decode latency versus head-level token/head retention because the smaller KV reduces attention bandwidth enough to outweigh low-rank reconstruct compute.",
+      "minimal_test": "On an open-weight long-context model (Llama-3-8B-Instruct or Mistral-7B-Instruct as used by HeadKV), implement/replicate one low-rank method baseline from the neighborhood (Palu, using its published ranks or a fixed-rank setting) and one head-level retention baseline (HeadKV with a matched KV budget). Run identical long-context decoding on a public benchmark input distribution (e.g., LongBench contexts; generate a fixed number of new tokens, e.g., 256) at batch size 1 and 4, sequence lengths 4k and 16k, on A100. Match KV-cache memory usage between methods (within 5%) using each method’s knobs (rank for Palu; retained heads/tokens for HeadKV). Include an ablation diagnostic for Palu: measure latency with reconstruction disabled by caching reconstructed full K/V (to isolate reconstruct overhead) at the same effective KV size.",
+      "decisive_metric": "Decode-time breakdown: (1) tokens/sec (or ms/token) during the decode phase only, reported as a function of context length, and (2) fraction of step time spent in K/V reconstruction vs attention (CUDA event timing). The key diagnostic is whether the attention-time reduction exceeds reconstruction-time increase at matched KV memory.",
+      "supporting_result": "At matched KV memory, Palu achieves a consistent decode speedup (e.g., >=10% lower ms/token) over HeadKV at 4k and 16k, and profiling shows net attention-time reduction larger than reconstruction overhead (reconstruction <=30% of step time), with the reconstruction-disabled ablation showing only a small additional gain (indicating reconstruction is not the bottleneck).",
+      "falsifying_result": "At matched KV memory, Palu provides no meaningful decode improvement over HeadKV (e.g., <3% ms/token difference or worse) and profiling shows reconstruction dominates or cancels attention savings (e.g., reconstruction >=50% of step time), with the reconstruction-disabled ablation showing large latent speedup (indicating reconstruction overhead is the limiting mechanism), making low-rank reconstruction not worth pursuing for serving-speed gains under these conditions."
+    },
+    "candidate": {
+      "falsifying_result": "\nAt matched KV memory, Palu provides no meaningful decode improvement over HeadKV (e.g., <3% ms/token difference or worse) and profiling shows reconstruction dominates or cancels attention savings (e.g., reconstruction >=50% of step time), with the reconstruction-disabled ablation showing large latent speedup (indicating reconstruction overhead is the limiting mechanism), making low-rank reconstruction not worth pursuing for serving-speed gains under these conditions.\n",
+      "supporting_result": "\nAt matched KV memory, Palu achieves a consistent decode speedup (e.g., >=10% lower ms/token) over HeadKV at 4k and 16k, and profiling shows net attention-time reduction larger than reconstruction overhead (reconstruction <=30% of step time), with the reconstruction-disabled ablation showing only a small additional gain (indicating reconstruction is not the bottleneck).\n",
+      "decisive_metric": "\nDecode-time breakdown: (1) tokens/sec (or ms/token) during the decode phase only, reported as a function of context length, and (2) fraction of step time spent in K/V reconstruction vs attention (CUDA event timing). The key diagnostic is whether the attention-time reduction exceeds reconstruction-time increase at matched KV memory.\n",
+      "minimal_test": "\nOn an open-weight long-context model (Llama-3-8B-Instruct or Mistral-7B-Instruct as used by HeadKV), implement/replicate one low-rank method baseline from the neighborhood (Palu, using its published ranks or a fixed-rank setting) and one head-level retention baseline (HeadKV with a matched KV budget). Run identical long-context decoding on a public benchmark input distribution (e.g., LongBench contexts; generate a fixed number of new tokens, e.g., 256) at batch size 1 and 4, sequence lengths 4k and 16k, on A100. Match KV-cache memory usage between methods (within 5%) using each method’s knobs (rank for Palu; retained heads/tokens for HeadKV). Include an ablation diagnostic for Palu: measure latency with reconstruction disabled by caching reconstructed full K/V (to isolate reconstruct overhead) at the same effective KV size.\n",
+      "hypothesis": "\nIf low-rank KV-cache compression is practically worthwhile for serving, then at the same KV-memory footprint it should reduce end-to-end decode latency versus head-level token/head retention because the smaller KV reduces attention bandwidth enough to outweigh low-rank reconstruct compute.\n"
+    },
+    "evidence": [],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "Lit2Test fifth40 GPT-5.2 / smallari_fifth40_036_compression_cache_low_rank_llms_memory__v02_fifth40"
+  },
+  {
+    "id": "reserve-novelty-01",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each page prefetch decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation page prefetch method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published page prefetch method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published page prefetch method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-02",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for tree traversal under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for tree traversal as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our tree traversal policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our tree traversal policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-03",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each task placement decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation task placement method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published task placement method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published task placement method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-04",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for index compaction under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for index compaction as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our index compaction policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our index compaction policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-05",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each priority queues decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation priority queues method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published priority queues method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published priority queues method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-06",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for memory allocation under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for memory allocation as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our memory allocation policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our memory allocation policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-07",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each adaptive buffering decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation adaptive buffering method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published adaptive buffering method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published adaptive buffering method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-08",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for graph partitioning under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for graph partitioning as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our graph partitioning policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our graph partitioning policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-09",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each error recovery decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation error recovery method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published error recovery method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published error recovery method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-10",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for load balancing under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for load balancing as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our load balancing policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our load balancing policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-11",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use the current observation alone to make each incremental parsing decision."
+    },
+    "candidate": {
+      "contribution": "Use the current-observation incremental parsing method as the baseline. Add a second decision rule that compares the last two windows and waits for directional agreement before changing the decision."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published incremental parsing method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published incremental parsing method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-12",
+    "axis": "novelty",
+    "kind": "substantive",
+    "expected": "win",
+    "original": {
+      "contribution": "Use a fixed global threshold for index rebuilding under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "Use a fixed global threshold for index rebuilding as the baseline. Add a policy that estimates each workload group's change rate independently and adapts the threshold in response to a shift in that group."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our index rebuilding policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our index rebuilding policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-13",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use the current observation alone to make each page prefetch decision."
+    },
+    "candidate": {
+      "contribution": "Make each page prefetch decision solely from the current observation."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published page prefetch method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published page prefetch method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-14",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use a fixed global threshold for tree traversal under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "For tree traversal, use one global, fixed threshold when workloads are uniform."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our tree traversal policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our tree traversal policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-15",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use the current observation alone to make each task placement decision."
+    },
+    "candidate": {
+      "contribution": "Make each task placement decision solely from the current observation."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published task placement method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published task placement method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-16",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use a fixed global threshold for index compaction under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "For index compaction, use one global, fixed threshold when workloads are uniform."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our index compaction policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our index compaction policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-17",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use the current observation alone to make each priority queues decision."
+    },
+    "candidate": {
+      "contribution": "Make each priority queues decision solely from the current observation."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "The published priority queues method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "novelty_passages": [
+          "The published priority queues method makes decisions only from the current observation. It stores no observations from preceding time windows."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  },
+  {
+    "id": "reserve-novelty-18",
+    "axis": "novelty",
+    "kind": "style",
+    "expected": "tie",
+    "original": {
+      "contribution": "Use a fixed global threshold for memory allocation under uniform workloads."
+    },
+    "candidate": {
+      "contribution": "For memory allocation, use one global, fixed threshold when workloads are uniform."
+    },
+    "evidence": [
+      {
+        "paper_id": "S001",
+        "title": "Supplied calibration reference",
+        "attribution_passages": [
+          "Our memory allocation policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "novelty_passages": [
+          "Our memory allocation policy uses a fixed global threshold under uniform workloads. The policy does not adapt to changes in workload groups."
+        ],
+        "dates": [
+          "2022"
+        ]
+      }
+    ],
+    "task": {
+      "title": "Controlled evaluation of a computational method",
+      "cutoff_date": "2024-01-01"
+    },
+    "provenance": "constructed from v1 evidence and comparison rules"
+  }
+]

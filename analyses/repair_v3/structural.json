@@ -1,0 +1,732 @@
+{
+  "summary": {
+    "direct": {
+      "n": 15,
+      "support_rate": 0.27666666666666667,
+      "support_rate_ci": [
+        0.15555555555555553,
+        0.40444444444444444
+      ],
+      "unverified_rate": 0.7233333333333333,
+      "unverified_rate_ci": [
+        0.5955555555555556,
+        0.8444444444444444
+      ],
+      "fabricated_rate": 0.0,
+      "fabricated_rate_ci": [
+        0.0,
+        0.0
+      ],
+      "coverage": 2.066666666666667,
+      "coverage_ci": [
+        1.8,
+        2.4
+      ],
+      "spec_completeness": 0.2866666666666667,
+      "spec_completeness_ci": [
+        0.2613333333333333,
+        0.3186666666666667
+      ],
+      "gap_survival": 0.5112,
+      "gap_survival_ci": [
+        0.3333333333333333,
+        0.6890666666666667
+      ],
+      "overclaim": 0.0,
+      "overclaim_ci": [
+        0.0,
+        0.0
+      ],
+      "max_smoothing": 2.0,
+      "max_smoothing_ci": [
+        2.0,
+        2.0
+      ],
+      "blocking": 2.6666666666666665,
+      "blocking_ci": [
+        2.4,
+        2.8666666666666667
+      ],
+      "joint_rate": 0.0,
+      "claims_total": 53
+    },
+    "ai_scientist": {
+      "n": 14,
+      "support_rate": 0.11547619047619048,
+      "support_rate_ci": [
+        0.028571428571428574,
+        0.22261904761904763
+      ],
+      "unverified_rate": 0.8845238095238095,
+      "unverified_rate_ci": [
+        0.7773809523809524,
+        0.9714285714285714
+      ],
+      "fabricated_rate": 0.0,
+      "fabricated_rate_ci": [
+        0.0,
+        0.0
+      ],
+      "coverage": 1.7142857142857142,
+      "coverage_ci": [
+        1.2857142857142858,
+        2.142857142857143
+      ],
+      "spec_completeness": 0.24857142857142858,
+      "spec_completeness_ci": [
+        0.21428571428571427,
+        0.28285714285714286
+      ],
+      "gap_survival": 0.5238571428571429,
+      "gap_survival_ci": [
+        0.3332857142857143,
+        0.6907142857142857
+      ],
+      "overclaim": 0.0,
+      "overclaim_ci": [
+        0.0,
+        0.0
+      ],
+      "max_smoothing": 2.0,
+      "max_smoothing_ci": [
+        2.0,
+        2.0
+      ],
+      "blocking": 2.9285714285714284,
+      "blocking_ci": [
+        2.642857142857143,
+        3.2142857142857144
+      ],
+      "joint_rate": 0.0,
+      "claims_total": 62
+    },
+    "edara": {
+      "n": 9,
+      "support_rate": 0.2074074074074074,
+      "support_rate_ci": [
+        0.07407407407407407,
+        0.3555555555555555
+      ],
+      "unverified_rate": 0.7925925925925925,
+      "unverified_rate_ci": [
+        0.6518518518518519,
+        0.925925925925926
+      ],
+      "fabricated_rate": 0.0,
+      "fabricated_rate_ci": [
+        0.0,
+        0.0
+      ],
+      "coverage": 1.8888888888888888,
+      "coverage_ci": [
+        1.4444444444444444,
+        2.3333333333333335
+      ],
+      "spec_completeness": 0.22666666666666668,
+      "spec_completeness_ci": [
+        0.17333333333333334,
+        0.28
+      ],
+      "gap_survival": 0.5926666666666667,
+      "gap_survival_ci": [
+        0.4073333333333334,
+        0.777888888888889
+      ],
+      "overclaim": 0.0,
+      "overclaim_ci": [
+        0.0,
+        0.0
+      ],
+      "max_smoothing": 2.0,
+      "max_smoothing_ci": [
+        2.0,
+        2.0
+      ],
+      "blocking": 3.111111111111111,
+      "blocking_ci": [
+        2.6666666666666665,
+        3.5555555555555554
+      ],
+      "joint_rate": 0.0,
+      "claims_total": 25
+    }
+  },
+  "documents": {
+    "ai_scientist": [
+      {
+        "task": "aiib-10541",
+        "claims": 5,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-33",
+        "claims": 3,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-4717",
+        "claims": 6,
+        "support_rate": 0.16666666666666666,
+        "unverified_rate": 0.8333333333333334,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-7144",
+        "claims": 5,
+        "support_rate": 0.2,
+        "unverified_rate": 0.8,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 3,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-82",
+        "claims": 4,
+        "support_rate": 0.25,
+        "unverified_rate": 0.75,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+        "claims": 6,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_002_unlearning_machine_language_use_algorithms__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.333,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_011_test_time_adaptation_active_tta_test__v02_expansion40",
+        "claims": 4,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.12,
+        "coverage": 1,
+        "blocking": 4,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_029_bottleneck_concept_concepts_information_cbms__v02_expansion40",
+        "claims": 4,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_040_critic_reinforcement_actor_critic_actor_continuo__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.6666666666666666,
+        "unverified_rate": 0.3333333333333333,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "survey_06_llm_safety_jailbreak",
+        "claims": 5,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 2,
+        "blocking": 2,
+        "gap_survival": 0.333,
+        "gate_pass": false,
+        "joint_compliant": false
+      },
+      {
+        "task": "survey_08_kv_cache_compression",
+        "claims": 3,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.12,
+        "coverage": 1,
+        "blocking": 4,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_02_agentic_ai",
+        "claims": 5,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 0.333,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_18_scientific_foundation_models",
+        "claims": 6,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      }
+    ],
+    "direct": [
+      {
+        "task": "aiib-10541",
+        "claims": 5,
+        "support_rate": 0.6,
+        "unverified_rate": 0.4,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.34,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-33",
+        "claims": 5,
+        "support_rate": 0.4,
+        "unverified_rate": 0.6,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-4717",
+        "claims": 5,
+        "support_rate": 0.4,
+        "unverified_rate": 0.6,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-7144",
+        "claims": 3,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.333,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-82",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+        "claims": 4,
+        "support_rate": 0.5,
+        "unverified_rate": 0.5,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_002_unlearning_machine_language_use_algorithms__v02_expansion40",
+        "claims": 4,
+        "support_rate": 0.75,
+        "unverified_rate": 0.25,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_011_test_time_adaptation_active_tta_test__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_029_bottleneck_concept_concepts_information_cbms__v02_expansion40",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 2,
+        "blocking": 2,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_040_critic_reinforcement_actor_critic_actor_continuo__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "survey_06_llm_safety_jailbreak",
+        "claims": 3,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": false,
+        "joint_compliant": false
+      },
+      {
+        "task": "survey_08_kv_cache_compression",
+        "claims": 3,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_02_agentic_ai",
+        "claims": 4,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_09_world_models_simulation",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 2,
+        "blocking": 2,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_18_scientific_foundation_models",
+        "claims": 4,
+        "support_rate": 0.5,
+        "unverified_rate": 0.5,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.333,
+        "gate_pass": true,
+        "joint_compliant": false
+      }
+    ],
+    "edara": [
+      {
+        "task": "aiib-10541",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-33",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.12,
+        "coverage": 1,
+        "blocking": 4,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-4717",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.12,
+        "coverage": 1,
+        "blocking": 4,
+        "gap_survival": 1.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-7144",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.36,
+        "coverage": 3,
+        "blocking": 2,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "aiib-82",
+        "claims": 5,
+        "support_rate": 0.2,
+        "unverified_rate": 0.8,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.333,
+        "gate_pass": false,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_002_unlearning_machine_language_use_algorithms__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.3333333333333333,
+        "unverified_rate": 0.6666666666666666,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 2,
+        "blocking": 3,
+        "gap_survival": 0.0,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "smallari_expansion40_029_bottleneck_concept_concepts_information_cbms__v02_expansion40",
+        "claims": 3,
+        "support_rate": 0.6666666666666666,
+        "unverified_rate": 0.3333333333333333,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.12,
+        "coverage": 2,
+        "blocking": 4,
+        "gap_survival": 0.333,
+        "gate_pass": true,
+        "joint_compliant": false
+      },
+      {
+        "task": "ws_02_agentic_ai",
+        "claims": 2,
+        "support_rate": 0.0,
+        "unverified_rate": 1.0,
+        "fabricated_rate": 0.0,
+        "overclaim": 0,
+        "max_smoothing": 2,
+        "spec_completeness": 0.24,
+        "coverage": 1,
+        "blocking": 3,
+        "gap_survival": 0.667,
+        "gate_pass": true,
+        "joint_compliant": false
+      }
+    ]
+  }
+}

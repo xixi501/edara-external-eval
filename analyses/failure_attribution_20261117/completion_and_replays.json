@@ -1,0 +1,156 @@
+{
+  "native_completion": [
+    {
+      "task_id": "aiib-82",
+      "database": "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/aiib82_arxiv_run/cases/aiib-82/topics/the-topic-of-this-paper-is-open-vocabula-b3161cec/research.db",
+      "recent_runs": [
+        {
+          "policy_run_id": "policy-ee8610d7c9e1abda",
+          "status": "paused_budget",
+          "error": "Insufficient reservation in topic"
+        }
+      ],
+      "plan_reviews": []
+    },
+    {
+      "task_id": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+      "database": "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40/topics/propose-one-concrete-next-step-research--5a8e02ac/research.db",
+      "recent_runs": [
+        {
+          "policy_run_id": "policy-fa3c01a1196b4d37",
+          "status": "inconclusive",
+          "error": null
+        },
+        {
+          "policy_run_id": "policy-4cb82f65ad9f440e",
+          "status": "dispatch_failed",
+          "error": "A source is outside explicit round carryover and consumed admission receipts: paper-live-051e5c2e1574"
+        }
+      ],
+      "plan_reviews": [
+        {
+          "version_id": "rv-2886577555c93902173c0984246463b86076950d4584e2e78a6a899da108f208",
+          "bundle_id": "rrb-179b2bef635a45ea5c7171b1b9ed413d",
+          "policy_version": "research-stage/light-plan-v1",
+          "required_reviewers": 1,
+          "rubric_protocol": "stage-rubrics/v2",
+          "attempt_status": "complete",
+          "nonpass": {
+            "requirement:rql-a2454332e20867b5a8eec39c": {
+              "artifact_refs": [
+                "packet:/target/payload/limitations",
+                "packet:/target/payload/limitations/8",
+                "packet:/target/payload/limitations/1"
+              ],
+              "evidence_ids": [],
+              "reason": "The atom search obligation for the LAVa robustness atom ev-b835d3994b4923361ffd6a01 is satisfied (search receipts exist; search_obligations status 'searched'), but the requirement also demands completion of independent source-check review and registration of that atom and resolution of the retained upstream PyramidKV 12% parity obligation before plan_to_execution. The supplied packet still shows the LAVa robustness atom under unreviewed source-check items and the plan itself lists these as unresolved limitations (f132, f125); neither the registration nor the parity resolution is evidenced in this packet, and the proposal limitation text has not yet been updated to a confirmed status.",
+              "required_changes": [
+                "Complete independent source-check review and registration of atom ev-b835d3994b4923361ffd6a01 using the existing search receipts, then update the proposal (rv-1344dc...) limitation text to the confirmed status.",
+                "Resolve or formally carry the retained upstream PyramidKV 12% parity obligation with a responsible version and deadline before the plan_to_execution gate."
+              ],
+              "verdict": "partial"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "ws_02_agentic_ai",
+      "database": "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/research.db",
+      "recent_runs": [
+        {
+          "policy_run_id": "policy-d8d8810948244299",
+          "status": "plan_reviewed",
+          "error": null
+        },
+        {
+          "policy_run_id": "policy-d9cde343c7b14946",
+          "status": "dispatch_failed",
+          "error": "A source is outside explicit round carryover and consumed admission receipts: paper-live-d540d1a9603a"
+        }
+      ],
+      "plan_reviews": [
+        {
+          "version_id": "rv-951a7df606b9f7f7d589f726d911ecd8198b70e04230a8d4e46c0e689ce24eff",
+          "bundle_id": "rrb-bbdcc8e57a53d5cefcbaf7dd07e71195",
+          "policy_version": "research-stage/light-plan-v1",
+          "required_reviewers": 1,
+          "rubric_protocol": "stage-rubrics/v2",
+          "attempt_status": "complete",
+          "nonpass": {}
+        }
+      ]
+    }
+  ],
+  "workshop_recovery": {
+    "log": "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws-budget-resume.log",
+    "status": "plan_reviewed",
+    "run_id": "policy-d8d8810948244299",
+    "validation_complete": true,
+    "delivery_path": "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/deliveries/research-progress-5a84df367b16bbbda5cbe2de25d27dd03a2b428d83567a18685348e428f9e342.json",
+    "delivery_status": "qualified_plan_available",
+    "qualified_plan_version_ids": [
+      "rv-951a7df606b9f7f7d589f726d911ecd8198b70e04230a8d4e46c0e689ce24eff"
+    ],
+    "snapshot_sha256": "5a84df367b16bbbda5cbe2de25d27dd03a2b428d83567a18685348e428f9e342"
+  },
+  "routing_replays": [
+    {
+      "task_id": "aiib-33",
+      "replay_matches_recorded_history": true,
+      "candidate_unchanged": true,
+      "blocking_spec_count": 3,
+      "search_query_count": 2,
+      "generator_calls": 0,
+      "model_calls": 0,
+      "note": "Search replay returns no additions, matching saved history; no HTTP request made."
+    },
+    {
+      "task_id": "ws_02_agentic_ai",
+      "replay_matches_recorded_history": true,
+      "candidate_unchanged": true,
+      "blocking_spec_count": 3,
+      "search_query_count": 2,
+      "generator_calls": 0,
+      "model_calls": 0,
+      "note": "Search replay returns no additions, matching saved history; no HTTP request made."
+    },
+    {
+      "task_id": "survey_06_llm_safety_jailbreak",
+      "replay_matches_recorded_history": true,
+      "candidate_unchanged": true,
+      "blocking_spec_count": 2,
+      "search_query_count": 2,
+      "generator_calls": 0,
+      "model_calls": 0,
+      "note": "Search replay returns no additions, matching saved history; no HTTP request made."
+    },
+    {
+      "task_id": "survey_08_kv_cache_compression",
+      "replay_matches_recorded_history": true,
+      "candidate_unchanged": true,
+      "blocking_spec_count": 4,
+      "search_query_count": 2,
+      "generator_calls": 0,
+      "model_calls": 0,
+      "note": "Search replay returns no additions, matching saved history; no HTTP request made."
+    }
+  ],
+  "input_hashes": {
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/analyses/failure_attribution_20261117/evidence.json": "b92b7b48868edee0d5458b4a5880528587eeae800cce54dec82ba7f49ee182bf",
+    "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/aiib82_arxiv_run/cases/aiib-82/topics/the-topic-of-this-paper-is-open-vocabula-b3161cec/research.db": "750048da18ded3f0d04d1b8bff3717fb59d8bcc44a53f27135808a42d756729b",
+    "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40/topics/propose-one-concrete-next-step-research--5a8e02ac/research.db": "364ffa5f2df5125d801be31ae9b25c91ca275f7d4493b7bfb48955a9f27ee3bc",
+    "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/research.db": "c59ffde31fa5b834d4c7063ff615f3afbade1f691ab4c5cef757f233676320b9",
+    "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws-budget-resume.log": "2c2cbe73f2dd3c6643f5b51856d35f65c3afb7309789979cc2f3a425769b7fb9",
+    "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/deliveries/research-progress-5a84df367b16bbbda5cbe2de25d27dd03a2b428d83567a18685348e428f9e342.json": "27a9b2a4bd8ac9c07bc95eba292738c43af44569d8f0865475f4717302d371e8",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/aiib-33/direct.json": "057051bfd0d9b24c7d0d6d6fdf6849a595a9ff3458ad9b242d55143406c84172",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/aiib-33/prepared.json": "48546626e6d9f09b55041b7128a21995af2d8c437b3d46ca967ba493c34a4505",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/ws_02_agentic_ai/direct.json": "24402e1d128c8b5a61cc66d47003c5136d0282b1e67e1497f43875baa9dcb615",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/ws_02_agentic_ai/prepared.json": "40863da735cd23235609decbdfdee51d7b7e4b6eacec146d3f6ea786620fdbb0",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/survey_06_llm_safety_jailbreak/direct.json": "81855f9f96053ed502a6d871f71b1e273f88035faa206048d80c8c27432586b9",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/survey_06_llm_safety_jailbreak/prepared.json": "3e4eafd0f8e86c92b6df74e072660cb14442fb5765eb3bfbffb657a12ae74a65",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/survey_08_kv_cache_compression/direct.json": "55c119594eb2ea0ffc4633cf7e8b83f20efa345e6d1f1324770fe609c8e328ad",
+    "/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/tasks/survey_08_kv_cache_compression/prepared.json": "25d23934fee2c6152437565d46651f4823424cf457a3fb3001d7294c905d5711"
+  },
+  "inputs_unchanged": true
+}

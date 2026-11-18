@@ -1,0 +1,2 @@
+[console_scripts]
+edara-mvp = edara_mvp_eval.cli:app

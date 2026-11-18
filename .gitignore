@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.log
+*.sqlite
+*.sqlite-*
+.env
+.env.*
+*.jsonl
+outputs/
+run_logs/
