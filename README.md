@@ -4,6 +4,13 @@
 
 > Evaluation harness and governance middleware for research-proposal agents. It audits a frozen proposal, applies bounded repairs, and measures the effect against an equally-budgeted conventional revision on the same source draft.
 
+## 从哪里开始
+
+1. [`ARCHITECTURE.md`](ARCHITECTURE.md)：数据流、模块职责、关键不变量。
+2. [`HANDOFF.md`](HANDOFF.md)：当前状态、结论、未决、运行手册、红线。
+3. [`docs/EVAL_PROTOCOL_V1_2_ZH.md`](docs/EVAL_PROTOCOL_V1_2_ZH.md)：判读规则。
+4. [`results/RESULTS_20261118_ZH.md`](results/RESULTS_20261118_ZH.md)：本轮结果与解读。
+
 ## 当前状态
 
 - 仪器版本：协议 v1.2（三次评委投票、配对差判定、混淆项审计与强制落实）。
@@ -34,6 +41,9 @@
 ## 目录
 
 ```
+ARCHITECTURE.md         架构说明（数据流、模块、不变量）
+HANDOFF.md              交接说明（现状、未决、运行手册）
+configs/                模型端点 profile（不含凭据）
 src/edara_mvp_eval/     外挂与评测实现
   confound_audit.py    假设特异性混淆项审计（v1.2 新增）
   paired_review.py     三轴盲评、机械归一化、多数票判定
@@ -83,6 +93,18 @@ python pilots/verify_paired_trial.py --run outputs/paired_<date> --cohort core
 ```
 
 凭据注入与日志脱敏参考 `pilots/run_logged.py`（仓库内为通用版本，实际部署路径按环境调整）。
+
+## 版本说明
+
+本仓库是交接用的**源代码基准（source of truth）**。它和实验服务器上的执行副本只有三处路径端口化差异，判读逻辑与试验结果不受影响：
+
+| 文件 | 差异 |
+|---|---|
+| `src/edara_mvp_eval/paired_trial.py` | `WORKSPACE` 支持 `EDARA_WORKSPACE`；协议可从 `docs/` 读取；无 `outputs/` 时放宽输出目录约束；`freeze` 自动复制 `data/` 中的冻结输入 |
+| `pilots/run_governance_pilot.py` | 不再假设固定的父目录层级 |
+| `tests/test_paired_trial.py` | 缺少原始宿主输出时改用 `data/` 中的冻结输入与校准案例 |
+
+模型端点配置从 `data/p1b-*.json` 复制到 `configs/`，不含任何凭据；API key 只从环境变量读取。
 
 ## 数据说明
 
