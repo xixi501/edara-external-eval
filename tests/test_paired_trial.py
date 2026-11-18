@@ -178,7 +178,7 @@ def test_frozen_cohorts_and_calibration_coverage():
     expected = {"pilot": (3, 9), "core": (15, 38), "extension": (25, 25)}
     for cohort, (topics, cases) in expected.items():
         frozen = ROOT / "data" / f"inputs_{cohort}.json"
-        # The handoff repository ships frozen inputs instead of the multi-GB host outputs.
+        # Standalone handoff repo ships frozen inputs under data/.
         records = json.loads(frozen.read_text(encoding="utf-8")) if frozen.exists() else prepare_inputs(ROOT, cohort)
         ready = [item for topic in records.values() for item in topic["originals"].values()
                  if item["status"] == "ready"]
@@ -187,7 +187,6 @@ def test_frozen_cohorts_and_calibration_coverage():
     try:
         cases = calibration_cases(ROOT)
     except FileNotFoundError:
-        # The Lit2Test checkout is an optional sibling; the frozen suite ships in data/.
         cases = json.loads((ROOT / "data" / "calibration_cases.json").read_text(encoding="utf-8"))
     assert len(cases) == 54
 

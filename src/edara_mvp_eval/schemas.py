@@ -239,6 +239,34 @@ class IntegrityGateResult(BaseModel):
     budget_feasible: bool = True
 
 
+class FactualFinding(BaseModel):
+    id: str
+    field: str
+    quote: str
+    claim_kind: Literal[
+        "prior_fact",
+        "numeric_or_benchmark",
+        "coverage_gap",
+        "result_or_process_status",
+        "internal_consistency",
+    ] = "prior_fact"
+    label: Literal["supported", "defect", "unknown"]
+    defect_type: Literal[
+        "none",
+        "attribution",
+        "numeric_mismatch",
+        "coverage_contradiction",
+        "prediction_as_observed",
+        "unattested_process",
+        "scope_overclaim",
+        "fabrication",
+        "internal_inconsistency",
+    ] = "none"
+    evidence: list[EvidenceQuote] = Field(default_factory=list)
+    basis: str = ""
+    reason: str = ""
+
+
 class FullAuditBundle(BaseModel):
     task_id: str
     arm: str
@@ -248,6 +276,8 @@ class FullAuditBundle(BaseModel):
     claimnov: ClaimNovAuditResult
     spec_audit: SpecAuditResult = Field(default_factory=SpecAuditResult)
     confound_audit: ConfoundAuditResult = Field(default_factory=ConfoundAuditResult)
+    factual_findings: list[FactualFinding] = Field(default_factory=list)
+    unverified_entities: list[dict[str, str]] = Field(default_factory=list)
     compositional: CompositionalRemainderResult = Field(default_factory=CompositionalRemainderResult)
     governance: IdeaGovernanceResult | None = None
     aib_scores: dict[str, Any] = Field(default_factory=dict)

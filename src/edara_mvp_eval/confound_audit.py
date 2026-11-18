@@ -77,7 +77,9 @@ def merge_confounds(spec: SpecAuditResult, result: ConfoundAuditResult) -> SpecA
     extra = confound_defects(result)
     if not extra:
         return spec
-    defects = (extra + spec.defects)[:4]
+    combined = extra + list(spec.defects)
+    combined.sort(key=lambda d: (0 if d.severity == "blocking" else 1, 0 if d.category == "confound_control" else 1))
+    defects = combined[:4]
     blocking = sum(1 for d in defects if d.severity == "blocking")
     recommended = len(defects) - blocking
     completeness = max(0.0, round(1.0 - 0.22 * blocking - 0.10 * recommended, 3))

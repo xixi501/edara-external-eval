@@ -13,6 +13,7 @@ from typing import Any, Callable
 
 from .epistemic_audit import run_full_audit
 from .governance import evidence_payload
+from .host_adapter import preserves_design_elements
 from .middleware import TrustworthyNoveltyMiddleware, append_spec_clarifications
 
 GeneratorCallback = Callable[[dict[str, Any]], dict[str, Any]]
@@ -24,6 +25,8 @@ class PolicyState:
     patched: bool = False
     clarified: bool = False
     searched: bool = False
+    revised: bool = False
+    needs_post_search_revision: bool = False
 
 
 def _governance(bundle):
@@ -33,8 +36,12 @@ def _governance(bundle):
 def _has_overclaim(bundle) -> bool:
     tri = getattr(bundle, "tri_state", None)
     gap = getattr(bundle, "gap_audit", None)
-    return bool(getattr(tri, "epistemic_overclaim_count", 0)) or bool(
-        getattr(gap, "any_falsified", False))
+    factual = getattr(bundle, "factual_findings", None) or ()
+    return (
+        bool(getattr(tri, "epistemic_overclaim_count", 0))
+        or bool(getattr(gap, "any_falsified", False))
+        or any(getattr(item, "label", "") == "defect" for item in factual)
+    )
 
 
 def _blocking_defects(bundle) -> int:
@@ -42,17 +49,68 @@ def _blocking_defects(bundle) -> int:
     return int(getattr(spec, "blocking_count", 0) or 0)
 
 
-def eligible_actions(bundle, state: PolicyState | None = None) -> list[tuple[str, str]]:
-    """Ordered (action, reason) pairs. Cheap, grounded, bounded actions come first."""
+def _should_regenerate(bundle, state: PolicyState) -> bool:
+    governance = _governance(bundle)
+    if governance and governance.action == "regenerate":
+        return True
+    claimnov = getattr(bundle, "claimnov", None)
+    if getattr(claimnov, "veto", False):
+        claims = getattr(governance, "claims", ()) if governance else ()
+        if not any(getattr(c, "status", "") == "distinct_hypothesis" for c in claims):
+            return not (governance and governance.action == "correct_attribution")
+    gap = getattr(bundle, "gap_audit", None)
+    return bool((state.patched or state.revised) and getattr(gap, "any_falsified", False))
+
+
+def _needs_guided_revise(bundle, state: PolicyState) -> bool:
+    if state.revised:
+        return False
+    if state.needs_post_search_revision:
+        return True
+    confound = getattr(bundle, "confound_audit", None)
+    if getattr(confound, "priority", "none") in {"blocking", "recommended"}:
+        return True
+    if _blocking_defects(bundle) or _has_overclaim(bundle) or getattr(bundle, "unverified_entities", ()):
+        return True
+    governance = _governance(bundle)
+    return bool(governance and governance.action == "correct_attribution")
+
+
+def eligible_actions(
+    bundle,
+    state: PolicyState | None = None,
+    *,
+    allow_guided_revise: bool = False,
+) -> list[tuple[str, str]]:
+    """Ordered (action, reason) pairs. Multi-round arms may run governed guided_revise."""
     state = state or PolicyState()
     governance = _governance(bundle)
     actions: list[tuple[str, str]] = []
+    if allow_guided_revise:
+        if state.needs_post_search_revision:
+            actions.append(("guided_revise", "incorporate_retrieved_evidence"))
+        if not state.regenerated and _should_regenerate(bundle, state):
+            actions.append(("regenerate", "core_covered_by_prior_work"))
+        if not state.revised and _needs_guided_revise(bundle, state):
+            actions.append(("guided_revise", "governed_multifield_revision"))
+        if (not state.searched and governance and governance.action == "seek_evidence"
+                and getattr(governance, "defect", "none") != "localization"):
+            actions.append(("seek_evidence", "novelty_evidence_missing"))
+        if not state.patched and (_has_overclaim(bundle)
+                                  or (governance and governance.action == "correct_attribution")):
+            actions.append(("local_patch", "remaining_grounded_defect"))
+        if not state.clarified and _blocking_defects(bundle):
+            actions.append(("clarify", "remaining_blocking_spec_defect"))
+        if not actions:
+            actions.append(("retain_and_test", "no_eligible_defect"))
+        return actions
+
     if not state.patched and (_has_overclaim(bundle)
                               or (governance and governance.action == "correct_attribution")):
         actions.append(("local_patch", "grounded_attribution_or_overclaim"))
     if not state.clarified and _blocking_defects(bundle):
         actions.append(("clarify", "blocking_spec_defect"))
-    if not state.regenerated and governance and governance.action == "regenerate":
+    if not state.regenerated and _should_regenerate(bundle, state):
         actions.append(("regenerate", "core_covered_by_prior_work"))
     if (not state.searched and governance and governance.action == "seek_evidence"
             and getattr(governance, "defect", "none") != "localization"):
@@ -157,12 +215,18 @@ class FeedbackMiddleware:
                 json.dumps({"topic": task.title, "action": action, "original": current,
                             "candidate": revised, "old_contribution": diagnostic.get("governance")}),
                 tag="feedback_candidate_check", max_tokens=900)
-            accepted = (comparison.get("aligned") is True and comparison.get("preserves") is True
+            preserved, regressions = preserves_design_elements(
+                current, revised, before_bundle=bundle, after_bundle=audited,
+            )
+            accepted = (preserved
+                        and comparison.get("aligned") is True and comparison.get("preserves") is True
                         and comparison.get("material_change") is True
                         and not audited.tri_state.citation_fabrication_detected
                         and not (audited.governance and audited.governance.action == "regenerate"))
             history.append({**record, "candidate": revised, "audit": audited.model_dump(),
-                            "comparison": comparison, "status": "accepted" if accepted else "returned"})
+                            "comparison": comparison, "design_regressions": regressions,
+                            "status": "accepted" if accepted else (
+                                "design_regression_blocked" if not preserved else "returned")})
             if accepted:
                 current, bundle = revised, audited
 

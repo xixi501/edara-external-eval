@@ -1,0 +1,79 @@
+{
+  "protocol_version": "1.2",
+  "protocol_sha256": "467bfd81b0aade75fe648b7463f00d533a93f8f93ab6d90613f6cf086ba9af91",
+  "code": {
+    "__init__.py": "2d53ac1fc72b6a3411dce31e3fe2f7568b22f753fd85794f8681b1d23d7973ca",
+    "artifact_export.py": "5f4c54703e63207c394879030a5ecb6e6c99367d15adf16fade1e62c8579208f",
+    "baselines.py": "5a5ae804f65072dcf72ebbaf26e3a650ca6fb7c52522e1c412cf61959513d561",
+    "canonical_render.py": "e24fb25ce25402ac6bbf86a5e67204467282f699ae30cd04473119f537da041e",
+    "claimnov_adapter.py": "574f870d34522b625cb533f1c77795af0f2ae3255559db7d44ba48ec6391850c",
+    "cli.py": "e875c674ced048045bd523e9cb61e7da660ed282a4822279b9760a9ae20a079c",
+    "confound_audit.py": "2af69c48e93b30e1d92e9cba369d99433d98782574de7a39f533f1b710e8256f",
+    "epistemic_audit.py": "3ee7f437c31e192c03dc0a9c1b82769d033e27461fa9261ed361d7b28f092849",
+    "factual_audit.py": "0e3b435e920567bdcdf0ea8043a992caac9a7402214b4b802f073ae29a33ad83",
+    "feedback.py": "6f5299572922080b91920fcff75ece1d54b601115a7bcded1a13b2f273e5020c",
+    "governance.py": "96f6910df6ed40b0c85dd9e91b1c5c0927c74e4113c6ba7af9a367b7f5bb5d97",
+    "host_adapter.py": "df957fc584de6d3c9b4b77e0b09d4a4456201b37944886a7f715de4f125df54c",
+    "literature_scout.py": "4e9fa3387d90e686af621f5f2dc799d5794f309e33a13163744d848ac34f0ab2",
+    "llm_client.py": "39f1c30ba650270ed8c9219d22bb2a7c3bf1326746cdecc0de6e51f4ab611d84",
+    "middleware.py": "4ba96b8422e1a0d29b3c0a7b4bd6754f456d507542c8dbf1bf4b25b455df7fd1",
+    "paired_calibration.py": "4ab8728506847ae6e33079e1d50cd0261bd138acd0745ade88bfbdfac2b04c1a",
+    "paired_inputs.py": "fddf291b9b89dc776a9600210e7200cdfce8ca9f0ce05989ed5fa61b0cbc0503",
+    "paired_review.py": "161bf8789e312b1b2c26d2204c7a565ba06524c08bbb24b9ecb044d82e7058e4",
+    "paired_trial.py": "c595b9ca019fee56bc4c0485fa9a3d6f1e5399fabd9ee7f060a1f4d16c31ecb9",
+    "pairwise.py": "bc813342d3e60018abdd003e621e5c335c2bf394ca64dae4c8102106547b60de",
+    "reeval.py": "d3103287d96c710d89438a7f08bdee8664c2c1a831ec41c8da9a9a4de2bd7790",
+    "schemas.py": "eaf4a5e27c5c0afcb97ef5008c0a85aaa75d98d5628c327d78c7fa3f7b2a87ca",
+    "spec_locator.py": "5cc2c81ae943e9634c3c9b0b59e5c74926b5cc04516720babb3b95bd9f1990f9",
+    "stage_b.py": "01f11749c6f9600c95bf413c75c84286c1731bb242bb137cffa61d11948d3dea",
+    "stage_b_evidence.py": "6f41c15fb70415d67c2f0c439acfafef0f6c89a10845c4b40833c1cf1bfdb81f",
+    "stage_b_meter.py": "fa0a6077d468e699cc98bc6d48e4b4effaa2601bc039d1893802f64c8f5f4a39",
+    "stage_b_review.py": "0051b671a4470fe007a04e5ca3e1347beed1b6c6d0ccff716ba5346f6c986bdd",
+    "tasks_loader.py": "bb8cfbb9a76f27aed838b2f39d1902269abf7297ca58d0abae7e71be69592129",
+    "unified_eval.py": "c15aec7ab83ddf36db2df2df10c4f6c0ae2f87ba126e7a2412983d5bbe4acf98"
+  },
+  "profiles": {
+    "editor": "d9341e0a6ee62867ef57c42b81f99967a4978b7d65a08620275f24ebfdbb28d3",
+    "audit": "09b6e46dae4b3eeb3ffa96178d49a2aedcede6b94c5089daf1c215e1bd12a8fa",
+    "judge": "09b6e46dae4b3eeb3ffa96178d49a2aedcede6b94c5089daf1c215e1bd12a8fa"
+  },
+  "models": {
+    "editor": "deepseek-flash",
+    "audit": "GLM-5.3-flash",
+    "judge": "GLM-5.3-flash"
+  },
+  "arms": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "limits": {
+    "local": {
+      "audit": 64,
+      "editor": 1,
+      "queries": 0,
+      "rounds": 1
+    },
+    "full": {
+      "audit": 128,
+      "editor": 4,
+      "queries": 2,
+      "rounds": 3
+    }
+  },
+  "output_tokens": 4096,
+  "calibration_set": "original",
+  "editor_parameters": {
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "audit_parameters": {
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "eval_mode": "unified"
+}

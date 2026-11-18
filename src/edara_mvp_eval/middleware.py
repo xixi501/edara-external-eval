@@ -12,6 +12,8 @@ from typing import Any
 from pydantic import ValidationError
 
 from .epistemic_audit import run_full_audit
+from .factual_audit import clean_replacement_text
+from .host_adapter import preserves_design_elements
 from .literature_scout import gather_evidence_for_query, make_counterexample_query
 from .llm_client import LLMRunner
 from .schemas import (
@@ -114,6 +116,7 @@ def _needs_intervention(bundle: FullAuditBundle) -> bool:
         and bundle.tri_state.max_smoothing_score <= 2
         and bundle.gap_audit.survival_rate >= 1.0
         and not bundle.compositional.attribution_requirements
+        and not any(f.label == "defect" for f in getattr(bundle, "factual_findings", ()))
     )
 
 
@@ -183,7 +186,7 @@ def apply_bounded_patches(
             continue
         cur_val = str(getattr(updated, patch.target_field) or "")
         span = patch.exact_source_span
-        rep = (patch.replacement_text or "").strip()
+        rep = clean_replacement_text((patch.replacement_text or "").strip())
         if not rep:
             rejected += 1
             continue
@@ -339,9 +342,11 @@ def compute_retention_metrics(
 
 
 def _bundle_rank_key(bundle: FullAuditBundle) -> tuple:
+    factual_defects = sum(1 for f in getattr(bundle, "factual_findings", ()) if f.label == "defect")
     return (
         1 if bundle.gate.gate_pass else 0,
         1 if bundle.gate.strict_gate_pass else 0,
+        -factual_defects,
         -len(bundle.gate.hard_fail_reasons),
         1 if bundle.gap_audit.survival_rate >= 1.0 else 0,
         -bundle.spec_audit.blocking_count,
@@ -403,13 +408,36 @@ class TrustworthyNoveltyMiddleware:
         return ref_items
 
     def _build_diag(self, bundle: FullAuditBundle) -> dict[str, Any]:
-        return {
-            "design_confounds": bundle.confound_audit.model_dump(),
+        defect_prio = {
+            "fabrication": 0,
+            "prediction_as_observed": 1,
+            "internal_inconsistency": 2,
+            "numeric_mismatch": 3,
+            "coverage_contradiction": 4,
+            "attribution": 5,
+            "scope_overclaim": 6,
+            "unattested_process": 7,
+        }
+        factual = [
+            f.model_dump()
+            for f in sorted(
+                (item for item in getattr(bundle, "factual_findings", ()) if item.label == "defect"),
+                key=lambda row: (
+                    defect_prio.get(getattr(row, "defect_type", "none"), 8),
+                    0 if (row.evidence or row.basis) else 1,
+                ),
+            )
+        ]
+        unverified = list(getattr(bundle, "unverified_entities", ()) or ())
+        rest = {
             "gate_failures": bundle.gate.hard_fail_reasons,
+            **({"unverified_external_entities": unverified} if unverified else {}),
             "smoothed_or_overclaimed_facts": [
                 a.model_dump()
                 for a in bundle.tri_state.prior_fact_audits
-                if a.smoothing_score >= 3 or a.epistemic_overclaim or a.citation_status == "fabricated_or_missing"
+                if a.smoothing_score >= 3
+                or a.epistemic_overclaim
+                or a.citation_status in {"fabricated_or_missing", "unverified"}
             ],
             "gap_findings": [g.model_dump() for g in bundle.gap_audit.items if g.status != "survived"],
             "spec_defects": [
@@ -420,6 +448,10 @@ class TrustworthyNoveltyMiddleware:
             "claimnov_veto": bundle.claimnov.veto,
             "claimnov_evidence": bundle.claimnov.veto_evidence,
         }
+        confounds = bundle.confound_audit.model_dump()
+        if bundle.confound_audit.priority == "blocking":
+            return {"design_confounds": confounds, **({"factual_findings": factual} if factual else {}), **rest}
+        return {**({"factual_findings": factual} if factual else {}), "design_confounds": confounds, **rest}
 
     def _enforce_confounds(self, diag: dict, payload: dict, user: str, runner: LLMRunner) -> dict:
         """One targeted retry when the editor ignores a blocking design confound."""
@@ -556,10 +588,17 @@ class TrustworthyNoveltyMiddleware:
             )
             current_proposal = candidate_bundle.proposal
             current_bundle = candidate_bundle
-            accepted = _bundle_rank_key(candidate_bundle) >= _bundle_rank_key(best_bundle)
+            preserved, regressions = preserves_design_elements(
+                best_proposal,
+                patched_prop,
+                before_bundle=best_bundle,
+                after_bundle=candidate_bundle,
+            )
+            accepted = preserved and _bundle_rank_key(candidate_bundle) >= _bundle_rank_key(best_bundle)
             if history is not None:
                 history.append({"round": round_idx, "action": "local_patch", "status": "accepted" if accepted else "returned",
                                 "diagnostics": diag, "patch": patch_payload, "confound_enforcement": enforcement,
+                                "design_regressions": regressions,
                                 "candidate": patched_prop.model_dump(), "audit": candidate_bundle.model_dump()})
             if accepted:
                 best_bundle = candidate_bundle

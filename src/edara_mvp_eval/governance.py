@@ -8,6 +8,7 @@ from typing import Any, Protocol
 
 from pydantic import BaseModel, Field, ValidationError
 
+from .host_adapter import as_draft_dict, filter_proposal_fields
 from .schemas import ClaimNovAuditResult, ContributionFinding, IdeaGovernanceResult, PriorWorkItem, TaskSpec
 
 _SYSTEM = """Audit the contribution claims of ONE research idea using only the supplied dated evidence.
@@ -38,7 +39,7 @@ proposal_span (verbatim from draft), evidence (array of {paper_id, quote}, quote
 rationale (brief reason), and already_credited (boolean).
 Always account for the draft's core contribution(s), including when none can be resolved."""
 
-_MAX_PASSAGE = 2200
+_MAX_PASSAGE = 3600
 
 
 class AuditModel(Protocol):
@@ -90,7 +91,10 @@ def evidence_payload(task: TaskSpec, prior_work: list[PriorWorkItem] | None = No
     for paper in task.prior_work if prior_work is None else prior_work:
         if not admissible(task, paper):
             continue
-        passages = "\n".join(p for p in (paper.fulltext_snippet, paper.abstract) if p.strip())
+        passages = "\n".join(
+            p for p in (paper.fulltext_snippet, paper.abstract, paper.important_result, paper.key_contribution)
+            if p and p.strip()
+        )
         if passages:
             result.append({
                 "paper_id": paper.id, "title": paper.title,
@@ -134,7 +138,11 @@ def audit_idea(
     evidence = evidence_payload(task, prior_work)
     if not evidence:
         return IdeaGovernanceResult(action="seek_evidence", unresolved_reason="no_pre_cutoff_evidence", defect="evidence")
-    text = draft if isinstance(draft, str) else json.dumps(draft, ensure_ascii=False, indent=2)
+    if isinstance(draft, dict):
+        clean = filter_proposal_fields(draft)
+        text = json.dumps(clean or draft, ensure_ascii=False, indent=2)
+    else:
+        text = draft
     hints = [
         {"claim": item.get("claim"), "paper_ids": [match["paper_id"] for match in item.get("top_matches", [])
                                                  if match.get("paper_id")]}

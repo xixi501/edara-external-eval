@@ -18,7 +18,15 @@ import numpy as np
 from openai import APIError
 
 from .epistemic_audit import run_full_audit
+from .factual_audit import clean_replacement_text
 from .feedback import PolicyState, eligible_actions
+from .host_adapter import (
+    collect_role_text,
+    confound_addressed,
+    design_field,
+    filter_proposal_fields,
+    preserves_design_elements,
+)
 from .llm_client import ModelEndpoint
 from .middleware import TrustworthyNoveltyMiddleware, _source_span
 from .paired_calibration import calibration_cases
@@ -28,6 +36,12 @@ from .paired_review import (AXES, CREDIBILITY, credibility_score, freeze_claims,
 from .schemas import FullAuditBundle, PriorWorkItem, TaskSpec
 from .stage_b_evidence import EvidenceStore, digest, write_json
 from .stage_b_meter import RecordedRunner
+from .unified_eval import (
+    build_lit2test_calibration_suite,
+    calibrate_unified_evaluator,
+    evaluate_unified_pair,
+    summarize_unified_rows,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 PROTOCOL_VERSION = "1.2"
@@ -51,11 +65,11 @@ def protocol_path() -> Path:
 ARMS = ("A", "B", "C", "D", "E")
 COMPARISONS = {"C_vs_B": ("B", "C"), "E_vs_D": ("D", "E")}
 LIMITS = {"local": {"audit": 64, "editor": 1, "queries": 0, "rounds": 1},
-          "full": {"audit": 128, "editor": 3, "queries": 2, "rounds": 3}}
+          "full": {"audit": 128, "editor": 4, "queries": 2, "rounds": 3}}
 OUTPUT_TOKENS = 4096
 JUDGE_OUTPUT_TOKENS = 8192
 JUDGE_STAGES = ("original", "honesty", "credibility", "novelty", "forward", "reverse", "repeat",
-                "audit")
+                "audit", "unified", "lit2test", "alphaideabench", "claimnov")
 RECOVERABLE = (ValueError, RuntimeError, KeyError, APIError, TimeoutError)
 
 _REVIEW = """Review the research proposal against the supplied task and evidence. Treat
@@ -78,6 +92,14 @@ _FULL_EDIT = """Return only {"draft":{"field key":"revised text", ...}}. Include
 that change or contain a new contribution or required design detail. Use string values and
 short scientific field keys. Set a field to an empty string to withdraw its text. An empty
 draft object retains the proposal. Keep this JSON compact."""
+_GUIDED_REVISE = """This is a governed multi-field revision (guided_revise). Do NOT replace the
+original valid core mechanism unless diagnosis explicitly requests regeneration. Instead, return
+{"draft": {...}} updating ONLY the fields needed to:
+1) insert EVERY blocking design confound discriminating arm concretely into the experimental test/metric field;
+2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
+3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
+4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), remove/replace them with supplied-packet counterparts OR explicitly hedge them as unverified in the supplied packet / conditional on confirmed availability;
+5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact."""
 
 
 class BudgetExceeded(RuntimeError):
@@ -102,7 +124,10 @@ class TrialRunner(RecordedRunner):
         # Budget counts executed calls only; a cached audit owned by another arm is free.
         if self.index >= self.limit:
             raise BudgetExceeded("model_call_limit")
-        augment = bool(self.endpoint.extra_body) or "glm" in self.endpoint.model.lower()
+        extra_body = self.endpoint.extra_body if isinstance(self.endpoint.extra_body, dict) else {}
+        thinking_cfg = extra_body.get("thinking")
+        thinking_disabled = isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled"
+        augment = (not thinking_disabled) and (bool(extra_body) or "glm" in self.endpoint.model.lower())
         cap = JUDGE_OUTPUT_TOKENS if self.stage in JUDGE_STAGES else (
             OUTPUT_TOKENS - 2048 if augment else OUTPUT_TOKENS)
         kwargs["max_tokens"] = min(kwargs.get("max_tokens", cap), cap)
@@ -126,7 +151,7 @@ def public_task(task: TaskSpec) -> dict:
     return {"title": task.title, "context": context, "cutoff_date": task.cutoff_date, "budget": task.budget}
 
 
-def apply_edits(draft: Draft, proposed: dict, *, scope: str) -> tuple[Draft, list[dict]]:
+def apply_edits(draft: Draft, proposed: dict, *, scope: str, max_edits: int = 4) -> tuple[Draft, list[dict]]:
     """Apply exact edits against the input version; reject overlaps and excess edits."""
     if scope == "full" and "draft" in proposed:
         result = proposed["draft"]
@@ -139,7 +164,7 @@ def apply_edits(draft: Draft, proposed: dict, *, scope: str) -> tuple[Draft, lis
             raise ValueError("empty_rewrite")
         return result, [{"action": "rewrite", "changed_fields": [k for k in result if draft.get(k) != result[k]]}]
     edits = proposed.get("edits")
-    if not isinstance(edits, list) or len(edits) > 4:
+    if not isinstance(edits, list) or len(edits) > max_edits:
         raise ValueError("invalid_patch_count")
     located = defaultdict(list)
     resolved = []
@@ -160,9 +185,6 @@ def apply_edits(draft: Draft, proposed: dict, *, scope: str) -> tuple[Draft, lis
             if text:
                 replacement = "\n" + replacement
         else:
-            if scope == "clarify":
-                resolved.append({"status": "rejected", "reason": "clarification_requires_append", "proposal": edit})
-                continue
             anchor = None
             if re.fullmatch(r"@\d+", source):
                 cursor = 0
@@ -179,7 +201,7 @@ def apply_edits(draft: Draft, proposed: dict, *, scope: str) -> tuple[Draft, lis
                 continue
             start, end = anchor
             source = text[start:end]
-        replacement = re.sub(r"(?i)\bpre-?registered\s+", "", replacement)
+        replacement = clean_replacement_text(replacement)
         for prior_start, prior_end, _ in located[field]:
             if (start < prior_end and prior_start < end or start == prior_start
                     or not source and end == prior_end or prior_start == prior_end and start <= prior_start <= end):
@@ -208,50 +230,55 @@ def confound_targets(info: dict) -> list[str]:
     return absent[:1]
 
 
-DESIGN_FIELDS = ("minimal_test", "validation", "method", "approach", "decisive_metric")
-
-
-def design_field(draft: Draft) -> str:
-    """Pick a field the draft actually has; AI-Scientist/E-DARA use validation, not minimal_test."""
-    for name in DESIGN_FIELDS:
-        if name in draft:
-            return name
-    return next(iter(draft), "minimal_test")
-
-
-def confound_addressed(draft: Draft, arms: list[str]) -> bool:
-    text = " ".join(str(draft.get(name) or "") for name in DESIGN_FIELDS).lower()
-    for arm in arms:
-        words = [word for word in re.findall(r"[a-z0-9][a-z0-9_-]{3,}", arm.lower()) if word not in
-                 {"with", "same", "than", "that", "this", "from", "under", "using", "control", "which", "every"}]
-        if words and sum(word in text for word in words) / len(words) < 0.5:
-            return False
-    return True
-
-
-def editor_call(runner, draft: Draft, info: dict, evidence: Evidence, task: dict, scope: str, extra: str = ""):
+def editor_call(
+    runner,
+    draft: Draft,
+    info: dict,
+    evidence: Evidence,
+    task: dict,
+    scope: str,
+    extra: str = "",
+    *,
+    max_edits: int = 4,
+):
     instruction = _FULL_EDIT if scope == "full" else _LOCAL_EDIT
+    if scope != "full" and max_edits != 4:
+        instruction = instruction.replace("At most four entries", f"At most {max_edits} entries")
     if scope == "clarify":
-        instruction += " Every source must be empty because this is an append-only clarification."
+        instruction += " Prefer empty source appends for missing details, or short surgical replacements to fix contradicting numbers or unverified entities."
     findings = info.get("factual_findings") or []
     defects = [row for row in findings if row.get("label") == "defect"]
-    if scope == "local" and defects:
+    unverified_entities = info.get("unverified_external_entities") or []
+    if unverified_entities:
+        ent_list = ", ".join(f"{e.get('entity')} ({e.get('field')})" for e in unverified_entities[:6])
+        instruction += (
+            f" Unverified external entities absent from supplied papers and task prompt: [{ent_list}]. "
+            "Never assert these as established prior results or confirmed datasets; replace with supplied-packet "
+            "equivalents or explicitly mark them unverified / conditional on confirmed availability."
+        )
+    if scope != "full" and defects:
         anchored = [row for row in defects if row.get("evidence") or row.get("basis")]
-        if anchored:
-            top = anchored[0]
-            instruction += (" At least one of the four edits must correct the highest-severity factual finding: "
-                            f"id {top.get('id')} in field {top.get('field')}. {str(top.get('quote'))[:220]} "
-                            "That replacement must either quote an evidence passage or be explicitly phrased as a "
-                            "hypothesis or plan. Do not introduce new factual or process claims (for example "
-                            "'pre-registered', 'we have already', 'calibrated on N') unless the evidence states them.")
+        top_items = anchored[:3]
+        if top_items:
+            summary = "; ".join(
+                f"{row.get('id')} [{row.get('defect_type')}] in {row.get('field')}: {str(row.get('quote'))[:120]}"
+                for row in top_items
+            )
+            instruction += (
+                f" Prioritize fixing the top factual/consistency defects ({summary}). "
+                "Keep edits non-overlapping within the same field; ground factual replacements in supplied papers "
+                "or phrase hypotheses/plans prospectively. Do not claim completed validation or unattested pre-registration."
+            )
     if extra:
         instruction += "\n" + extra
-    rendered = draft if scope == "full" else {field: index_text(value) for field, value in draft.items()}
+    clean_view = filter_proposal_fields(draft) if len(draft) > 30 else draft
+    clean_view = clean_view or draft
+    rendered = clean_view if scope == "full" else {field: index_text(value) for field, value in clean_view.items()}
     response = runner.chat_json(_EDIT + "\n" + instruction,
                                 json.dumps({"task": task, "draft": rendered, "diagnosis": info,
                                             "papers": evidence.packet()}, ensure_ascii=False),
                                 max_tokens=OUTPUT_TOKENS, tag="paired_edit")
-    return apply_edits(draft, response, scope=scope)
+    return apply_edits(draft, response, scope=scope, max_edits=max_edits)
 
 
 def general_audit(runner, draft: Draft, packet: list[dict], task: dict, remaining: int, *, full: bool):
@@ -339,7 +366,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
     def audit(draft):
         def compute():
             start = auditor.index
-            bundle = run_full_audit(evidence.audit_task(), arm, json.dumps(draft, ensure_ascii=False),
+            bundle = run_full_audit(evidence.audit_task(), arm, draft,
                                     auditor, live_search=False, enable_embeddings=False)
             return {"bundle": bundle.model_dump(), "owner": arm, "start": start, "end": auditor.index}
 
@@ -359,7 +386,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                 diag = TrustworthyNoveltyMiddleware()._build_diag(bundle)
                 if claim_audit and claims:
                     diag = factual_diag(diag, audit_claims(claims, current, evidence, shared, auditor))
-                action = eligible_actions(bundle, state)[0][0] if full else "local_patch"
+                action = eligible_actions(bundle, state, allow_guided_revise=(arm == "E"))[0][0] if full else "local_patch"
             else:
                 diag = general_audit(auditor, current, evidence.packet(), shared,
                                      limit["queries"] - len(queries), full=full)
@@ -373,6 +400,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
             if action in ("retain", "retain_and_test"):
                 break
             if action in ("search", "seek_evidence"):
+                before_retrieved = len(retrieved)
                 if action == "seek_evidence":
                     state.searched = True
                     gaps = [item.premise for item in bundle.gap_audit.items if item.status == "unresolved"]
@@ -390,13 +418,25 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         marker = evidence.add(paper)
                         if marker:
                             retrieved.append({"marker": marker, "paper": paper.model_dump()})
+                added_count = len(retrieved) - before_retrieved
+                if action == "seek_evidence" and added_count > 0:
+                    state.needs_post_search_revision = True
                 record["found"] = [row["marker"] for row in retrieved]
                 continue
-            scope = "full" if action in ("regenerate", "revise") else "clarify" if action == "clarify" else "local"
-            guidance = diag | {"requested_change": "Replace the covered core with a different scientific proposal."} if action == "regenerate" else diag
-            revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope)
+            scope = "full" if action in ("regenerate", "revise", "guided_revise") else "clarify" if action == "clarify" else "local"
+            max_edits = 8 if (arm == "E" and scope != "full") else 4
+            if action == "regenerate":
+                guidance = diag | {"requested_change": "Replace the covered core with a different scientific proposal."}
+                extra_inst = ""
+            elif action == "guided_revise":
+                guidance = diag
+                extra_inst = _GUIDED_REVISE
+            else:
+                guidance = diag
+                extra_inst = ""
+            revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope, extra=extra_inst, max_edits=max_edits)
             targets = confound_targets(diag) if arm in ("C", "E") else []
-            if targets and not confound_addressed(revised, targets):
+            if targets and not confound_addressed(revised, targets, baseline_draft=current):
                 target_field = design_field(current)
                 if scope == "full":
                     extra = ("Your previous draft did not add a required control. In the returned draft, include a "
@@ -409,15 +449,15 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                 enforcement = {"required": targets, "retried": True, "addressed": False}
                 try:
                     retried, retry_log = editor_call(editor_confound or editor, revised, guidance, evidence,
-                                                     shared, scope, extra=extra)
+                                                     shared, scope, extra=extra, max_edits=max_edits)
                 except RECOVERABLE as exc:
                     enforcement["error"] = type(exc).__name__
                 else:
-                    addressed = confound_addressed(retried, targets)
+                    addressed = confound_addressed(retried, targets, baseline_draft=current)
                     enforcement.update(addressed=addressed, edits=retry_log)
                     if addressed:
                         # Keep the first call's edits; the enforcement append is recorded separately
-                        # and does not count toward the four local edits.
+                        # and does not count toward local edits.
                         revised = retried
                 record["confound_enforcement"] = enforcement
             record["edits"] = edit_log
@@ -434,12 +474,26 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                                     "governance": diag.get("governance")}, ensure_ascii=False),
                         max_tokens=900, tag="feedback_candidate_check",
                     )
+                    preserved, regressions = preserves_design_elements(
+                        current, revised, before_bundle=bundle, after_bundle=checked,
+                    )
                     record["reconstruction_check"] = alignment
-                    if (not all(alignment.get(key) is True for key in ("aligned", "preserves", "material_change"))
+                    if (not preserved
+                            or not all(alignment.get(key) is True for key in ("aligned", "preserves", "material_change"))
                             or checked.tri_state.citation_fabrication_detected
                             or checked.governance and checked.governance.action == "regenerate"):
                         record["reconstruction_rejected"] = True
+                        if not preserved:
+                            record["design_regression_blocked"] = regressions
                         revised = current
+            elif arm in ("C", "E") and revised != current:
+                preserved, regressions = preserves_design_elements(current, revised)
+                if not preserved:
+                    record["design_regression_blocked"] = regressions
+                    revised = current
+            if action == "guided_revise":
+                state.revised = True
+                state.needs_post_search_revision = False
             if action == "clarify":
                 state.clarified = True
             if action == "local_patch":
@@ -486,6 +540,7 @@ class Trial:
         auditor = self.endpoints["audit"]
         if "glm" in auditor.model.lower():
             self.endpoints["audit"] = replace(auditor, extra_body={"thinking": {"type": "disabled"}})
+        self.eval_mode = getattr(args, "eval_mode", "unified")
         manifest = {
             "protocol_version": PROTOCOL_VERSION,
             "protocol_sha256": path_hash(ROOT / PROTOCOL_FILE),
@@ -497,6 +552,8 @@ class Trial:
             "editor_parameters": self.endpoints["editor"].extra_body,
             "audit_parameters": self.endpoints["audit"].extra_body,
         }
+        if self.eval_mode != "legacy":
+            manifest["eval_mode"] = self.eval_mode
         if args.calibration_from:
             report = args.calibration_from / "calibration.json"
             manifest["calibration_source"] = {"run": args.calibration_from.name, "sha256": path_hash(report)}
@@ -522,6 +579,33 @@ class Trial:
         return inputs
 
     def calibrate(self) -> dict:
+        if self.eval_mode == "unified":
+            suite = cached(
+                self.out / "calibration_cases.json",
+                lambda: [
+                    {**c, "task": c["task"].model_dump()}
+                    for c in build_lit2test_calibration_suite(ROOT)
+                ],
+            )
+            hydrated = [{**c, "task": TaskSpec.model_validate(c["task"])} for c in suite]
+
+            def make_runners(case_id: str):
+                root = self.out / "calibration" / case_id
+                return [
+                    self.runner(root / order, case_id, "judge", arm="blind", stage=order, limit=6)
+                    for order in ("forward", "reverse")
+                ]
+
+            report = cached(
+                self.out / "calibration.json",
+                lambda: calibrate_unified_evaluator(hydrated, make_runners) | {"eval_mode": "unified"},
+            )
+            print(
+                f"[calibration:unified] substantive={report['substantive_correct']}/{report['substantive_total']} "
+                f"sham={report['sham_ties']}/{report['sham_total']} qualified={report['qualified']}",
+                flush=True,
+            )
+            return report
         if self.args.calibration_from:
             source = self.args.calibration_from
             stamp = load(source / "manifest.json")
@@ -596,12 +680,46 @@ class Trial:
 
     def evaluate(self, root, job, original, input_packet, versions, task, claims, axes):
         full_packet, full_drafts = shared_full_pool(task, input_packet, versions)
-        local_packet = Evidence.restore(task, input_packet).packet()
+        local_evidence = Evidence.restore(task, input_packet)
+        local_packet = local_evidence.packet()
+        local_corpus = local_evidence.audit_task().prior_work
+        full_corpus = list(local_corpus)
+        seen_ids = {p.id for p in full_corpus}
+        for arm in COMPARISONS["E_vs_D"]:
+            for row in versions[arm].get("retrieved") or []:
+                paper = PriorWorkItem.model_validate(row["paper"])
+                if paper.id not in seen_ids:
+                    full_corpus.append(paper)
+                    seen_ids.add(paper.id)
         results = {}
         for label, arms in COMPARISONS.items():
             selected = local_packet if label == "C_vs_B" else full_packet
             drafts = ({arm: versions[arm]["draft"] for arm in arms} if label == "C_vs_B" else full_drafts)
             root_pair = root / "review" / label
+            if self.eval_mode == "unified":
+                pair_runners = [
+                    self.runner(root_pair / "lit2test" / order, job, "judge", arm="blind", stage=order, limit=6)
+                    for order in ("forward", "reverse")
+                ]
+                aib_runner = self.runner(
+                    root_pair / "alphaideabench", job, "judge", arm="blind", stage="alphaideabench", limit=24,
+                )
+                claimnov_runner = self.runner(
+                    root_pair / "claimnov", job, "judge", arm="blind", stage="claimnov", limit=128,
+                )
+                corpus = local_corpus if label == "C_vs_B" else full_corpus
+                unified = evaluate_unified_pair(
+                    drafts[arms[0]],
+                    drafts[arms[1]],
+                    task,
+                    selected,
+                    pair_runners=pair_runners,
+                    aib_runner=aib_runner,
+                    claimnov_runner=claimnov_runner,
+                    prior_corpus=corpus,
+                )
+                results[label] = {"evidence_sha256": digest(selected), "evidence": selected, "unified": unified}
+                continue
             snapshot = {"evidence_sha256": digest(selected), "evidence": selected, "arms": {}}
             for axis in AXES:
                 if axis not in axes:
@@ -674,7 +792,11 @@ class Trial:
                 except RECOVERABLE as exc:
                     return {"claims": None, "error": public_error(exc)}
 
-            claims = cached(root / "ledger.json", ledger)["claims"] if "honesty" in axes else []
+            claims = (
+                cached(root / "ledger.json", ledger)["claims"]
+                if self.eval_mode == "legacy" and "honesty" in axes
+                else []
+            )
             versions = {}
             for arm in ARMS[1:]:
                 limits = LIMITS["local" if arm in ("B", "C") else "full"]
@@ -692,11 +814,17 @@ class Trial:
             result = cached(root / "review.json", lambda: self.evaluate(
                 root, job, original, seed["evidence"], versions, task, claims, axes))
             print(f"[{cohort}] {job} " + " ".join(f"{arm}={row['status']}" for arm, row in versions.items()), flush=True)
-            return {"task_id": task_id, "host": host, "stage": record["stage"],
-                    "development": seed["development"], "source_sha256": record["sha256"],
-                    "versions": {arm: {k: row[k] for k in ("status", "sha256", "edit_volume", "queries")}
-                                 for arm, row in versions.items()},
-                    "comparisons": {label: value["arms"] for label, value in result.items()}}
+            row_payload = {
+                "task_id": task_id, "host": host, "stage": record["stage"],
+                "development": seed["development"], "source_sha256": record["sha256"],
+                "versions": {arm: {k: row[k] for k in ("status", "sha256", "edit_volume", "queries")}
+                             for arm, row in versions.items()},
+            }
+            if self.eval_mode == "unified":
+                row_payload["unified_comparisons"] = {label: value["unified"] for label, value in result.items()}
+            else:
+                row_payload["comparisons"] = {label: value["arms"] for label, value in result.items()}
+            return row_payload
 
         jobs = [(task_id, host, record, seed) for task_id, seed in topics.items()
                 for host, record in seed["originals"].items() if record["status"] == "ready"]
@@ -705,7 +833,7 @@ class Trial:
                    if record["status"] != "ready"]
         with ThreadPoolExecutor(max_workers=self.args.workers) as pool:
             rows = list(pool.map(one, jobs))
-        report = {"cohort": cohort, "qualified_axes": axes, "results": rows, "missing": missing}
+        report = {"cohort": cohort, "eval_mode": self.eval_mode, "qualified_axes": axes, "results": rows, "missing": missing}
         write_json(self.out / f"{cohort}_results.json", report)
         summarize(self.out, report)
         return report
@@ -754,6 +882,69 @@ def axis_summary(rows: list[dict], experiment: str, axis: str) -> dict:
             "supports_gain": bool(interval and bounds and interval[0] > 0 and bounds[0] > 0)}
 
 
+def _summarize_unified(out: Path, report: dict, strata: dict, metered: dict, shared: Counter) -> None:
+    cohort, rows = report["cohort"], report["results"]
+    tables = {
+        group: {cmp: summarize_unified_rows(cases, cmp) for cmp in COMPARISONS}
+        for group, cases in strata.items()
+    }
+    write_json(
+        out / f"{cohort}_summary.json",
+        {"eval_mode": "unified", "strata": tables, "usage_cumulative": metered,
+         "shared_initial_audits": dict(shared), "missing": report["missing"]},
+    )
+
+    def fmt(value):
+        if value is None:
+            return "—"
+        if isinstance(value, list):
+            return f"[{value[0]:+.3f}, {value[1]:+.3f}]"
+        return f"{value:+.3f}"
+
+    lines = [f"# 同稿对照试验（统一 Bench 评测）· {cohort}", "", f"纳入 {len(rows)} 份原稿，缺失 {len(report['missing'])} 份。", ""]
+    for group, comparisons in tables.items():
+        lines += [
+            f"## {group}",
+            "",
+            "| 比较 | Lit2Test 胜/负/平/未决 | 净胜率 | 95% 区间 | 五维总分差 | AIB context_grounding 差 | AIB testability 差 | ClaimNov 差 |",
+            "|---|---|---:|---|---:|---:|---:|---:|",
+        ]
+        for cmp, score in comparisons.items():
+            counts = score["counts"]
+            wltu = "/".join(str(counts.get(k, 0)) for k in ("win", "loss", "tie", "unresolved"))
+            aib = score["alphaideabench_dimension_deltas"]
+            lines.append(
+                f"| {cmp} | {wltu} | {fmt(score['lit2test_net_wins'])} | {fmt(score['lit2test_net_wins_ci95'])} | "
+                f"{fmt(score['lit2test_score_sum_delta'])} | {fmt(aib.get('context_grounding'))} | "
+                f"{fmt(aib.get('testability'))} | {fmt(score['claimnov_novelty_delta'])} |"
+            )
+        lines.append("")
+    lines += [
+        "## 修订与费用",
+        "",
+        "| 臂 | 正文变化 | 执行异常 | 改动词项中位数 | 累计请求 | 累计费用 USD |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for arm in ARMS[1:]:
+        arm_rows = [(r["versions"][arm], r["source_sha256"]) for r in rows]
+        changed = sum(row["sha256"] != original for row, original in arm_rows)
+        failed = sum(row["status"] not in ("changed", "retained") for row, _ in arm_rows)
+        volume = [row["edit_volume"]["tokens_deleted"] + row["edit_volume"]["tokens_inserted"]
+                  for row, _ in arm_rows]
+        ledger = metered.get(arm, Counter())
+        lines.append(
+            f"| {arm} | {changed}/{len(rows)} | {failed} | {float(np.median(volume)) if volume else 0:g} | "
+            f"{ledger['attempts']} | {ledger['cost_usd']:.4f} |"
+        )
+    judge = metered.get("blind", Counter())
+    lines += [
+        "",
+        f"本运行的外评与校准累计请求 {judge['attempts']}，计量费用 {judge['cost_usd']:.4f} USD。",
+        f"E 复用了 {shared['manuscripts']} 份相同稿件与证据上的 C 初审，对应 {shared['calls']} 次调用及 {shared['cost_usd']:.4f} USD。",
+    ]
+    (out / f"{cohort}_summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def summarize(out: Path, report: dict) -> None:
     cohort, rows = report["cohort"], report["results"]
     shared = {key for key, count in Counter(r["task_id"] for r in rows).items() if count == 3}
@@ -764,16 +955,21 @@ def summarize(out: Path, report: dict) -> None:
     for stage in ("proposal", "experiment_plan"):
         strata[f"edara {stage}"] = [r for r in strata["edara"] if r["stage"] == stage]
     strata = {key: cases for key, cases in strata.items() if cases}
-    tables = {group: {cmp: {axis: axis_summary(cases, cmp, axis) for axis in AXES} for cmp in COMPARISONS}
-              for group, cases in strata.items()}
     metered = usage(out)
     shared = Counter()
     for row in rows:
         entry = out / "versions" / row["task_id"] / row["host"]
-        if any(step.get("audit_owner") == "C" for step in load(entry / "E.json")["history"]):
+        if (entry / "E.json").is_file() and any(
+            step.get("audit_owner") == "C" for step in load(entry / "E.json")["history"]
+        ):
             shared["manuscripts"] += 1
             for path in (entry / "C" / "audit").glob("[0-9][0-9][0-9][0-9].json"):
                 shared.update(load(path).get("usage") or {})
+    if report.get("eval_mode") == "unified":
+        _summarize_unified(out, report, strata, metered, shared)
+        return
+    tables = {group: {cmp: {axis: axis_summary(cases, cmp, axis) for axis in AXES} for cmp in COMPARISONS}
+              for group, cases in strata.items()}
     write_json(out / f"{cohort}_summary.json", {"strata": tables, "usage_cumulative": metered,
                                                 "shared_initial_audits": dict(shared), "missing": report["missing"]})
     lines = [f"# 同稿对照试验 · {cohort}", "", f"纳入 {len(rows)} 份原稿，缺失 {len(report['missing'])} 份。", ""]
@@ -825,6 +1021,7 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--calibration-set", choices=("original", "reserve"), default="original")
     parser.add_argument("--calibration-from", type=Path)
+    parser.add_argument("--eval-mode", choices=("unified", "legacy"), default="unified")
     parser.add_argument("--gen-profile", type=Path, default=WORKSPACE / "data/p1b-idea-profile.json")
     parser.add_argument("--audit-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
     parser.add_argument("--judge-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
@@ -858,7 +1055,10 @@ def main() -> int:
             if not path.is_file():
                 parser.error("Calibration must run before the pilot or formal trial")
             result = load(path)
-        axes = tuple(axis for axis in AXES if result["axes"][axis]["qualified"])
+        if trial.eval_mode == "unified":
+            axes = ("unified",) if result.get("qualified") else ()
+        else:
+            axes = tuple(axis for axis in AXES if result["axes"][axis]["qualified"])
         if not axes:
             print("[gate] No axis passed calibration. Formal trial has not run.", flush=True)
             return 3

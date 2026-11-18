@@ -5,6 +5,7 @@ import json
 import re
 from typing import Any
 
+from .factual_audit import audit_draft_consistency
 from .llm_client import LLMRunner
 from .schemas import NormalizedProposal, SpecAuditResult, SpecDefectItem, TaskSpec
 
@@ -78,6 +79,24 @@ def _deterministic_spec_defects(proposal: NormalizedProposal) -> list[SpecDefect
                 why_implementation_critical="Omits boundary conditions where the proposed mechanism breaks or requires calibration.",
                 clarification_hint="State failure regimes in limitations or add structured unknown_dependencies.",
                 severity="recommended",
+            )
+        )
+    for finding in audit_draft_consistency(
+        {
+            "hypothesis": proposal.hypothesis,
+            "decisive_metric": proposal.decisive_metric,
+            "supporting_result": proposal.supporting_result,
+            "falsifying_result": proposal.falsifying_result,
+        }
+    ):
+        defects.append(
+            SpecDefectItem(
+                category="metric_or_decision_rule",
+                target_field=finding.field if finding.field in {"decisive_metric", "falsifying_result"} else "decisive_metric",
+                missing_detail=finding.reason[:240],
+                why_implementation_critical="Internal conflict between hypothesis and metric/falsification criteria breaks testability.",
+                clarification_hint="Align effect-size thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result.",
+                severity="blocking",
             )
         )
     return defects

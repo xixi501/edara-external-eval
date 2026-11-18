@@ -1,0 +1,510 @@
+{
+  "eval_mode": "unified",
+  "strata": {
+    "全部": {
+      "C_vs_B": {
+        "counts": {
+          "loss": 3,
+          "tie": 3,
+          "win": 3
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -0.6666666666666666,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.16666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -1.0,
+          2.1666666666666665
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.3333333333333333,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": -0.22222222222222224,
+          "decisive_metric": 0.05555555555555555,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.2222222222222222,
+          "testability": 0.0,
+          "verification_feasibility": 0.1111111111111111,
+          "method_novelty": 0.3333333333333333,
+          "insight_novelty": 0.1111111111111111
+        },
+        "claimnov_novelty_delta": 0.020566666666666667
+      },
+      "E_vs_D": {
+        "counts": {
+          "win": 4,
+          "tie": 4,
+          "loss": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.3333333333333333,
+        "lit2test_net_wins_ci95": [
+          0.0,
+          0.6666666666666666
+        ],
+        "lit2test_score_sum_delta": 0.6666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          0.0,
+          1.3333333333333333
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": -0.22222222222222224,
+          "hypothesis_specificity": 0.05555555555555555,
+          "minimality_feasibility": 0.05555555555555556,
+          "decisive_metric": 0.27777777777777773,
+          "falsifiability": 0.5
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.1111111111111111,
+          "testability": 0.1111111111111111,
+          "verification_feasibility": 0.2222222222222222,
+          "method_novelty": 0.1111111111111111,
+          "insight_novelty": 0.2222222222222222
+        },
+        "claimnov_novelty_delta": 0.02928888888888889
+      }
+    },
+    "三来源共同题": {
+      "C_vs_B": {
+        "counts": {
+          "loss": 3,
+          "tie": 3,
+          "win": 3
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -0.6666666666666666,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.16666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -1.0,
+          2.1666666666666665
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.3333333333333333,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": -0.22222222222222224,
+          "decisive_metric": 0.05555555555555555,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.2222222222222222,
+          "testability": 0.0,
+          "verification_feasibility": 0.1111111111111111,
+          "method_novelty": 0.3333333333333333,
+          "insight_novelty": 0.1111111111111111
+        },
+        "claimnov_novelty_delta": 0.020566666666666667
+      },
+      "E_vs_D": {
+        "counts": {
+          "win": 4,
+          "tie": 4,
+          "loss": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.3333333333333333,
+        "lit2test_net_wins_ci95": [
+          0.0,
+          0.6666666666666666
+        ],
+        "lit2test_score_sum_delta": 0.6666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          0.0,
+          1.3333333333333333
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": -0.22222222222222224,
+          "hypothesis_specificity": 0.05555555555555555,
+          "minimality_feasibility": 0.05555555555555556,
+          "decisive_metric": 0.27777777777777773,
+          "falsifiability": 0.5
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.1111111111111111,
+          "testability": 0.1111111111111111,
+          "verification_feasibility": 0.2222222222222222,
+          "method_novelty": 0.1111111111111111,
+          "insight_novelty": 0.2222222222222222
+        },
+        "claimnov_novelty_delta": 0.02928888888888889
+      }
+    },
+    "direct": {
+      "C_vs_B": {
+        "counts": {
+          "loss": 1,
+          "tie": 1,
+          "win": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -1.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.5,
+        "lit2test_score_sum_delta_ci95": [
+          -1.5,
+          3.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.6666666666666666,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": -0.16666666666666666,
+          "decisive_metric": 0.0,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.0,
+          "verification_feasibility": 0.3333333333333333,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": -0.025366666666666666
+      },
+      "E_vs_D": {
+        "counts": {
+          "win": 1,
+          "tie": 2
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.3333333333333333,
+        "lit2test_net_wins_ci95": [
+          0.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": -0.16666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -1.5,
+          1.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": -0.6666666666666666,
+          "hypothesis_specificity": 0.16666666666666666,
+          "minimality_feasibility": 0.0,
+          "decisive_metric": 0.16666666666666666,
+          "falsifiability": 0.16666666666666666
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.3333333333333333,
+          "testability": 0.0,
+          "verification_feasibility": 0.3333333333333333,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": 0.0201
+      }
+    },
+    "ai_scientist": {
+      "C_vs_B": {
+        "counts": {
+          "tie": 1,
+          "loss": 1,
+          "win": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -1.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.16666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -1.5,
+          1.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.6666666666666666,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": -0.6666666666666666,
+          "decisive_metric": 0.16666666666666666,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.3333333333333333,
+          "testability": 0.0,
+          "verification_feasibility": 0.3333333333333333,
+          "method_novelty": 0.6666666666666666,
+          "insight_novelty": 0.3333333333333333
+        },
+        "claimnov_novelty_delta": 0.028399999999999995
+      },
+      "E_vs_D": {
+        "counts": {
+          "win": 1,
+          "loss": 1,
+          "tie": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -1.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.6666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -1.5,
+          2.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": -0.16666666666666666,
+          "hypothesis_specificity": -0.16666666666666666,
+          "minimality_feasibility": -0.16666666666666666,
+          "decisive_metric": 0.3333333333333333,
+          "falsifiability": 0.8333333333333334
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.3333333333333333,
+          "verification_feasibility": 0.3333333333333333,
+          "method_novelty": 0.3333333333333333,
+          "insight_novelty": 0.3333333333333333
+        },
+        "claimnov_novelty_delta": 0.08813333333333333
+      }
+    },
+    "edara": {
+      "C_vs_B": {
+        "counts": {
+          "loss": 1,
+          "tie": 1,
+          "win": 1
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": [
+          -1.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": -0.16666666666666666,
+        "lit2test_score_sum_delta_ci95": [
+          -2.0,
+          1.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": -0.3333333333333333,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": 0.16666666666666666,
+          "decisive_metric": 0.0,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.3333333333333333,
+          "testability": 0.0,
+          "verification_feasibility": -0.3333333333333333,
+          "method_novelty": 0.3333333333333333,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": 0.058666666666666666
+      },
+      "E_vs_D": {
+        "counts": {
+          "tie": 1,
+          "win": 2
+        },
+        "topics": 3,
+        "lit2test_net_wins": 0.6666666666666666,
+        "lit2test_net_wins_ci95": [
+          0.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 1.5,
+        "lit2test_score_sum_delta_ci95": [
+          0.0,
+          3.0
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.16666666666666666,
+          "hypothesis_specificity": 0.16666666666666666,
+          "minimality_feasibility": 0.3333333333333333,
+          "decisive_metric": 0.3333333333333333,
+          "falsifiability": 0.5
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.0,
+          "verification_feasibility": 0.0,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.3333333333333333
+        },
+        "claimnov_novelty_delta": -0.020366666666666665
+      }
+    },
+    "edara proposal": {
+      "C_vs_B": {
+        "counts": {
+          "loss": 1
+        },
+        "topics": 1,
+        "lit2test_net_wins": -1.0,
+        "lit2test_net_wins_ci95": null,
+        "lit2test_score_sum_delta": -2.0,
+        "lit2test_score_sum_delta_ci95": null,
+        "lit2test_dimension_deltas": {
+          "grounding": -1.0,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": -1.0,
+          "decisive_metric": 0.0,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.0,
+          "verification_feasibility": -1.0,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": 0.1329
+      },
+      "E_vs_D": {
+        "counts": {
+          "tie": 1
+        },
+        "topics": 1,
+        "lit2test_net_wins": 0.0,
+        "lit2test_net_wins_ci95": null,
+        "lit2test_score_sum_delta": 0.0,
+        "lit2test_score_sum_delta_ci95": null,
+        "lit2test_dimension_deltas": {
+          "grounding": -1.0,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": 0.0,
+          "decisive_metric": 0.0,
+          "falsifiability": 1.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.0,
+          "verification_feasibility": 0.0,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": 0.0873
+      }
+    },
+    "edara experiment_plan": {
+      "C_vs_B": {
+        "counts": {
+          "tie": 1,
+          "win": 1
+        },
+        "topics": 2,
+        "lit2test_net_wins": 0.5,
+        "lit2test_net_wins_ci95": [
+          0.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 0.75,
+        "lit2test_score_sum_delta_ci95": [
+          0.0,
+          1.5
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.0,
+          "hypothesis_specificity": 0.0,
+          "minimality_feasibility": 0.75,
+          "decisive_metric": 0.0,
+          "falsifiability": 0.0
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": -0.5,
+          "testability": 0.0,
+          "verification_feasibility": 0.0,
+          "method_novelty": 0.5,
+          "insight_novelty": 0.0
+        },
+        "claimnov_novelty_delta": 0.021550000000000003
+      },
+      "E_vs_D": {
+        "counts": {
+          "win": 2
+        },
+        "topics": 2,
+        "lit2test_net_wins": 1.0,
+        "lit2test_net_wins_ci95": [
+          1.0,
+          1.0
+        ],
+        "lit2test_score_sum_delta": 2.25,
+        "lit2test_score_sum_delta_ci95": [
+          1.5,
+          3.0
+        ],
+        "lit2test_dimension_deltas": {
+          "grounding": 0.75,
+          "hypothesis_specificity": 0.25,
+          "minimality_feasibility": 0.5,
+          "decisive_metric": 0.5,
+          "falsifiability": 0.25
+        },
+        "alphaideabench_dimension_deltas": {
+          "context_grounding": 0.0,
+          "testability": 0.0,
+          "verification_feasibility": 0.0,
+          "method_novelty": 0.0,
+          "insight_novelty": 0.5
+        },
+        "claimnov_novelty_delta": -0.0742
+      }
+    }
+  },
+  "usage_cumulative": {
+    "blind": {
+      "attempts": 647,
+      "failures": 0,
+      "calls": 647,
+      "prompt_tokens": 1542771,
+      "completion_tokens": 174687,
+      "cost_usd": 0.2562629589990002
+    },
+    "D": {
+      "attempts": 42,
+      "failures": 0,
+      "calls": 42,
+      "prompt_tokens": 352615,
+      "completion_tokens": 56312,
+      "cost_usd": 0.11223256128499998
+    },
+    "E": {
+      "attempts": 430,
+      "failures": 0,
+      "calls": 430,
+      "prompt_tokens": 1015913,
+      "completion_tokens": 184157,
+      "cost_usd": 0.2571331589489999
+    },
+    "B": {
+      "attempts": 18,
+      "failures": 0,
+      "calls": 18,
+      "prompt_tokens": 153544,
+      "completion_tokens": 22954,
+      "cost_usd": 0.045649001805000006
+    },
+    "C": {
+      "attempts": 249,
+      "failures": 0,
+      "calls": 249,
+      "prompt_tokens": 555907,
+      "completion_tokens": 93715,
+      "cost_usd": 0.130335798765
+    }
+  },
+  "shared_initial_audits": {
+    "manuscripts": 9,
+    "calls": 238,
+    "prompt_tokens": 428277,
+    "completion_tokens": 91062,
+    "cost_usd": 0.088863198765
+  },
+  "missing": []
+}

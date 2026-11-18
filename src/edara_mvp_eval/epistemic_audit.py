@@ -9,12 +9,15 @@ from alphaideabench.domain.dimensions import load_catalog
 from pydantic import ValidationError
 
 from .claimnov_adapter import analyze_compositional_remainder, run_claimnov_audit
+from .factual_audit import audit_independent_claims, audit_unverified_entities
 from .governance import audit_idea
+from .host_adapter import filter_proposal_fields, to_lit2test_card
 from .literature_scout import extract_relevant_excerpt, gather_evidence_for_query, make_counterexample_query
 from .llm_client import LLMRunner
 from .schemas import (
     ClaimNovAuditResult,
     CompositionalRemainderResult,
+    FactualFinding,
     FullAuditBundle,
     GapAuditResult,
     GapPremiseAuditItem,
@@ -66,7 +69,13 @@ def normalize_artifact(
     raw_output: str | dict[str, Any],
     runner: LLMRunner,
 ) -> NormalizedProposal:
-    raw_str = raw_output if isinstance(raw_output, str) else json.dumps(raw_output, ensure_ascii=False, indent=2)
+    if isinstance(raw_output, dict):
+        filtered = filter_proposal_fields(raw_output) or raw_output
+        raw_str = json.dumps(filtered, ensure_ascii=False, indent=2)
+        fallback_card = to_lit2test_card(filtered)
+    else:
+        raw_str = raw_output
+        fallback_card = to_lit2test_card(raw_output) if raw_output.lstrip().startswith("{") else {}
     user = (
         f"Task ID: {task.task_id}\n"
         f"Task Title: {task.title}\n"
@@ -86,16 +95,16 @@ def normalize_artifact(
         gap_premises = [str(data["literature_gap"]).strip()]
     return NormalizedProposal(
         task_id=task.task_id,
-        title=str(data.get("title") or task.title),
-        literature_gap=str(data.get("literature_gap") or ""),
-        hypothesis=str(data.get("hypothesis") or ""),
-        method=str(data.get("method") or ""),
-        minimal_test=str(data.get("minimal_test") or ""),
-        decisive_metric=str(data.get("decisive_metric") or ""),
-        supporting_result=str(data.get("supporting_result") or ""),
-        falsifying_result=str(data.get("falsifying_result") or ""),
-        related_work=str(data.get("related_work") or ""),
-        limitations=str(data.get("limitations") or ""),
+        title=str(data.get("title") or fallback_card.get("title") or task.title),
+        literature_gap=str(data.get("literature_gap") or fallback_card.get("literature_gap") or ""),
+        hypothesis=str(data.get("hypothesis") or fallback_card.get("hypothesis") or ""),
+        method=str(data.get("method") or fallback_card.get("method") or ""),
+        minimal_test=str(data.get("minimal_test") or fallback_card.get("minimal_test") or ""),
+        decisive_metric=str(data.get("decisive_metric") or fallback_card.get("decisive_metric") or ""),
+        supporting_result=str(data.get("supporting_result") or fallback_card.get("supporting_result") or ""),
+        falsifying_result=str(data.get("falsifying_result") or fallback_card.get("falsifying_result") or ""),
+        related_work=str(data.get("related_work") or fallback_card.get("related_work") or ""),
+        limitations=str(data.get("limitations") or fallback_card.get("limitations") or ""),
         resource_plan=data.get("resource_plan") if isinstance(data.get("resource_plan"), dict) else {},
         prior_facts=prior_facts,
         prospective_hypotheses=hypotheses,
@@ -145,7 +154,7 @@ def audit_tri_state_and_smoothing(
             *(pf.claim for pf in proposal.prior_facts),
         ]
     ).lower()
-    for pf in proposal.prior_facts[:6]:
+    for pf in proposal.prior_facts[:12]:
         q = f"{pf.claim} {' '.join(pf.cited_titles)}".strip()
         evidence_items = gather_evidence_for_query(q, task, live_search=live_search, top_k=4)
         ev_text = "\n".join(
@@ -444,6 +453,86 @@ def _expanded_prior_corpus(
     return merged
 
 
+def _tri_state_from_factual(
+    proposal: NormalizedProposal,
+    findings: list[FactualFinding],
+) -> TriStateAuditResult:
+    """Derive TriStateAuditResult directly from batch factual findings to avoid duplicate serial LLM calls."""
+    audits: list[PriorFactAudit] = []
+    for f in findings:
+        ev_quote = f.evidence[0].quote if f.evidence else ""
+        if f.label == "supported":
+            audits.append(
+                PriorFactAudit(
+                    claim=f.quote,
+                    citation_status="verified_local",
+                    smoothing_score=1,
+                    smoothing_type="none",
+                    proposal_span=f.quote[:200],
+                    evidence_quote=ev_quote[:300],
+                    critique_grounded=True,
+                    epistemic_overclaim=False,
+                )
+            )
+        elif f.label == "defect":
+            is_fab = f.defect_type == "fabrication"
+            sm_type = (
+                "fabrication" if is_fab
+                else "misattribution" if f.defect_type in {"attribution", "numeric_mismatch", "coverage_contradiction"}
+                else "scope_expansion"
+            )
+            score = 5 if is_fab else (4 if f.defect_type in {"scope_overclaim", "prediction_as_observed", "attribution", "numeric_mismatch", "coverage_contradiction"} else 3)
+            audits.append(
+                PriorFactAudit(
+                    claim=f.quote,
+                    citation_status="fabricated_or_missing" if is_fab else ("verified_local" if ev_quote else "unverified"),
+                    smoothing_score=score,
+                    smoothing_type=sm_type,  # type: ignore[arg-type]
+                    skeptic_counter_evidence=f.reason[:300],
+                    proposal_span=f.quote[:200],
+                    evidence_quote=ev_quote[:300],
+                    critique_grounded=True,
+                    epistemic_overclaim=True,
+                )
+            )
+        else:
+            audits.append(
+                PriorFactAudit(
+                    claim=f.quote,
+                    citation_status="unverified",
+                    smoothing_score=2,
+                    smoothing_type="none",
+                    proposal_span=f.quote[:200],
+                    evidence_quote=ev_quote[:300],
+                    critique_grounded=bool(ev_quote),
+                    epistemic_overclaim=False,
+                )
+            )
+    untested_hyp_cnt = len(proposal.prospective_hypotheses)
+    honest_unknown_cnt = sum(
+        1
+        for u in proposal.unknown_dependencies
+        if u.why_unresolved.strip() and (u.resolution_path.strip() or u.minimal_calibration_test.strip())
+    )
+    unop_unknown_cnt = len(proposal.unknown_dependencies) - honest_unknown_cnt
+    overclaims = sum(1 for a in audits if a.epistemic_overclaim or a.smoothing_score >= 3)
+    denom = max(1, len(audits) + untested_hyp_cnt + len(proposal.unknown_dependencies))
+    max_sm = max((a.smoothing_score for a in audits), default=1)
+    mean_sm = round(statistics.mean(a.smoothing_score for a in audits), 3) if audits else 1.0
+    fabrication = any(a.citation_status == "fabricated_or_missing" or a.smoothing_type == "fabrication" for a in audits)
+    return TriStateAuditResult(
+        prior_fact_audits=audits,
+        untested_hypothesis_count=untested_hyp_cnt,
+        honest_unknown_count=honest_unknown_cnt,
+        unoperationalized_unknown_count=unop_unknown_cnt,
+        epistemic_overclaim_count=overclaims,
+        max_smoothing_score=max_sm,
+        mean_smoothing_score=mean_sm,
+        epistemic_overclaim_rate=round(overclaims / denom, 3),
+        citation_fabrication_detected=fabrication,
+    )
+
+
 def run_full_audit(
     task: TaskSpec,
     arm: str,
@@ -452,20 +541,35 @@ def run_full_audit(
     *,
     live_search: bool = False,
     enable_embeddings: bool = False,
+    include_factual_audit: bool = True,
+    run_tri_state: bool = False,
 ) -> FullAuditBundle:
     cost_before = judge_runner.usage.cost_usd
-    artifact = raw_output.model_dump() if isinstance(raw_output, NormalizedProposal) else raw_output
-    proposal = normalize_artifact(task, artifact, judge_runner)
     if isinstance(raw_output, NormalizedProposal):
-        # Refresh claim extraction after text edits while auditing the actual
-        # patched artifact, with its original fields and unknown contracts intact.
-        proposal = raw_output.model_copy(update={
-            "prior_facts": proposal.prior_facts,
-            "prospective_hypotheses": proposal.prospective_hypotheses,
-        })
-    tri = audit_tri_state_and_smoothing(proposal, task, judge_runner, live_search=live_search)
-    gap = audit_gap_premises(proposal, task, judge_runner, live_search=live_search)
+        artifact = raw_output.model_dump()
+        proposal = raw_output
+    else:
+        artifact = raw_output
+        proposal = normalize_artifact(task, artifact, judge_runner)
     prior_corpus = _expanded_prior_corpus(proposal, task, live_search=live_search)
+    factual_findings = (
+        audit_independent_claims(artifact, task, judge_runner, prior_work=prior_corpus)
+        if include_factual_audit
+        else []
+    )
+    unverified_entities = (
+        audit_unverified_entities(artifact, task, prior_work=prior_corpus)
+        if include_factual_audit
+        else []
+    )
+    if run_tri_state or not include_factual_audit:
+        tri = audit_tri_state_and_smoothing(proposal, task, judge_runner, live_search=live_search)
+        defect_count = sum(1 for f in factual_findings if f.label == "defect")
+        if defect_count > tri.epistemic_overclaim_count:
+            tri = tri.model_copy(update={"epistemic_overclaim_count": defect_count})
+    else:
+        tri = _tri_state_from_factual(proposal, factual_findings)
+    gap = audit_gap_premises(proposal, task, judge_runner, live_search=live_search)
     cn = run_claimnov_audit(proposal, prior_corpus, judge_runner, enable_embeddings=enable_embeddings)
     comp = analyze_compositional_remainder(proposal, cn)
     governance = audit_idea(task, artifact, judge_runner, claimnov=cn, prior_work=prior_corpus)
@@ -489,6 +593,8 @@ def run_full_audit(
         claimnov=cn,
         spec_audit=spec,
         confound_audit=confound,
+        factual_findings=factual_findings,
+        unverified_entities=unverified_entities,
         compositional=comp,
         governance=governance,
         aib_scores=aib,

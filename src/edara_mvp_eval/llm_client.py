@@ -81,6 +81,13 @@ def extract_json_dict(text: str) -> dict[str, Any]:
                         obj = json.loads(candidate, strict=False)
                         return obj if isinstance(obj, dict) else {"value": obj}
                     except json.JSONDecodeError:
+                        pass
+                # Recover when trailing extra braces or commentary follow a valid top-level object.
+                for strict_flag in (True, False):
+                    try:
+                        obj, _ = json.JSONDecoder(strict=strict_flag).raw_decode(candidate)
+                        return obj if isinstance(obj, dict) else {"value": obj}
+                    except json.JSONDecodeError:
                         continue
         raise
 
@@ -91,6 +98,23 @@ class MeteredUsage:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     cost_usd: float = 0.0
+
+
+_FAST_STRUCTURED_TAGS = frozenset({
+    "claimnov_entail",
+    "claimnov_extract",
+    "claimnov_veto",
+    "aib_batch_judge",
+    "aib_dimension_judge",
+    "tri_state_fact_audit",
+    "gap_falsify",
+    "spec_locate",
+    "confound_audit",
+    "independent_claim_extract",
+    "independent_claim_audit",
+    "normalize",
+    "aib_eval",
+})
 
 
 class LLMRunner:
@@ -142,7 +166,12 @@ class LLMRunner:
             return _dry_run_response(tag=tag, system=system, user=user)
 
         client = self.get_openai_client()
-        has_thinking = bool(self.endpoint.extra_body) or "glm" in self.endpoint.model.lower()
+        effective_extra_body = dict(self.endpoint.extra_body) if self.endpoint.extra_body else {}
+        if "glm" in self.endpoint.model.lower() and tag in _FAST_STRUCTURED_TAGS:
+            effective_extra_body["thinking"] = {"type": "disabled"}
+        thinking_cfg = effective_extra_body.get("thinking")
+        thinking_disabled = isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled"
+        has_thinking = (not thinking_disabled) and (bool(effective_extra_body) or "glm" in self.endpoint.model.lower())
         effective_max_tokens = max(max_tokens + 2048, 4096) if has_thinking else max_tokens
         create_kwargs: dict[str, Any] = {
             "model": self.endpoint.model,
@@ -153,8 +182,8 @@ class LLMRunner:
             "temperature": temperature,
             "max_tokens": effective_max_tokens,
         }
-        if self.endpoint.extra_body:
-            create_kwargs["extra_body"] = self.endpoint.extra_body
+        if effective_extra_body:
+            create_kwargs["extra_body"] = effective_extra_body
         if json_mode and self._supports_json_mode:
             create_kwargs["response_format"] = {"type": "json_object"}
         try:
@@ -286,6 +315,37 @@ def _dry_run_response(*, tag: str, system: str, user: str) -> str:
             ],
             "gap_premises": ["Cross-regime threshold drift under explicit abstention constraints lacks controlled falsification diagnostics."],
         })
+
+    if tag == "independent_claim_extract":
+        is_direct = "universal zero-shot" in user.lower() or "universally eliminates" in user.lower()
+        is_repaired = "[repaired" in user.lower() or "bounded uncertainty" in user.lower()
+        if is_direct and not is_repaired:
+            return json.dumps({
+                "claims": [
+                    {
+                        "field": "related_work",
+                        "quote": "Prior papers prove entropy alone guarantees domain robustness in all deployed systems.",
+                        "claim_kind": "prior_fact",
+                    }
+                ]
+            })
+        return json.dumps({"claims": []})
+
+    if tag == "independent_claim_audit":
+        if "guarantees domain robustness" in user.lower():
+            return json.dumps({
+                "findings": [
+                    {
+                        "id": "c1",
+                        "label": "defect",
+                        "defect_type": "scope_overclaim",
+                        "evidence": [],
+                        "basis": "Prior papers prove entropy alone guarantees domain robustness in all deployed systems.",
+                        "reason": "Offline dry-run: claims universal guarantee unsupported by seed caveats.",
+                    }
+                ]
+            })
+        return json.dumps({"findings": []})
 
     if tag == "tri_state_fact_audit":
         is_direct_claim = "guarantees" in low or "all deployed" in low or "never consider" in low
@@ -480,6 +540,84 @@ def _dry_run_response(*, tag: str, system: str, user: str) -> str:
                 "Scoped universal overclaim into explicit regime-boundary framing.",
                 "Converted implicit threshold assumption into an explicit unknown dependency with resolution criterion.",
             ],
+        })
+
+    if tag == "lit2test_decomposed_pair":
+        try:
+            payload = json.loads(user)
+        except json.JSONDecodeError:
+            payload = {}
+        card_a = json.dumps(payload.get("answer_a") or {}, ensure_ascii=False).lower()
+        card_b = json.dumps(payload.get("answer_b") or {}, ensure_ascii=False).lower()
+
+        def _score_card(text: str, dim: str) -> int:
+            if dim == "grounding" and "published trials already prove" in text:
+                return 1
+            if dim == "decisive_metric" and "aggregate overall task accuracy" in text:
+                return 1
+            if dim == "falsifiability" and "failure to reach statistical significance" in text:
+                return 1
+            if any(k in text for k in ("repaired", "bounded", "aurc", "ablation", "matched", "held-out")):
+                return 3
+            return 2
+
+        dims = {}
+        tot_a = 0
+        tot_b = 0
+        for dim in ("grounding", "hypothesis_specificity", "minimality_feasibility", "decisive_metric", "falsifiability"):
+            sa = _score_card(card_a, dim)
+            sb = _score_card(card_b, dim)
+            tot_a += sa
+            tot_b += sb
+            w = "A" if sa > sb else "B" if sb > sa else "tie"
+            dims[dim] = {"score_a": sa, "score_b": sb, "winner": w, "reason": "offline lit2test fixture"}
+        overall = "A" if tot_a > tot_b else "B" if tot_b > tot_a else "tie"
+        return json.dumps({
+            "dimensions": dims,
+            "overall_winner": overall,
+            "overall_confidence": "high",
+            "overall_reason": "Offline Lit2Test decomposed fixture.",
+        })
+
+    if tag == "aib_batch_judge":
+        idea_section = user.split("## Idea", 1)[-1].lower()
+        is_repaired = "repaired" in idea_section or "bounded" in idea_section or "aurc" in idea_section
+        score = 4 if is_repaired else 3
+        dim_blocks = re.findall(r"### \d+\.\s+([^\n`]+)\(`([a-z_]+)`\)(.*?)(?=\n### \d+\.|\Z)", system, re.S)
+        dims = {}
+        for _, dim_id, block in dim_blocks:
+            items = re.findall(r"^- (.+?)  \[yes =", block, re.M)
+            dims[dim_id] = {
+                "dimension_id": dim_id,
+                "score": score,
+                "reasoning": "Offline AlphaIdeaBench batched fixture.",
+                "checklist_notes": [
+                    {"item": item, "judgment": "yes" if is_repaired else "partial", "evidence": "offline fixture"}
+                    for item in items
+                ],
+                "confidence": 0.9,
+                "flags": [],
+            }
+        return json.dumps({"dimensions": dims})
+
+    if tag == "aib_dimension_judge":
+        m_dim = re.search(r"\(`([a-z_]+)`\)", user)
+        dim_id = m_dim.group(1) if m_dim else "context_grounding"
+        items = re.findall(r"^- (.+?)  \[yes =", system, re.M)
+        idea_section = user.split("## Idea", 1)[-1].lower()
+        is_repaired = "repaired" in idea_section or "bounded" in idea_section or "aurc" in idea_section
+        score = 4 if is_repaired else 3
+        notes = [
+            {"item": item, "judgment": "yes" if is_repaired else "partial", "evidence": "offline fixture"}
+            for item in items
+        ]
+        return json.dumps({
+            "dimension_id": dim_id,
+            "score": score,
+            "reasoning": "Offline AlphaIdeaBench dimension fixture.",
+            "checklist_notes": notes,
+            "confidence": 0.9,
+            "flags": [],
         })
 
     if tag == "pairwise_judge":
