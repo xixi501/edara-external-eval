@@ -16,8 +16,8 @@ _PROCESS_HYPE_PATTERNS = (
     (
         "unattested_process",
         re.compile(
-            r"(?i)(?:\b(?:we\s+(?:use|have|ran|already\s+\w+)|uses?|already|was|were)\b[^.!?\n]{0,40}\bpre-?registered\b"
-            r"|\bpre-?registered\b[^.!?\n]{0,40}\b(?:split|cohort|dataset|data|sample|subset|examples?|benchmarks?)\b)"
+            r"(?i)(?:\b(?:we\s+(?:use|have|ran|already\s+\w+)|uses?|already|was|were|is|are)\b[^.!?\n]{0,40}\bpre-?registered\b"
+            r"|\bpre-?registered\b[^.!?\n]{0,40}\b(?:split|cohort|dataset|data|sample|subset|examples?|benchmarks?|(?:strongest|primary)?\s*baseline|correlates?)\b)"
         ),
     ),
     (
@@ -40,12 +40,13 @@ _DEFECT_PRIORITY = {
     "none": 8,
 }
 
-_EXTRACT_SYSTEM = """Extract up to 12 distinct, verifiable factual, attribution, numeric, coverage, or result-status claims from the research proposal.
+_EXTRACT_SYSTEM = """Extract up to 12 distinct, verifiable factual, attribution, numeric, coverage, specification, causal-premise, or result-status claims from the research proposal.
 Focus on claims that can be wrong or misleading against the proposal's own framing or supplied papers:
 1. prior_fact: statements attributing methods, limitations, or findings to prior work.
-2. numeric_or_benchmark: statements quoting numbers, percentages, budgets, sample sizes, or benchmark results.
+2. numeric_or_benchmark: statements quoting numbers, percentages, budgets, sample sizes, dataset class counts/splits, or benchmark results.
 3. coverage_gap: statements asserting that prior literature lacks, omits, or leaves unresolved a method, dataset, or finding.
-4. result_or_process_status: statements phrasing unexecuted/proposed outcomes as already observed or established, or claiming unattested procedures (e.g. 'pre-registered', 'we have already verified', 'calibrated on N').
+4. result_or_process_status: statements phrasing unexecuted/proposed outcomes as already observed or established, or claiming unattested procedures (e.g. 'pre-registered baseline/split', 'we have already verified', 'calibrated on N').
+5. unverified_causal_premise: statements in gap/literature_gap/hypothesis asserting why an existing method fails as an established fact when it has not been verified in the supplied papers.
 
 Copy each field key and an exact contiguous quote from that field. Omit purely prospective plans explicitly marked as 'we will', 'we plan to', or 'we hypothesize'.
 Return JSON only:

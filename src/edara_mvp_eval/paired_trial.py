@@ -99,7 +99,10 @@ original valid core mechanism unless diagnosis explicitly requests regeneration.
 2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
 3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
 4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), remove/replace them with supplied-packet counterparts OR explicitly hedge them as unverified in the supplied packet / conditional on confirmed availability;
-5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact."""
+5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact;
+6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding discriminating arms, reallocate samples/seeds cleanly rather than silently overrunning stated budgets;
+7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with dataset-verification conditions or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
+8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording."""
 
 
 class BudgetExceeded(RuntimeError):
@@ -487,10 +490,38 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                             record["design_regression_blocked"] = regressions
                         revised = current
             elif arm in ("C", "E") and revised != current:
-                preserved, regressions = preserves_design_elements(current, revised)
+                titles = [
+                    p.title for p in evidence.audit_items.values()
+                    if getattr(p, "title", "")
+                ] or [
+                    str(row.get("title") or "") for row in evidence.rows.values()
+                    if isinstance(row, dict)
+                ]
+                preserved, regressions = preserves_design_elements(current, revised, prior_work_titles=titles)
                 if not preserved:
-                    record["design_regression_blocked"] = regressions
-                    revised = current
+                    retry_hint = (
+                        "Your previous revision violated design/grounding preservation ("
+                        + ", ".join(regressions)
+                        + "). Restore all dropped controls and supplied packet citations verbatim while keeping your fixes."
+                    )
+                    try:
+                        retried, retry_log = editor_call(
+                            editor, current, guidance, evidence, shared, scope,
+                            extra=((extra_inst + "\n" + retry_hint).strip()), max_edits=max_edits,
+                        )
+                    except RECOVERABLE:
+                        retried = None
+                    if retried is not None:
+                        p2, r2 = preserves_design_elements(current, retried, prior_work_titles=titles)
+                        if p2:
+                            revised = retried
+                            preserved = True
+                            record["preservation_retry"] = {"recovered": True, "regressions": regressions}
+                        else:
+                            regressions = r2
+                    if not preserved:
+                        record["design_regression_blocked"] = regressions
+                        revised = current
             if action == "guided_revise":
                 state.revised = True
                 state.needs_post_search_revision = False

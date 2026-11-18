@@ -528,3 +528,52 @@ def test_confound_addressed_matches_design_field_clarify_allows_edits_and_entity
     editor_call(InspectRunner(), draft_with_external, diag, Evidence(_task()), {"title": "t"}, scope="local")
     assert "Unverified external entities" in captured["system"]
     assert "SCBench" in captured["system"]
+
+
+def test_preserves_related_work_anchors_and_expanded_preregistered_patterns():
+    from edara_mvp_eval.factual_audit import _deterministic_process_defects
+    from edara_mvp_eval.host_adapter import preserves_design_elements, preserves_related_work_anchors
+
+    base = {
+        "hypothesis": "Tool checks improve feasibility >= 0.5.",
+        "minimal_test": "Compare against baseline S1 with matched controls.",
+        "decisive_metric": "Feasibility difference between treatment and baseline.",
+        "falsifying_result": "Hypothesis fails if gain < 0.5.",
+        "literature_gap": "Contrast with SPT-SEG shows no prior event adaptation.",
+        "related_work[10].work": "Prompt-to-Pill: Multi-Agent Drug Discovery Pipeline (2025)",
+        "related_work[6].work": "ExternalBogus: unverified external benchmark",
+    }
+    # Dropping a supplied paper or emptying a supplied related_work entry is blocked.
+    dropped_supplied = {**base, "related_work[10].work": "", "literature_gap": "No prior event adaptation."}
+    ok, reasons = preserves_design_elements(
+        base, dropped_supplied, prior_work_titles=["SPT-SEG: Zero-Shot Segmentation", "Prompt-to-Pill: Multi-Agent Pipeline"]
+    )
+    assert not ok
+    assert any("dropped_supplied_reference:Prompt-to-Pill" in r for r in reasons)
+    assert any("dropped_supplied_reference:SPT-SEG" in r for r in reasons)
+    assert any("emptied_supplied_related_work:related_work[10].work" in r for r in reasons)
+
+    # Removing only the unverified external reference while keeping supplied papers passes.
+    cleaned_external = {**base, "related_work[6].work": ""}
+    ok2, reasons2 = preserves_related_work_anchors(
+        base, cleaned_external, prior_work_titles=["SPT-SEG: Zero-Shot Segmentation", "Prompt-to-Pill: Multi-Agent Pipeline"]
+    )
+    assert ok2 and reasons2 == []
+
+    # Expanded pre-registered hype check catches "pre-registered strongest baseline" and "are pre-registered as"
+    # while still keeping prospective "the pre-registered decision rule" exempt.
+    defects = _deterministic_process_defects(
+        {
+            "decisive_metric": "Difference minus the pre-registered strongest baseline S1.",
+            "supporting_result": "Pass rate and accuracy are pre-registered as candidate correlates.",
+            "falsifying_result": "Apply the pre-registered decision rule after evaluation.",
+        },
+        _task(),
+        [],
+        [],
+    )
+    fields = {d.field for d in defects}
+    assert "decisive_metric" in fields
+    assert "supporting_result" in fields
+    assert "falsifying_result" not in fields
+

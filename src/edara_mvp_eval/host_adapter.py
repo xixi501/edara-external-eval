@@ -292,14 +292,78 @@ def extract_design_elements(draft: Any) -> dict[str, bool]:
     }
 
 
+_GENERIC_TITLE_HYPHEN_RE = re.compile(
+    r"^(?:multi-agent|zero-shot|few-shot|one-shot|end-to-end|real-time|large-scale|"
+    r"open-vocabulary|closed-set|cross-domain|pre-trained|fine-tuned|test-time|"
+    r"task-aware|query-aware|layer-wise|long-context|high-level|low-cost)$",
+    re.I,
+)
+
+
+def _title_anchor_tokens(title: str) -> list[str]:
+    clean = str(title or "").strip()
+    if not clean:
+        return []
+    head = clean.split(":", 1)[0].strip()
+    source = head if any("-" in t or any(c.isupper() for c in t[1:]) or t.isupper() for t in re.findall(r"\b[A-Za-z][A-Za-z0-9-]{2,}\b", head)) else clean
+    tokens = re.findall(r"\b[A-Za-z][A-Za-z0-9-]{2,}\b", source)
+    strong = [
+        tok for tok in tokens
+        if not _GENERIC_TITLE_HYPHEN_RE.match(tok)
+        and (
+            any(c.isupper() for c in tok[1:])
+            or tok.isupper()
+            or ("-" in tok and any(part.isupper() or any(c.isupper() for c in part[1:]) for part in tok.split("-")))
+        )
+        and len(tok) >= 4
+    ]
+    return list(dict.fromkeys(strong))
+
+
+def preserves_related_work_anchors(
+    before: Any,
+    after: Any,
+    *,
+    prior_work_titles: Sequence[str] = (),
+) -> tuple[bool, list[str]]:
+    """Reject rewrites that wipe non-empty related_work fields or delete supplied-paper citations present before."""
+    prev = as_draft_dict(before)
+    curr = as_draft_dict(after)
+    regressions: list[str] = []
+
+    prev_blob = "\n".join(str(v) for v in prev.values() if isinstance(v, str)).lower()
+    curr_blob = "\n".join(str(v) for v in curr.values() if isinstance(v, str)).lower()
+
+    for title in prior_work_titles or ():
+        for tok in _title_anchor_tokens(title):
+            low = tok.lower()
+            if low in prev_blob and low not in curr_blob:
+                regressions.append(f"dropped_supplied_reference:{tok}")
+                break
+
+    for key, val in prev.items():
+        if key.startswith("related_work") and isinstance(val, str) and val.strip():
+            if not str(curr.get(key) or "").strip():
+                val_low = val.lower()
+                if any(
+                    tok.lower() in val_low
+                    for title in (prior_work_titles or ())
+                    for tok in _title_anchor_tokens(title)
+                ):
+                    regressions.append(f"emptied_supplied_related_work:{key}")
+
+    return len(regressions) == 0, regressions
+
+
 def preserves_design_elements(
     before: Any,
     after: Any,
     *,
     before_bundle: Any = None,
     after_bundle: Any = None,
+    prior_work_titles: Sequence[str] = (),
 ) -> tuple[bool, list[str]]:
-    """Reject rewrites that silently drop existing structural design elements or present controls."""
+    """Reject rewrites that silently drop existing structural design elements, present controls, or supplied anchors."""
     prev = extract_design_elements(before)
     curr = extract_design_elements(after)
     regressions = [f"lost_{key}" for key in ("hypothesis", "test", "control", "metric", "decision")
@@ -317,6 +381,11 @@ def preserves_design_elements(
         }
         if prev_present & curr_absent:
             regressions.append("lost_present_confound_control")
+    if prior_work_titles:
+        _, ref_regressions = preserves_related_work_anchors(
+            before, after, prior_work_titles=prior_work_titles
+        )
+        regressions.extend(ref_regressions)
     return len(regressions) == 0, regressions
 
 

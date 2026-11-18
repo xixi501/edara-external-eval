@@ -593,6 +593,7 @@ class TrustworthyNoveltyMiddleware:
                 patched_prop,
                 before_bundle=best_bundle,
                 after_bundle=candidate_bundle,
+                prior_work_titles=[p.title for p in task.prior_work],
             )
             accepted = preserved and _bundle_rank_key(candidate_bundle) >= _bundle_rank_key(best_bundle)
             if history is not None:
