@@ -36,6 +36,13 @@ WORKSPACE = Path(os.environ.get("EDARA_WORKSPACE")
                  or (ROOT.parents[2] if len(ROOT.parents) >= 3 else ROOT.parent))
 
 
+def default_profile(name: str) -> Path:
+    for candidate in (WORKSPACE / "data" / name, ROOT / "configs" / name):
+        if candidate.is_file():
+            return candidate
+    return WORKSPACE / "data" / name
+
+
 def protocol_path() -> Path:
     for candidate in (ROOT / PROTOCOL_FILE, ROOT / "docs" / PROTOCOL_FILE):
         if candidate.is_file():
@@ -751,9 +758,9 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--calibration-set", choices=("original", "reserve"), default="original")
     parser.add_argument("--calibration-from", type=Path)
-    parser.add_argument("--gen-profile", type=Path, default=WORKSPACE / "data/p1b-idea-profile.json")
-    parser.add_argument("--audit-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
-    parser.add_argument("--judge-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
+    parser.add_argument("--gen-profile", type=Path, default=default_profile("p1b-idea-profile.json"))
+    parser.add_argument("--audit-profile", type=Path, default=default_profile("p1b-critic-profile.json"))
+    parser.add_argument("--judge-profile", type=Path, default=default_profile("p1b-critic-profile.json"))
     args = parser.parse_args()
     args.out = args.out.resolve()
     outputs_root = ROOT / "outputs"

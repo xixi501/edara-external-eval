@@ -11,8 +11,9 @@ from edara_mvp_eval.epistemic_audit import run_full_audit
 from edara_mvp_eval.llm_client import LLMRunner, ModelEndpoint
 from edara_mvp_eval.schemas import TaskSpec
 
-ROOT = Path(__file__).resolve().parents[2]
-PROFILE_ROOT = ROOT.parents[1] / "data"
+_HERE = Path(__file__).resolve()
+ROOT = _HERE.parents[2] if len(_HERE.parents) >= 3 else _HERE.parents[1]
+PROFILE_ROOT = (ROOT.parents[1] / "data") if len(ROOT.parents) >= 2 else (ROOT / "data")
 SOURCE = Path(__file__).resolve().parents[1] / "src/edara_mvp_eval"
 
 

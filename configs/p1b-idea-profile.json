@@ -1,0 +1,38 @@
+{
+  "account_id": "deepseek",
+  "base_url": "https://api.deepseek.com",
+  "capability_basis": "endpoint",
+  "capability_checked_on": "2026-10-16",
+  "capability_source": "https://api-docs.deepseek.com/quick_start/pricing/; https://api-docs.deepseek.com/api/create-chat-completion/",
+  "capability_verified": true,
+  "context_margin": 4096,
+  "context_window": 1000000,
+  "credential_env": "DEEPSEEK_API_KEY",
+  "max_output_tokens": 393216,
+  "model": "deepseek-flash",
+  "model_family": "deepseek",
+  "parameters": {
+    "max_tokens": 4096,
+    "reasoning_effort": "low",
+    "temperature": 0,
+    "thinking": {
+      "type": "enabled"
+    }
+  },
+  "pricing": {
+    "cached_input_microusd_per_million": 6000,
+    "checked_on": "2026-10-16",
+    "conversion": null,
+    "currency_basis": "USD",
+    "input_microusd_per_million": 300000,
+    "output_microusd_per_million": 1200000,
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified": true,
+    "version": "deepseek-peak-20261016-v1"
+  },
+  "profile_id": "independent-20261019-evidence-v1",
+  "rate_group": "default",
+  "reasoning_in_output": true,
+  "timeout_seconds": 900.0,
+  "tool_protocol": "native"
+}

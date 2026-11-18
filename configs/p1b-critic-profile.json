@@ -1,0 +1,50 @@
+{
+  "account_id": "autodl-glm",
+  "base_url": "https://www.autodl.art/api/v1",
+  "capability_authorization": "2026-10-19 independent research uses the existing explicitly authorized upstream capacity basis; new generation budget30 USD, external evaluation budget0, no prior-run state.",
+  "capability_basis": "upstream_documented_authorized",
+  "capability_checked_on": "2026-10-16",
+  "capability_source": "https://docs.z.ai/guides/vlm/glm-5.3-flash; https://docs.z.ai/api-reference/llm/chat-completion; https://docs.z.ai/guides/capabilities/thinking",
+  "capability_verified": true,
+  "context_margin": 4096,
+  "context_window": 1000000,
+  "credential_env": "AUTODL_API_KEY",
+  "max_output_tokens": 131072,
+  "model": "GLM-5.3-flash",
+  "model_family": "glm",
+  "parameters": {
+    "max_tokens": 4096,
+    "reasoning_effort": "low",
+    "temperature": 1,
+    "thinking": {
+      "clear_thinking": false,
+      "type": "enabled"
+    }
+  },
+  "pricing": {
+    "cached_input_microusd_per_million": 34202,
+    "checked_on": "2026-10-16",
+    "conversion": {
+      "basis": "Standard public rates; no membership discount; accounting estimate, not provider invoice.",
+      "cached_input_cny_per_million": "0.230",
+      "cny_per_usd": "6.7249",
+      "currency": "CNY",
+      "date": "2026-10-14",
+      "input_cny_per_million": "0.800",
+      "output_cny_per_million": "2.800",
+      "rounding": "ceiling_integer_microusd",
+      "source_url": "https://www.chinamoney.org.cn/r/cms/www/chinamoney/data/fx/ccpr-notice2026-10-14.json"
+    },
+    "currency_basis": "USD",
+    "input_microusd_per_million": 118961,
+    "output_microusd_per_million": 416364,
+    "source_url": "https://www.autodl.art/large-model/market/82/GLM-5.3-flash",
+    "verified": true,
+    "version": "autodl-standard-20261016-cfets-20261014-v1"
+  },
+  "profile_id": "independent-20261019-reviewer-v1",
+  "rate_group": "default",
+  "reasoning_in_output": true,
+  "timeout_seconds": 900.0,
+  "tool_protocol": "native"
+}
