@@ -91,7 +91,7 @@ C/E 臂的审计新增 `confound_audit`：针对核心假设列出能产生同�
 
 - Python 3.10+，`pip install -e .`；外部依赖 `alphaideabench`（本地 checkout）与 ClaimNov（路径注入，见 `src/edara_mvp_eval/claimnov_adapter.py`）。
 - 凭据通过环境变量注入，不入库：`DEEPSEEK_API_KEY`（编辑器）、`AUTODL_API_KEY`（评委/审计）。
-- 单元测试：`pytest -q`（104 项）。
+- 单元测试：`pytest -q`（108 项）。
 
 ### 运行
 

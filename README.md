@@ -41,7 +41,7 @@ src/edara_mvp_eval/     外挂与评测实现
   middleware.py        审计→有界修补→复核
   epistemic_audit.py   证据、缺口、规格、ClaimNov 审计
 pilots/                 运行入口与核验脚本
-tests/                  单元测试（104 项）
+tests/                  单元测试（108 项）
 analyses/               历史分析脚本与报告（repair_v3 等）
 docs/                   协议、交接、贡献—证据对应表
 data/                   冻结输入、校准案例、任务清单
