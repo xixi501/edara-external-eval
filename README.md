@@ -6,16 +6,19 @@
 
 ## 从哪里开始
 
-1. [`ARCHITECTURE.md`](ARCHITECTURE.md)：数据流、模块职责、关键不变量。
-2. [`HANDOFF.md`](HANDOFF.md)：当前状态、结论、未决、运行手册、红线。
+1. [`docs/HANDOFF_20261118.md`](docs/HANDOFF_20261118.md)：最新交接（目标、设计、结果、下一步）。
+2. [`ARCHITECTURE.md`](ARCHITECTURE.md)：数据流、模块职责、关键不变量。
+3. [`HANDOFF.md`](HANDOFF.md)：上一阶段的交接、结论、运行手册、红线。
 3. [`docs/EVAL_PROTOCOL_V1_2_ZH.md`](docs/EVAL_PROTOCOL_V1_2_ZH.md)：判读规则。
 4. [`results/RESULTS_20261118_ZH.md`](results/RESULTS_20261118_ZH.md)：本轮结果与解读。
 
 ## 当前状态
 
-- 仪器版本：协议 v1.2（三次评委投票、配对差判定、混淆项审计与强制落实）。
+- 仪器版本：协议 v1.2；诚实轴三处机械问题已修复，三轴校准 12/12 + 6/6 通过。
 - 主样本：15 个 topic、38 份冻结原稿（Direct 15、AI-Scientist 14、E-DARA 9，缺 7 份）。
-- 最近一次正式试验：2026-11-18，38 份原稿。结构化审计对可信度小幅正向（净胜率 +0.222），完整工作流为负向（−0.167），新颖度无变化，诚实轴未通过校准。结果见 [`results/RESULTS_20261118_ZH.md`](results/RESULTS_20261118_ZH.md) 与 [`HANDOFF.md`](HANDOFF.md)。
+- 主试验：C 对 B 可信 **+0.222 [0.089, 0.344]**（要素级 +0.316）；E 对 D **−0.167 [−0.322, −0.044]**；新颖度无变化。
+- 后续（2026-11-18 下午）：新增 claim 级事实审计 pass。Step 1（9 例）审计召回 7/9、编辑落实 7/7；Step 2（27 份，修复前）C 对 B 可信 +0.222 [0.014, 0.417]、诚实 +0.104、R−E +0.077、新颖 0；随后修复了强制落实字段映射与槽规则两处 bug，**held-out 尚未验证**。
+- 接管入口：[`docs/HANDOFF_20261118.md`](docs/HANDOFF_20261118.md)；Step 2 结果：[`docs/STEP2_RESULT_20261118.md`](docs/STEP2_RESULT_20261118.md)；数据：[`results/20261118_claim_audit/`](results/20261118_claim_audit/)。
 - E-DARA 主体代码在另一个仓库 [`xixi501/edara`](https://github.com/xixi501/edara)，本仓库不修改它。
 
 ## 试验设计（简述）

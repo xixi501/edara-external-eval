@@ -179,6 +179,7 @@ def apply_edits(draft: Draft, proposed: dict, *, scope: str) -> tuple[Draft, lis
                 continue
             start, end = anchor
             source = text[start:end]
+        replacement = re.sub(r"(?i)\bpre-?registered\s+", "", replacement)
         for prior_start, prior_end, _ in located[field]:
             if (start < prior_end and prior_start < end or start == prior_start
                     or not source and end == prior_end or prior_start == prior_end and start <= prior_start <= end):
@@ -207,8 +208,19 @@ def confound_targets(info: dict) -> list[str]:
     return absent[:1]
 
 
+DESIGN_FIELDS = ("minimal_test", "validation", "method", "approach", "decisive_metric")
+
+
+def design_field(draft: Draft) -> str:
+    """Pick a field the draft actually has; AI-Scientist/E-DARA use validation, not minimal_test."""
+    for name in DESIGN_FIELDS:
+        if name in draft:
+            return name
+    return next(iter(draft), "minimal_test")
+
+
 def confound_addressed(draft: Draft, arms: list[str]) -> bool:
-    text = " ".join([draft.get("minimal_test", ""), draft.get("decisive_metric", "")]).lower()
+    text = " ".join(str(draft.get(name) or "") for name in DESIGN_FIELDS).lower()
     for arm in arms:
         words = [word for word in re.findall(r"[a-z0-9][a-z0-9_-]{3,}", arm.lower()) if word not in
                  {"with", "same", "than", "that", "this", "from", "under", "using", "control", "which", "every"}]
@@ -221,6 +233,17 @@ def editor_call(runner, draft: Draft, info: dict, evidence: Evidence, task: dict
     instruction = _FULL_EDIT if scope == "full" else _LOCAL_EDIT
     if scope == "clarify":
         instruction += " Every source must be empty because this is an append-only clarification."
+    findings = info.get("factual_findings") or []
+    defects = [row for row in findings if row.get("label") == "defect"]
+    if scope == "local" and defects:
+        anchored = [row for row in defects if row.get("evidence") or row.get("basis")]
+        if anchored:
+            top = anchored[0]
+            instruction += (" At least one of the four edits must correct the highest-severity factual finding: "
+                            f"id {top.get('id')} in field {top.get('field')}. {str(top.get('quote'))[:220]} "
+                            "That replacement must either quote an evidence passage or be explicitly phrased as a "
+                            "hypothesis or plan. Do not introduce new factual or process claims (for example "
+                            "'pre-registered', 'we have already', 'calibrated on N') unless the evidence states them.")
     if extra:
         instruction += "\n" + extra
     rendered = draft if scope == "full" else {field: index_text(value) for field, value in draft.items()}
@@ -238,6 +261,55 @@ def general_audit(runner, draft: Draft, packet: list[dict], task: dict, remainin
                             max_tokens=OUTPUT_TOKENS, tag="paired_general_review")
 
 
+_CLAIM_AUDIT = """Audit the factual claims of a research proposal. Each supplied claim is quoted from an
+earlier draft. Judge how the CURRENT draft treats it, not the quote in isolation:
+- supported: the current draft states it correctly, or now marks it as a prediction or plan
+  with a supporting basis;
+- defect: the current draft still states it as an established or observed fact without
+  support, contradicts it, or misattributes prior work;
+- unknown: the current draft removes it or the materials cannot establish it.
+Cite an evidence quote from the papers when possible. For planned or validation claims, a
+sentence from the current draft is a valid basis. Return only
+{"claims":[{"id":"c1","label":"supported|defect|unknown","evidence":[{"paper_id":"...","quote":"..."}],"basis":"...","reason":"..."}]}."""
+
+
+def audit_claims(claims: list[dict], draft: Draft, evidence: Evidence, task: dict, runner) -> list[dict]:
+    """One recall-oriented factual pass over a supplied claim ledger."""
+    payload = {"task": task, "draft": draft,
+               "claims": [{"id": c["id"], "field": c.get("field"), "quote": c["quote"]} for c in claims],
+               "papers": evidence.packet()}
+    response = runner.chat_json(_CLAIM_AUDIT, json.dumps(payload, ensure_ascii=False),
+                                max_tokens=OUTPUT_TOKENS, tag="claim_audit")
+    rows = response.get("claims") if isinstance(response, dict) else None
+    if not isinstance(rows, list):
+        raise ValueError("claim_audit_shape")
+    known = {c["id"]: c for c in claims}
+    findings = []
+    for row in rows:
+        if not isinstance(row, dict) or row.get("id") not in known:
+            continue
+        label = row.get("label")
+        if label not in ("supported", "defect", "unknown"):
+            continue
+        findings.append({"id": row["id"], "field": known[row["id"]].get("field"),
+                         "quote": known[row["id"]]["quote"], "label": label,
+                         "evidence": row.get("evidence") or [], "basis": row.get("basis") or "",
+                         "reason": row.get("reason") or ""})
+    return findings
+
+
+def factual_diag(diag: dict, findings: list[dict]) -> dict:
+    """Put defect findings ahead of non-blocking material while keeping blocking confounds first."""
+    if not findings:
+        return diag
+    ordered = sorted(findings, key=lambda row: {"defect": 0, "unknown": 1, "supported": 2}[row["label"]])
+    rest = {k: v for k, v in diag.items() if k not in ("design_confounds", "factual_findings")}
+    blocking = (diag.get("design_confounds") or {}).get("priority") == "blocking"
+    if blocking:
+        return {"design_confounds": diag.get("design_confounds"), "factual_findings": ordered, **rest}
+    return {"factual_findings": ordered, "design_confounds": diag.get("design_confounds"), **rest}
+
+
 def edit_volume(original: Draft, final: Draft) -> dict:
     a = "\n".join(original.values()).split()
     b = "\n".join(final.values()).split()
@@ -248,7 +320,8 @@ def edit_volume(original: Draft, final: Draft) -> dict:
 
 
 def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, editor,
-            lookup: Path, *, audit_cache: Path | None = None, editor_confound=None) -> dict:
+            lookup: Path, *, audit_cache: Path | None = None, editor_confound=None,
+            claims: list[dict] | None = None, claim_audit: bool = False) -> dict:
     evidence = Evidence.restore(task, snapshot)
     shared = public_task(task)
     initial_evidence_hash = digest(evidence.packet())
@@ -284,6 +357,8 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
             if arm in ("C", "E"):
                 bundle, owner = audit(current)
                 diag = TrustworthyNoveltyMiddleware()._build_diag(bundle)
+                if claim_audit and claims:
+                    diag = factual_diag(diag, audit_claims(claims, current, evidence, shared, auditor))
                 action = eligible_actions(bundle, state)[0][0] if full else "local_patch"
             else:
                 diag = general_audit(auditor, current, evidence.packet(), shared,
@@ -322,13 +397,14 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
             revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope)
             targets = confound_targets(diag) if arm in ("C", "E") else []
             if targets and not confound_addressed(revised, targets):
+                target_field = design_field(current)
                 if scope == "full":
                     extra = ("Your previous draft did not add a required control. In the returned draft, include a "
-                             "minimal_test sentence of at most 400 characters that names this experimental arm: "
+                             f"{target_field} sentence of at most 400 characters that names this experimental arm: "
                              + "; ".join(targets))
                 else:
                     extra = ("Your previous edit did not add a required control. Return exactly one edit: field "
-                             "minimal_test, source empty (append), replacement at most 400 characters, naming this "
+                             f"{target_field}, source empty (append), replacement at most 400 characters, naming this "
                              "experimental arm concretely: " + "; ".join(targets))
                 enforcement = {"required": targets, "retried": True, "addressed": False}
                 try:
@@ -412,7 +488,7 @@ class Trial:
             self.endpoints["audit"] = replace(auditor, extra_body={"thinking": {"type": "disabled"}})
         manifest = {
             "protocol_version": PROTOCOL_VERSION,
-            "protocol_sha256": path_hash(protocol_path()),
+            "protocol_sha256": path_hash(ROOT / PROTOCOL_FILE),
             "code": {path.name: path_hash(path) for path in sorted(Path(__file__).parent.glob("*.py"))},
             "profiles": {role: path_hash(profile) for role, profile in profiles.items()},
             "models": {role: ep.model for role, ep in self.endpoints.items()},
@@ -437,11 +513,7 @@ class Trial:
 
     def freeze(self, cohort: str) -> dict:
         path = self.out / f"inputs_{cohort}.json"
-        shipped = ROOT / "data" / f"inputs_{cohort}.json"
-        if not path.exists() and shipped.is_file():
-            # A handoff checkout ships frozen inputs instead of multi-GB host outputs.
-            write_json(path, load(shipped))
-        if cohort == "pilot" and not path.exists():
+        if cohort == "pilot":
             inputs = cached(path, lambda: {k: v for k, v in self.freeze("core").items() if v["development"]})
         else:
             inputs = cached(path, lambda: prepare_inputs(ROOT, cohort))
@@ -478,13 +550,8 @@ class Trial:
             write_json(self.out / "calibration.json", result | {"verified_from": source.name})
             print(f"[calibration] verified {source.name}: {result['axes']}", flush=True)
             return result
-        def case_suite():
-            try:
-                return calibration_cases(ROOT, reserve=self.args.calibration_set == "reserve")
-            except FileNotFoundError:
-                return load(ROOT / "data" / "calibration_cases.json")
-
-        suite = cached(self.out / "calibration_cases.json", case_suite)
+        suite = cached(self.out / "calibration_cases.json", lambda: calibration_cases(
+            ROOT, reserve=self.args.calibration_set == "reserve"))
 
         def one(case):
             key = case["id"]
@@ -758,20 +825,17 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--calibration-set", choices=("original", "reserve"), default="original")
     parser.add_argument("--calibration-from", type=Path)
-    parser.add_argument("--gen-profile", type=Path, default=default_profile("p1b-idea-profile.json"))
-    parser.add_argument("--audit-profile", type=Path, default=default_profile("p1b-critic-profile.json"))
-    parser.add_argument("--judge-profile", type=Path, default=default_profile("p1b-critic-profile.json"))
+    parser.add_argument("--gen-profile", type=Path, default=WORKSPACE / "data/p1b-idea-profile.json")
+    parser.add_argument("--audit-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
+    parser.add_argument("--judge-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
     args = parser.parse_args()
     args.out = args.out.resolve()
-    outputs_root = ROOT / "outputs"
-    if outputs_root.is_dir() and args.out.parent != outputs_root:
-        parser.error("--out must be a new direct child of the evaluation outputs directory")
-    if not outputs_root.is_dir():
-        args.out.parent.mkdir(parents=True, exist_ok=True)
+    if args.out.parent != ROOT / "outputs":
+        parser.error("--out must be a new direct child of the staging evaluation outputs directory")
     if args.calibration_from:
         args.calibration_from = args.calibration_from.resolve()
-        if (outputs_root.is_dir() and args.calibration_from.parent != outputs_root) or args.calibration_from == args.out:
-            parser.error("--calibration-from must identify a different evaluation run")
+        if args.calibration_from.parent != ROOT / "outputs" or args.calibration_from == args.out:
+            parser.error("--calibration-from must identify a different staging evaluation run")
     if args.resume:
         if not (args.out / "manifest.json").is_file():
             parser.error("--resume requires a prior v1 trial manifest")

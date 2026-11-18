@@ -259,7 +259,7 @@ def lookup_pointer(pointer: str, passages: dict[str, str]) -> str | None:
     """Resolve a passage reference written as an ID, 'A3: text', or the text itself."""
     if pointer in passages:
         return passages[pointer]
-    match = re.match(r"^([AN]\d+)\s*[:.\-–]\s*(.*)$", pointer.strip())
+    match = re.match(r"^([AN]\d+)\b\s*[:.\-–]?\s*(.*)$", pointer.strip())
     if match:
         if match.group(1) in passages:
             return passages[match.group(1)]
@@ -349,9 +349,21 @@ def honesty_score(raw: dict, original: Draft, candidate: Draft, claims: list[dic
         return unchanged_honesty(claims)
     result = Honesty.model_validate(raw)
     by_id = {row["id"]: row for row in claims}
+    marker_ids = [item.id for item in result.changes if item.id not in by_id and re.fullmatch(r"@\d+", item.id)]
+    mapped_markers = False
+    if marker_ids and len(result.changes) == len(by_id):
+        # A judge sometimes reuses sentence markers as claim IDs. With one change per
+        # frozen claim, map them in order instead of discarding the whole judgment.
+        order = sorted(by_id)
+        mapped = dict(zip(sorted(marker_ids, key=lambda value: int(value[1:])), order))
+        result = result.model_copy(update={"changes": [
+            item.model_copy(update={"id": mapped.get(item.id, item.id)}) for item in result.changes]})
+        if mapped:
+            marker_ids = []
+            mapped_markers = True
     counts = {"K": len(by_id), "R": 0, "E": 0, "deleted": 0, "coverage_gains": 0, "unknown": 0}
     transitions = {}
-    repairs = []
+    repairs = ["mapped_marker_ids"] if mapped_markers else []
     seen = set()
 
     for item in result.changes:
@@ -366,8 +378,11 @@ def honesty_score(raw: dict, original: Draft, candidate: Draft, claims: list[dic
         label = item.label
         if label == "same":
             if not frozen_present:
-                label = "unknown"
-                repairs.append("same_anchor_missing")
+                if item.span is not None and anchored(item.span, candidate):
+                    repairs.append("same_paraphrase_anchor")
+                else:
+                    label = "unknown"
+                    repairs.append("same_anchor_missing")
         elif label == "deleted":
             if frozen_present:
                 label = "same"

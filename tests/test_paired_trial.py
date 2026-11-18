@@ -344,3 +344,34 @@ def test_confound_targets_use_the_single_decisive_arm():
                               ["always-retrieve arm"])
     assert not confound_addressed({"minimal_test": "Nothing relevant.", "decisive_metric": ""},
                                   ["always-retrieve arm"])
+
+
+def test_reference_without_colon_and_marker_ids_and_paraphrased_same():
+    from edara_mvp_eval.paired_review import lookup_pointer
+    assert lookup_pointer("A1 The controller was introduced by them.", {"A1": "The controller was introduced by them."}) == \
+        "The controller was introduced by them."
+
+    original = {"claim": "We introduce a new controller for memory allocation."}
+    candidate = {"claim": "The controller for memory allocation was originally introduced by S001."}
+    claims = [{"id": "c1", "field": "claim", "quote": original["claim"]}]
+    baseline = {"c1": {"label": "defect"}}
+    packet = [{"paper_id": "S001", "attribution_passages": ["The controller was introduced by S001."]}]
+    raw = {"changes": [{"id": "@1", "label": "supported", "reason": "fixed attribution",
+                        "span": {"field": "claim", "quote": candidate["claim"]},
+                        "evidence": [{"paper_id": "S001", "quote": "The controller was introduced by S001."}]}],
+           "added": []}
+    outcome = honesty_score(raw, original, candidate, claims, baseline, packet)
+    assert outcome["R"] == 1 and outcome["score"] == 1.0
+    assert "mapped_marker_ids" in outcome["repairs"]
+
+
+def test_design_field_picks_existing_field_and_strips_preregistration():
+    from edara_mvp_eval.paired_trial import design_field, apply_edits
+    assert design_field({"validation": "x"}) == "validation"
+    assert design_field({"minimal_test": "x", "validation": "y"}) == "minimal_test"
+    draft = {"validation": "Baseline: none."}
+    _, log = apply_edits(draft, {"edits": [{"field": "validation", "source": "",
+                                            "replacement": "with a pre-registered sweep grid"}]},
+                         scope="local")
+    assert log[0]["status"] == "applied"
+    assert "pre-registered" not in log[0]["replacement"].lower()
