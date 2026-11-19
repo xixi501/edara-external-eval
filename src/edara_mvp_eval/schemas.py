@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from typing import Any, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class PriorWorkItem(BaseModel):
@@ -120,6 +120,11 @@ class ConfoundItem(BaseModel):
     status: Literal["present", "absent", "ambiguous"] = "absent"
     anchor: dict[str, Any] | None = None
     why_not_enough: str = ""
+
+    @field_validator("same_observation_if", "why_not_enough", mode="before")
+    @classmethod
+    def _coerce_none_to_empty(cls, value: Any) -> Any:
+        return "" if value is None else value
 
 
 class ConfoundAuditResult(BaseModel):

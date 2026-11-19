@@ -577,3 +577,161 @@ def test_preserves_related_work_anchors_and_expanded_preregistered_patterns():
     assert "supporting_result" in fields
     assert "falsifying_result" not in fields
 
+
+def test_schema_none_tolerance_editor_json_retry_clarify_antishrink_and_post_search_bonus(tmp_path):
+    from edara_mvp_eval.paired_trial import apply_edits, editor_call, run_arm
+    from edara_mvp_eval.schemas import ConfoundItem
+
+    # 1. ConfoundItem coerces None -> "" on why_not_enough / same_observation_if
+    ci = ConfoundItem.model_validate({
+        "alternative": "Shortcut features",
+        "same_observation_if": None,
+        "discriminating_arm": "Permutation control",
+        "why_not_enough": None,
+    })
+    assert ci.why_not_enough == ""
+    assert ci.same_observation_if == ""
+
+    # 2. apply_edits(..., scope="clarify") rejects destructive long shrinking replacements
+    long_span = "X" * 200
+    draft_long = {"method": f"Intro. {long_span} End."}
+    kept, log = apply_edits(
+        draft_long,
+        {"edits": [{"field": "method", "source": long_span, "replacement": "Y" * 50}]},
+        scope="clarify",
+    )
+    assert kept == draft_long
+    assert log[0]["status"] == "rejected"
+    assert log[0]["reason"] == "clarify_destructive_shrink"
+
+    # 3. editor_call retries once on transient JSONDecodeError
+    class FlakyEditor:
+        def __init__(self):
+            self.calls = 0
+
+        def chat_json(self, system, user, **kwargs):
+            self.calls += 1
+            if self.calls == 1:
+                raise json.JSONDecodeError("truncated", "{", 1)
+            return {"draft": {"hypothesis": "Clean revised hypothesis."}}
+
+    ed = FlakyEditor()
+    rev_draft, rev_log = editor_call(
+        ed, {"hypothesis": "Old hypothesis."}, {}, Evidence(_task()), {"title": "t"}, scope="full"
+    )
+    assert ed.calls == 2
+    assert rev_draft["hypothesis"] == "Clean revised hypothesis."
+    assert rev_log[0]["action"] == "rewrite"
+
+    # 4. Bounded +1 post-search concluding guided_revise when round 3 runs seek_evidence and adds papers
+    class LookupWithNewPaper:
+        def __init__(self):
+            self.events = []
+
+        def search(self, query):
+            return [
+                PriorWorkItem(
+                    id="P_NEW",
+                    title="NewPostCutoffPreprintControl",
+                    abstract="Matched control lowers variance by 12%.",
+                    year="2024",
+                    publication_date="2024-02-01",
+                    date_source="test",
+                    version="v1",
+                    source="lit2test_paper",
+                )
+            ]
+
+    import edara_mvp_eval.paired_trial as pt
+
+    class DummyAudit:
+        def __init__(self):
+            self.index = 0
+            self.reused = 0
+
+        def chat_json(self, *args, **kwargs):
+            return {}
+
+    class DummyEditor:
+        def __init__(self):
+            self.guided_calls = 0
+
+        def chat_json(self, system, user, **kwargs):
+            if "guided_revise" in system:
+                self.guided_calls += 1
+                return {"draft": {"hypothesis": f"Updated hypothesis incorporating round {self.guided_calls}."}}
+            return {"edits": [{"field": "minimal_test", "source": "", "replacement": "Add permutation arm."}]}
+
+    orig_audit = pt.run_full_audit
+    orig_store = pt.EvidenceStore
+    orig_eligible = pt.eligible_actions
+    calls = {"step": 0}
+
+    def fake_audit(*args, **kwargs):
+        from edara_mvp_eval.schemas import FullAuditBundle, IntegrityGateResult, NormalizedProposal
+        draft_arg = args[2]
+        return FullAuditBundle(
+            task_id=_task().task_id,
+            arm="E",
+            proposal=NormalizedProposal(
+                task_id=_task().task_id,
+                title=draft_arg.get("title", "Test"),
+                literature_gap=draft_arg.get("literature_gap", "Gap."),
+                hypothesis=draft_arg.get("hypothesis", "H1."),
+                method=draft_arg.get("method", "M1."),
+                minimal_test=draft_arg.get("minimal_test", "Compare against baseline."),
+                decisive_metric=draft_arg.get("decisive_metric", "Delta."),
+                supporting_result=draft_arg.get("supporting_result", "Gain > 0."),
+                falsifying_result=draft_arg.get("falsifying_result", "Gain <= 0."),
+            ),
+            tri_state=TriStateAuditResult(),
+            gap_audit=GapAuditResult(items=[]),
+            claimnov=ClaimNovAuditResult(),
+            spec_audit=SpecAuditResult(defects=[]),
+            governance=IdeaGovernanceResult(action="seek_evidence", defect="coverage"),
+            gate=IntegrityGateResult(gate_pass=True),
+        )
+
+    def fake_eligible(bundle, state, *, allow_guided_revise=False):
+        calls["step"] += 1
+        if state.needs_post_search_revision:
+            return [("guided_revise", "incorporate_retrieved_evidence")]
+        if calls["step"] <= 2:
+            return [("clarify", "blocking_spec_defect")]
+        if not state.searched:
+            return [("seek_evidence", "novelty_evidence_missing")]
+        return [("retain_and_test", "done")]
+
+    try:
+        pt.run_full_audit = fake_audit
+        pt.EvidenceStore = lambda lookup, task: LookupWithNewPaper()
+        pt.eligible_actions = fake_eligible
+        out = run_arm(
+            "E",
+            {
+                "title": "Test",
+                "hypothesis": "H1.",
+                "method": "M1.",
+                "minimal_test": "Compare against baseline.",
+                "decisive_metric": "Delta.",
+                "supporting_result": "Gain > 0.",
+                "falsifying_result": "Gain <= 0.",
+                "literature_gap": "Gap.",
+                "related_work": "DynamicKV.",
+            },
+            _task(),
+            Evidence(_task()).snapshot(),
+            DummyAudit(),
+            DummyEditor(),
+            tmp_path,
+        )
+    finally:
+        pt.run_full_audit = orig_audit
+        pt.EvidenceStore = orig_store
+        pt.eligible_actions = orig_eligible
+
+    actions = [h["action"] for h in out["history"]]
+    assert actions == ["clarify", "clarify", "seek_evidence", "guided_revise"]
+    assert "Updated hypothesis incorporating round 1." in out["draft"]["hypothesis"]
+
+

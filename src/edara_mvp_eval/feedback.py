@@ -26,6 +26,7 @@ class PolicyState:
     clarified: bool = False
     searched: bool = False
     revised: bool = False
+    revision_blocked: bool = False
     needs_post_search_revision: bool = False
 
 
@@ -91,7 +92,7 @@ def eligible_actions(
             actions.append(("guided_revise", "incorporate_retrieved_evidence"))
         if not state.regenerated and _should_regenerate(bundle, state):
             actions.append(("regenerate", "core_covered_by_prior_work"))
-        if not state.revised and _needs_guided_revise(bundle, state):
+        if not state.revised and not state.revision_blocked and _needs_guided_revise(bundle, state):
             actions.append(("guided_revise", "governed_multifield_revision"))
         if (not state.searched and governance and governance.action == "seek_evidence"
                 and getattr(governance, "defect", "none") != "localization"):

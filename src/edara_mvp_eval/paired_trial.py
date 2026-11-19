@@ -127,12 +127,7 @@ class TrialRunner(RecordedRunner):
         # Budget counts executed calls only; a cached audit owned by another arm is free.
         if self.index >= self.limit:
             raise BudgetExceeded("model_call_limit")
-        extra_body = self.endpoint.extra_body if isinstance(self.endpoint.extra_body, dict) else {}
-        thinking_cfg = extra_body.get("thinking")
-        thinking_disabled = isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled"
-        augment = (not thinking_disabled) and (bool(extra_body) or "glm" in self.endpoint.model.lower())
-        cap = JUDGE_OUTPUT_TOKENS if self.stage in JUDGE_STAGES else (
-            OUTPUT_TOKENS - 2048 if augment else OUTPUT_TOKENS)
+        cap = JUDGE_OUTPUT_TOKENS if self.stage in JUDGE_STAGES else OUTPUT_TOKENS
         kwargs["max_tokens"] = min(kwargs.get("max_tokens", cap), cap)
         return super().chat_text(system, user, **kwargs)
 
@@ -205,6 +200,9 @@ def apply_edits(draft: Draft, proposed: dict, *, scope: str, max_edits: int = 4)
             start, end = anchor
             source = text[start:end]
         replacement = clean_replacement_text(replacement)
+        if scope == "clarify" and source and len(source) > 160 and len(replacement) < int(len(source) * 0.85):
+            resolved.append({"status": "rejected", "reason": "clarify_destructive_shrink", "proposal": edit})
+            continue
         for prior_start, prior_end, _ in located[field]:
             if (start < prior_end and prior_start < end or start == prior_start
                     or not source and end == prior_end or prior_start == prior_end and start <= prior_start <= end):
@@ -277,11 +275,22 @@ def editor_call(
     clean_view = filter_proposal_fields(draft) if len(draft) > 30 else draft
     clean_view = clean_view or draft
     rendered = clean_view if scope == "full" else {field: index_text(value) for field, value in clean_view.items()}
-    response = runner.chat_json(_EDIT + "\n" + instruction,
-                                json.dumps({"task": task, "draft": rendered, "diagnosis": info,
-                                            "papers": evidence.packet()}, ensure_ascii=False),
-                                max_tokens=OUTPUT_TOKENS, tag="paired_edit")
-    return apply_edits(draft, response, scope=scope, max_edits=max_edits)
+    base_payload = json.dumps({"task": task, "draft": rendered, "diagnosis": info,
+                               "papers": evidence.packet()}, ensure_ascii=False)
+    for attempt in range(2):
+        prompt_suffix = (
+            ""
+            if attempt == 0
+            else "\nRetry: previous response was invalid or truncated JSON/schema. Emit ONE strictly valid, compact JSON object updating ONLY the essential changed fields; keep text concise."
+        )
+        try:
+            response = runner.chat_json(_EDIT + "\n" + instruction + prompt_suffix,
+                                        base_payload,
+                                        max_tokens=OUTPUT_TOKENS, tag="paired_edit")
+            return apply_edits(draft, response, scope=scope, max_edits=max_edits)
+        except (json.JSONDecodeError, ValueError):
+            if attempt == 1:
+                raise
 
 
 def general_audit(runner, draft: Draft, packet: list[dict], task: dict, remaining: int, *, full: bool):
@@ -383,7 +392,14 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
         return FullAuditBundle.model_validate(record["bundle"]), record["owner"]
 
     try:
-        for _ in range(limit["rounds"]):
+        round_idx = 0
+        post_search_bonus_used = False
+        while round_idx < limit["rounds"] or (
+            arm == "E" and state.needs_post_search_revision and not post_search_bonus_used
+        ):
+            if round_idx >= limit["rounds"]:
+                post_search_bonus_used = True
+            round_idx += 1
             if arm in ("C", "E"):
                 bundle, owner = audit(current)
                 diag = TrustworthyNoveltyMiddleware()._build_diag(bundle)
@@ -422,12 +438,13 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         if marker:
                             retrieved.append({"marker": marker, "paper": paper.model_dump()})
                 added_count = len(retrieved) - before_retrieved
-                if action == "seek_evidence" and added_count > 0:
+                if action == "seek_evidence" and (added_count > 0 or state.revision_blocked):
                     state.needs_post_search_revision = True
+                    state.revision_blocked = False
                 record["found"] = [row["marker"] for row in retrieved]
                 continue
             scope = "full" if action in ("regenerate", "revise", "guided_revise") else "clarify" if action == "clarify" else "local"
-            max_edits = 8 if (arm == "E" and scope != "full") else 4
+            max_edits = 4
             if action == "regenerate":
                 guidance = diag | {"requested_change": "Replace the covered core with a different scientific proposal."}
                 extra_inst = ""
@@ -498,11 +515,17 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                     if isinstance(row, dict)
                 ]
                 preserved, regressions = preserves_design_elements(current, revised, prior_work_titles=titles)
+                if action in ("local_patch", "clarify"):
+                    before_chars = sum(len(str(v)) for v in current.values())
+                    after_chars = sum(len(str(v)) for v in revised.values())
+                    if before_chars >= 1200 and after_chars < int(before_chars * 0.85):
+                        preserved = False
+                        regressions = [*regressions, f"excessive_shrinkage:{before_chars}->{after_chars}"]
                 if not preserved:
                     retry_hint = (
                         "Your previous revision violated design/grounding preservation ("
                         + ", ".join(regressions)
-                        + "). Restore all dropped controls and supplied packet citations verbatim while keeping your fixes."
+                        + "). Keep existing grounded content intact and restore all dropped controls and supplied packet citations verbatim while keeping your fixes."
                     )
                     try:
                         retried, retry_log = editor_call(
@@ -513,17 +536,28 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         retried = None
                     if retried is not None:
                         p2, r2 = preserves_design_elements(current, retried, prior_work_titles=titles)
+                        if action in ("local_patch", "clarify"):
+                            b2 = sum(len(str(v)) for v in current.values())
+                            a2 = sum(len(str(v)) for v in retried.values())
+                            if b2 >= 1200 and a2 < int(b2 * 0.85):
+                                p2 = False
+                                r2 = [*r2, f"excessive_shrinkage:{b2}->{a2}"]
                         if p2:
                             revised = retried
                             preserved = True
                             record["preservation_retry"] = {"recovered": True, "regressions": regressions}
                         else:
                             regressions = r2
+                            record["preservation_retry"] = {"recovered": False, "regressions": regressions}
                     if not preserved:
                         record["design_regression_blocked"] = regressions
                         revised = current
             if action == "guided_revise":
-                state.revised = True
+                if record.get("design_regression_blocked") and revised == current:
+                    state.revision_blocked = True
+                else:
+                    state.revised = True
+                    state.revision_blocked = False
                 state.needs_post_search_revision = False
             if action == "clarify":
                 state.clarified = True
