@@ -65,7 +65,7 @@ def protocol_path() -> Path:
 ARMS = ("A", "B", "C", "D", "E")
 COMPARISONS = {"C_vs_B": ("B", "C"), "E_vs_D": ("D", "E")}
 LIMITS = {"local": {"audit": 64, "editor": 1, "queries": 0, "rounds": 1},
-          "full": {"audit": 128, "editor": 4, "queries": 2, "rounds": 3}}
+          "full": {"audit": 128, "editor": 6, "queries": 2, "rounds": 3}}
 OUTPUT_TOKENS = 4096
 JUDGE_OUTPUT_TOKENS = 8192
 JUDGE_STAGES = ("original", "honesty", "credibility", "novelty", "forward", "reverse", "repeat",

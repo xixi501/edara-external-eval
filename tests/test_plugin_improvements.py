@@ -734,4 +734,9 @@ def test_schema_none_tolerance_editor_json_retry_clarify_antishrink_and_post_sea
     assert actions == ["clarify", "clarify", "seek_evidence", "guided_revise"]
     assert "Updated hypothesis incorporating round 1." in out["draft"]["hypothesis"]
 
+    # 5. Generic compound descriptors like "Multi-Hop" do not trigger false supplied-reference blocks
+    from edara_mvp_eval.host_adapter import _title_anchor_tokens
+    assert "Multi-Hop" not in _title_anchor_tokens("Multi-Hop Question Answering in Unlearning")
+
+
 

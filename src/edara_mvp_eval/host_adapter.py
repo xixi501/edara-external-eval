@@ -293,8 +293,9 @@ def extract_design_elements(draft: Any) -> dict[str, bool]:
 
 
 _GENERIC_TITLE_HYPHEN_RE = re.compile(
-    r"^(?:multi-agent|zero-shot|few-shot|one-shot|end-to-end|real-time|large-scale|"
-    r"open-vocabulary|closed-set|cross-domain|pre-trained|fine-tuned|test-time|"
+    r"^(?:multi-agent|multi-hop|single-hop|multi-step|multi-turn|multi-task|zero-shot|few-shot|one-shot|"
+    r"end-to-end|real-time|large-scale|open-vocabulary|open-domain|closed-set|cross-domain|cross-modal|"
+    r"pre-trained|fine-tuned|test-time|in-context|self-consistency|black-box|white-box|"
     r"task-aware|query-aware|layer-wise|long-context|high-level|low-cost)$",
     re.I,
 )
