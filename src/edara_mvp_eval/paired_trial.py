@@ -611,6 +611,27 @@ class Trial:
 
     def calibrate(self) -> dict:
         if self.eval_mode == "unified":
+            if self.args.calibration_from:
+                source = self.args.calibration_from
+                stamp = load(source / "manifest.json")
+                if (stamp.get("eval_mode") != "unified"
+                        or stamp.get("profiles", {}).get("judge") != self.manifest["profiles"]["judge"]
+                        or stamp.get("code", {}).get("unified_eval.py") != self.manifest["code"]["unified_eval.py"]
+                        or stamp.get("code", {}).get("llm_client.py") != self.manifest["code"]["llm_client.py"]):
+                    raise RuntimeError("Unified calibration evaluator or judge profile differs")
+                result = load(source / "calibration.json")
+                cases = load(source / "calibration_cases.json")
+                if not result.get("qualified") or len(cases) < 8:
+                    raise RuntimeError("Source unified calibration is not qualified")
+                write_json(self.out / "calibration_cases.json", cases)
+                write_json(self.out / "calibration.json", result | {"verified_from": source.name})
+                print(
+                    f"[calibration:unified] verified {source.name}: "
+                    f"substantive={result['substantive_correct']}/{result['substantive_total']} "
+                    f"sham={result['sham_ties']}/{result['sham_total']} qualified={result['qualified']}",
+                    flush=True,
+                )
+                return result
             suite = cached(
                 self.out / "calibration_cases.json",
                 lambda: [

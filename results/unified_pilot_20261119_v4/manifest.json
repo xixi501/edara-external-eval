@@ -10,17 +10,17 @@
     "cli.py": "e875c674ced048045bd523e9cb61e7da660ed282a4822279b9760a9ae20a079c",
     "confound_audit.py": "2af69c48e93b30e1d92e9cba369d99433d98782574de7a39f533f1b710e8256f",
     "epistemic_audit.py": "3ee7f437c31e192c03dc0a9c1b82769d033e27461fa9261ed361d7b28f092849",
-    "factual_audit.py": "0e3b435e920567bdcdf0ea8043a992caac9a7402214b4b802f073ae29a33ad83",
+    "factual_audit.py": "d27f70a3d0caa14fa81091e992e723778d842458e4f5e0c7883adad904f4e409",
     "feedback.py": "6f5299572922080b91920fcff75ece1d54b601115a7bcded1a13b2f273e5020c",
     "governance.py": "96f6910df6ed40b0c85dd9e91b1c5c0927c74e4113c6ba7af9a367b7f5bb5d97",
-    "host_adapter.py": "df957fc584de6d3c9b4b77e0b09d4a4456201b37944886a7f715de4f125df54c",
+    "host_adapter.py": "729e0e1ff5a46632b123a616a0475f1a7377342e48092788bdc5c352e25bb4e3",
     "literature_scout.py": "4e9fa3387d90e686af621f5f2dc799d5794f309e33a13163744d848ac34f0ab2",
     "llm_client.py": "39f1c30ba650270ed8c9219d22bb2a7c3bf1326746cdecc0de6e51f4ab611d84",
-    "middleware.py": "4ba96b8422e1a0d29b3c0a7b4bd6754f456d507542c8dbf1bf4b25b455df7fd1",
+    "middleware.py": "fe8cffd20f11b14180cec63bf6a6b6a7a0253f9898c08e8f32aa2aab0ce580bf",
     "paired_calibration.py": "4ab8728506847ae6e33079e1d50cd0261bd138acd0745ade88bfbdfac2b04c1a",
     "paired_inputs.py": "fddf291b9b89dc776a9600210e7200cdfce8ca9f0ce05989ed5fa61b0cbc0503",
     "paired_review.py": "161bf8789e312b1b2c26d2204c7a565ba06524c08bbb24b9ecb044d82e7058e4",
-    "paired_trial.py": "c595b9ca019fee56bc4c0485fa9a3d6f1e5399fabd9ee7f060a1f4d16c31ecb9",
+    "paired_trial.py": "0a8c3a17286aa1ff78748d6f2d963991e883c26b29422eedf69f56cb78c8a31c",
     "pairwise.py": "bc813342d3e60018abdd003e621e5c335c2bf394ca64dae4c8102106547b60de",
     "reeval.py": "d3103287d96c710d89438a7f08bdee8664c2c1a831ec41c8da9a9a4de2bd7790",
     "schemas.py": "eaf4a5e27c5c0afcb97ef5008c0a85aaa75d98d5628c327d78c7fa3f7b2a87ca",
@@ -75,5 +75,9 @@
       "type": "disabled"
     }
   },
-  "eval_mode": "unified"
+  "eval_mode": "unified",
+  "calibration_source": {
+    "run": "unified_pilot_20261118_v3",
+    "sha256": "b2408f2975d5e0fe7a298de4c5f261e5d4cfece891bcd5543f68340a68ed975a"
+  }
 }

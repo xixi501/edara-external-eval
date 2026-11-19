@@ -267,5 +267,6 @@
       "correct": true
     }
   ],
-  "eval_mode": "unified"
+  "eval_mode": "unified",
+  "verified_from": "unified_pilot_20261118_v3"
 }
