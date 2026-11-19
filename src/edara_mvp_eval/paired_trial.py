@@ -95,12 +95,12 @@ draft object retains the proposal. Keep this JSON compact."""
 _GUIDED_REVISE = """This is a governed multi-field revision (guided_revise). Do NOT replace the
 original valid core mechanism unless diagnosis explicitly requests regeneration. Instead, return
 {"draft": {...}} updating ONLY the fields needed to:
-1) insert EVERY blocking design confound discriminating arm concretely into the experimental test/metric field;
+1) insert ONLY the single decisive discriminating control arm named in design_confounds concretely into the experimental test/metric field (do NOT expand into a multi-arm factorial grid);
 2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
 3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
 4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), remove/replace them with supplied-packet counterparts OR explicitly hedge them as unverified in the supplied packet / conditional on confirmed availability;
 5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact;
-6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding discriminating arms, reallocate samples/seeds cleanly rather than silently overrunning stated budgets;
+6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding the discriminating arm, reallocate samples/seeds cleanly rather than silently overrunning stated budgets, and compute any complexity/calibration features strictly from pre-outcome decision-time observables (never label/diagnosis leakage);
 7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with dataset-verification conditions or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
 8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording."""
 
@@ -360,7 +360,8 @@ def edit_volume(original: Draft, final: Draft) -> dict:
 
 def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, editor,
             lookup: Path, *, audit_cache: Path | None = None, editor_confound=None,
-            claims: list[dict] | None = None, claim_audit: bool = False) -> dict:
+            claims: list[dict] | None = None, claim_audit: bool = False,
+            enforce_guards: bool = True) -> dict:
     evidence = Evidence.restore(task, snapshot)
     shared = public_task(task)
     initial_evidence_hash = digest(evidence.packet())
@@ -455,7 +456,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                 guidance = diag
                 extra_inst = ""
             revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope, extra=extra_inst, max_edits=max_edits)
-            targets = confound_targets(diag) if arm in ("C", "E") else []
+            targets = confound_targets(diag) if (arm in ("C", "E") and enforce_guards) else []
             if targets and not confound_addressed(revised, targets, baseline_draft=current):
                 target_field = design_field(current)
                 if scope == "full":
@@ -506,7 +507,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         if not preserved:
                             record["design_regression_blocked"] = regressions
                         revised = current
-            elif arm in ("C", "E") and revised != current:
+            elif arm in ("C", "E") and enforce_guards and revised != current:
                 titles = [
                     p.title for p in evidence.audit_items.values()
                     if getattr(p, "title", "")
