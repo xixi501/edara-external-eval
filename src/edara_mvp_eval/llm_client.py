@@ -89,6 +89,14 @@ def extract_json_dict(text: str) -> dict[str, Any]:
                         return obj if isinstance(obj, dict) else {"value": obj}
                     except json.JSONDecodeError:
                         continue
+            if candidate.count("{") == candidate.count("}") + 1 and '"dimensions"' in candidate and '"overall_winner"' in candidate:
+                fixed = re.sub(r'\},\s*"overall_winner"\s*:', '}},"overall_winner":', candidate, count=1)
+                if fixed != candidate:
+                    try:
+                        obj = json.loads(fixed)
+                        return obj if isinstance(obj, dict) else {"value": obj}
+                    except json.JSONDecodeError:
+                        pass
         raise
 
 

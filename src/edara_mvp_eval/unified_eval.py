@@ -150,7 +150,7 @@ def _lit2test_call(
                 prompt,
                 json.dumps(payload, ensure_ascii=False),
                 temperature=temperature if attempt == 0 else max(temperature, 0.1),
-                max_tokens=2400 + attempt * 800,
+                max_tokens=3600 + attempt * 800,
                 tag="lit2test_decomposed_pair",
             )
             return _validate_lit2test_payload(raw)

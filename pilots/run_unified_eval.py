@@ -94,7 +94,7 @@ def run_reeval(args: argparse.Namespace, endpoint: ModelEndpoint) -> int:
             corpus = local_corpus if label == "C_vs_B" else full_corpus
             rdir = args.out / "versions" / task_id / host / "review" / label
             pair_runners = [
-                _make_runner(endpoint, rdir / "lit2test" / o, job, o, 6, dry_run=args.dry_run)
+                _make_runner(endpoint, rdir / "lit2test" / o, job, o, 12, dry_run=args.dry_run)
                 for o in ("forward", "reverse")
             ]
             aib_runner = (
