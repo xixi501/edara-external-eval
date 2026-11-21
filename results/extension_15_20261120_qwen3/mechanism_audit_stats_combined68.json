@@ -1,0 +1,152 @@
+{
+  "n_manuscripts": 68,
+  "E1_host_writeback": {
+    "direct": {
+      "n": 30,
+      "orig_keys_kept_all": 30,
+      "new_keys_added": 1,
+      "nonempty_design_field": 30,
+      "edit_fields_changed_sum": 281
+    },
+    "ai_scientist": {
+      "n": 29,
+      "orig_keys_kept_all": 29,
+      "new_keys_added": 15,
+      "nonempty_design_field": 29,
+      "edit_fields_changed_sum": 151
+    },
+    "edara": {
+      "n": 9,
+      "orig_keys_kept_all": 9,
+      "new_keys_added": 8,
+      "nonempty_design_field": 9,
+      "edit_fields_changed_sum": 101
+    }
+  },
+  "E2_process_hype": {
+    "A": {
+      "manuscripts_with_hype": 6,
+      "total_hype_defects": 9
+    },
+    "B": {
+      "manuscripts_with_hype": 6,
+      "total_hype_defects": 9
+    },
+    "C": {
+      "manuscripts_with_hype": 1,
+      "total_hype_defects": 3
+    },
+    "D": {
+      "manuscripts_with_hype": 17,
+      "total_hype_defects": 32
+    },
+    "E": {
+      "manuscripts_with_hype": 0,
+      "total_hype_defects": 0
+    }
+  },
+  "E2_unverified_external_entities": {
+    "A": {
+      "manuscripts_with_unver": 67,
+      "total_unver_entities": 357
+    },
+    "B": {
+      "manuscripts_with_unver": 67,
+      "total_unver_entities": 363
+    },
+    "C": {
+      "manuscripts_with_unver": 62,
+      "total_unver_entities": 282
+    },
+    "D": {
+      "manuscripts_with_unver": 67,
+      "total_unver_entities": 367
+    },
+    "E": {
+      "manuscripts_with_unver": 53,
+      "total_unver_entities": 169
+    }
+  },
+  "E3_E4_confounds": {
+    "any_confound": 64,
+    "blocking_confound": 38,
+    "recommended_confound": 26,
+    "targets_required_n": 38,
+    "A_already_addressed": 15,
+    "D_addressed": 27,
+    "E_addressed": 36,
+    "C_addressed": 36,
+    "enforcement_triggered_E": 3,
+    "enforcement_recovered_E": 0,
+    "enforcement_triggered_C": 16,
+    "enforcement_recovered_C": 0
+  },
+  "E5_factual_and_comp": {
+    "factual": {
+      "initial_with_defects": 41,
+      "initial_defect_count": 74,
+      "by_type_initial": {
+        "prediction_as_observed": 39,
+        "coverage_contradiction": 8,
+        "unattested_process": 17,
+        "fabrication": 4,
+        "numeric_mismatch": 3,
+        "internal_inconsistency": 1,
+        "attribution": 2
+      },
+      "final_defect_count": 16
+    },
+    "search": {
+      "triggered": 53,
+      "retrieved_papers_total": 140,
+      "runs_with_added_papers": 48,
+      "post_search_guided_revise": 40,
+      "cutoff_without_revise": 13
+    }
+  },
+  "E7_preservation_guard": {
+    "E_guard_blocked_steps": 2,
+    "C_guard_blocked_steps": 0,
+    "A_vs_D_design_violation": 0,
+    "A_vs_E_design_violation": 0,
+    "A_vs_C_design_violation": 0,
+    "A_vs_D_anchor_drop": 0,
+    "A_vs_E_anchor_drop": 0,
+    "A_vs_C_anchor_drop": 0,
+    "E_changed_n": 66,
+    "E_error_n": 2,
+    "E_clean_closed_loop_n": 42
+  },
+  "design_element_presence": {
+    "A": {
+      "control": 68,
+      "metric": 67,
+      "decision": 63,
+      "all_three": 62
+    },
+    "B": {
+      "control": 68,
+      "metric": 67,
+      "decision": 63,
+      "all_three": 62
+    },
+    "C": {
+      "control": 68,
+      "metric": 67,
+      "decision": 63,
+      "all_three": 62
+    },
+    "D": {
+      "control": 68,
+      "metric": 68,
+      "decision": 64,
+      "all_three": 64
+    },
+    "E": {
+      "control": 68,
+      "metric": 68,
+      "decision": 68,
+      "all_three": 68
+    }
+  }
+}

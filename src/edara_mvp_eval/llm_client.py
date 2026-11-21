@@ -38,7 +38,7 @@ class ModelEndpoint:
             out_m = float(pricing.get("output_microusd_per_million", 2_000_000)) / 1_000_000.0
             params = data.get("parameters") or {}
             extra_body = {k: params[k] for k in ("reasoning_effort", "thinking") if k in params}
-            timeout_s = min(float(data.get("timeout_seconds") or 90.0), 120.0)
+            timeout_s = min(float(data.get("timeout_seconds") or 90.0), 300.0)
             return cls(
                 model=str(data["model"]),
                 base_url=data.get("base_url"),
@@ -179,6 +179,13 @@ class LLMRunner:
             effective_extra_body["thinking"] = {"type": "disabled"}
         thinking_cfg = effective_extra_body.get("thinking")
         thinking_disabled = isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled"
+        if (
+            thinking_disabled
+            and "glm" in self.endpoint.model.lower()
+            and "autodl" in (self.endpoint.base_url or "").lower()
+        ):
+            # AutoDL's OpenAI-compatible GLM endpoint ignores thinking.type=disabled unless reasoning_effort=none.
+            effective_extra_body["reasoning_effort"] = "none"
         has_thinking = (not thinking_disabled) and (bool(effective_extra_body) or "glm" in self.endpoint.model.lower())
         effective_max_tokens = max(max_tokens + 2048, 4096) if has_thinking else max_tokens
         create_kwargs: dict[str, Any] = {

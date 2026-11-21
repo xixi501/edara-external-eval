@@ -1,0 +1,184 @@
+{
+  "n_manuscripts": 38,
+  "E1_host_writeback": {
+    "direct": {
+      "n": 15,
+      "orig_keys_kept_all": 15,
+      "new_keys_added": 1,
+      "nonempty_design_field": 15,
+      "edit_fields_changed_sum": 154
+    },
+    "ai_scientist": {
+      "n": 14,
+      "orig_keys_kept_all": 14,
+      "new_keys_added": 9,
+      "nonempty_design_field": 14,
+      "edit_fields_changed_sum": 103
+    },
+    "edara": {
+      "n": 9,
+      "orig_keys_kept_all": 9,
+      "new_keys_added": 8,
+      "nonempty_design_field": 9,
+      "edit_fields_changed_sum": 183
+    }
+  },
+  "E2_process_hype": {
+    "A": {
+      "manuscripts_with_hype": 4,
+      "total_hype_defects": 7
+    },
+    "B": {
+      "manuscripts_with_hype": 4,
+      "total_hype_defects": 7
+    },
+    "C": {
+      "manuscripts_with_hype": 1,
+      "total_hype_defects": 3
+    },
+    "D": {
+      "manuscripts_with_hype": 8,
+      "total_hype_defects": 17
+    },
+    "E": {
+      "manuscripts_with_hype": 0,
+      "total_hype_defects": 0
+    }
+  },
+  "E2_unverified_external_entities": {
+    "A": {
+      "manuscripts_with_unver": 34,
+      "total_unver_entities": 179
+    },
+    "B": {
+      "manuscripts_with_unver": 35,
+      "total_unver_entities": 186
+    },
+    "C": {
+      "manuscripts_with_unver": 30,
+      "total_unver_entities": 139
+    },
+    "D": {
+      "manuscripts_with_unver": 35,
+      "total_unver_entities": 167
+    },
+    "E": {
+      "manuscripts_with_unver": 24,
+      "total_unver_entities": 65
+    }
+  },
+  "E3_E4_confounds": {
+    "any_confound": 35,
+    "blocking_confound": 23,
+    "recommended_confound": 12,
+    "targets_required_n": 25,
+    "A_already_addressed": 0,
+    "D_addressed": 20,
+    "E_addressed": 23,
+    "C_addressed": 24,
+    "claims_only_trap_D": 0,
+    "claims_only_trap_E": 0,
+    "enforcement_triggered_E": 0,
+    "enforcement_recovered_E": 0,
+    "enforcement_triggered_C": 8,
+    "enforcement_recovered_C": 8
+  },
+  "E5_factual_and_comp": {
+    "factual": {
+      "initial_with_defects": 23,
+      "initial_defect_count": 40,
+      "by_type_initial": {
+        "prediction_as_observed": 18,
+        "coverage_contradiction": 3,
+        "unattested_process": 10,
+        "fabrication": 4,
+        "numeric_mismatch": 2,
+        "internal_inconsistency": 1,
+        "attribution": 2
+      },
+      "final_defect_count": 8
+    },
+    "compositional": {
+      "step0_is_comp_novelty": 0,
+      "step0_claimnov_veto": 0
+    },
+    "search": {
+      "triggered": 30,
+      "retrieved_papers_total": 58,
+      "runs_with_added_papers": 26,
+      "post_search_guided_revise": 20,
+      "cutoff_without_revise": 6
+    }
+  },
+  "E7_preservation_guard": {
+    "E_guard_triggered_steps": 0,
+    "E_guard_recovered_steps": 0,
+    "E_guard_blocked_steps": 2,
+    "E_guard_reasons": {
+      "dropped_supplied_reference": 2
+    },
+    "C_guard_triggered_steps": 0,
+    "C_guard_recovered_steps": 0,
+    "C_guard_blocked_steps": 0,
+    "C_guard_reasons": {},
+    "A_vs_D_design_violation": 1,
+    "A_vs_E_design_violation": 0,
+    "A_vs_C_design_violation": 0,
+    "A_vs_D_reasons": {
+      "dropped_supplied_reference": 1
+    },
+    "A_vs_E_reasons": {},
+    "A_vs_C_reasons": {},
+    "A_vs_D_anchor_drop": 1,
+    "A_vs_E_anchor_drop": 0,
+    "A_vs_C_anchor_drop": 0,
+    "C_hist_keys": {
+      "action": 38,
+      "diagnosis": 38,
+      "evidence_sha256": 38,
+      "audit_owner": 38,
+      "edits": 38,
+      "changed": 38,
+      "confound_enforcement": 8
+    },
+    "E_hist_keys": {
+      "action": 112,
+      "diagnosis": 112,
+      "evidence_sha256": 112,
+      "audit_owner": 112,
+      "edits": 81,
+      "changed": 81,
+      "queries": 30,
+      "found": 30,
+      "reconstruction_check": 4,
+      "design_regression_blocked": 2
+    }
+  },
+  "design_element_presence": {
+    "A": {
+      "control": 38,
+      "metric": 37,
+      "decision": 35
+    },
+    "B": {
+      "control": 38,
+      "metric": 37,
+      "decision": 35
+    },
+    "C": {
+      "control": 38,
+      "metric": 37,
+      "decision": 35
+    },
+    "D": {
+      "control": 38,
+      "metric": 38,
+      "decision": 35
+    },
+    "E": {
+      "control": 38,
+      "metric": 38,
+      "decision": 38
+    }
+  }
+}

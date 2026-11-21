@@ -1,0 +1,3335 @@
+{
+  "ext15": {
+    "label": "Extension (15 new topics, N=30)",
+    "n": 30,
+    "topics": 15,
+    "strata": {
+      "all": {
+        "n": 30,
+        "glm": {
+          "counts": {
+            "win": 14,
+            "tie": 5,
+            "loss": 11
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.1,
+          "lit2test_net_wins_ci95": [
+            -0.2,
+            0.43333333333333335
+          ],
+          "lit2test_score_sum_delta": 0.2833333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.75,
+            1.3
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.05,
+            "hypothesis_specificity": -0.13333333333333333,
+            "minimality_feasibility": 0.06666666666666667,
+            "decisive_metric": 0.1,
+            "falsifiability": 0.3
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "deepseek": {
+          "counts": {
+            "win": 15,
+            "tie": 5,
+            "loss": 10
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.16666666666666666,
+          "lit2test_net_wins_ci95": [
+            -0.13333333333333333,
+            0.4666666666666667
+          ],
+          "lit2test_score_sum_delta": 0.31666666666666665,
+          "lit2test_score_sum_delta_ci95": [
+            -1.0170833333333331,
+            1.6
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.016666666666666666,
+            "hypothesis_specificity": -0.1,
+            "minimality_feasibility": 0.016666666666666666,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.4166666666666667
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "qwen": {
+          "counts": {
+            "win": 16,
+            "loss": 9,
+            "tie": 5
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.23333333333333334,
+          "lit2test_net_wins_ci95": [
+            -0.1,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": 0.8666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.5,
+            2.1
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.06666666666666667,
+            "decisive_metric": 0.23333333333333334,
+            "falsifiability": 0.5666666666666667
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.16666666666666666,
+            "testability": 0.43333333333333335,
+            "verification_feasibility": 0.03333333333333333,
+            "method_novelty": 0.03333333333333333,
+            "insight_novelty": 0.0
+          },
+          "claimnov_novelty_delta": -0.00770333333333333,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "win": 15,
+            "tie": 5,
+            "loss": 10
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.16666666666666666,
+          "lit2test_net_wins_ci95": [
+            -0.16666666666666666,
+            0.4666666666666667
+          ],
+          "lit2test_score_sum_delta": 0.48883333333333334,
+          "lit2test_score_sum_delta_ci95": [
+            -0.7391058333333332,
+            1.6388683333333334
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_closed_loop": {
+        "n": 22,
+        "glm": {
+          "counts": {
+            "win": 11,
+            "tie": 5,
+            "loss": 6
+          },
+          "topics": 12,
+          "lit2test_net_wins": 0.25,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.5
+          ],
+          "lit2test_score_sum_delta": 0.7083333333333334,
+          "lit2test_score_sum_delta_ci95": [
+            0.020312500000000178,
+            1.5208333333333333
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.041666666666666664,
+            "hypothesis_specificity": -0.14583333333333334,
+            "minimality_feasibility": 0.1875,
+            "decisive_metric": 0.2708333333333333,
+            "falsifiability": 0.4375
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "deepseek": {
+          "counts": {
+            "win": 12,
+            "tie": 5,
+            "loss": 5
+          },
+          "topics": 12,
+          "lit2test_net_wins": 0.375,
+          "lit2test_net_wins_ci95": [
+            0.16666666666666666,
+            0.625
+          ],
+          "lit2test_score_sum_delta": 1.1666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            0.22916666666666666,
+            2.1666666666666665
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.14583333333333334,
+            "hypothesis_specificity": 0.020833333333333332,
+            "minimality_feasibility": 0.10416666666666667,
+            "decisive_metric": 0.25,
+            "falsifiability": 0.6458333333333334
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "qwen": {
+          "counts": {
+            "win": 13,
+            "loss": 4,
+            "tie": 5
+          },
+          "topics": 12,
+          "lit2test_net_wins": 0.4166666666666667,
+          "lit2test_net_wins_ci95": [
+            0.20833333333333334,
+            0.6666666666666666
+          ],
+          "lit2test_score_sum_delta": 1.7291666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            0.9166666666666666,
+            2.5833333333333335
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.16666666666666666,
+            "hypothesis_specificity": 0.16666666666666666,
+            "minimality_feasibility": 0.1875,
+            "decisive_metric": 0.4375,
+            "falsifiability": 0.7708333333333334
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.5,
+            "verification_feasibility": 0.08333333333333333,
+            "method_novelty": 0.125,
+            "insight_novelty": 0.041666666666666664
+          },
+          "claimnov_novelty_delta": 0.002766666666666667,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "win": 12,
+            "tie": 5,
+            "loss": 5
+          },
+          "topics": 12,
+          "lit2test_net_wins": 0.3333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.125,
+            0.5416666666666666
+          ],
+          "lit2test_score_sum_delta": 1.2014166666666668,
+          "lit2test_score_sum_delta_ci95": [
+            0.43050000000000005,
+            2.076416666666667
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_len_le_1_15x": {
+        "n": 10,
+        "glm": {
+          "counts": {
+            "tie": 2,
+            "win": 3,
+            "loss": 5
+          },
+          "topics": 8,
+          "lit2test_net_wins": -0.3125,
+          "lit2test_net_wins_ci95": [
+            -0.8125,
+            0.1875
+          ],
+          "lit2test_score_sum_delta": -0.78125,
+          "lit2test_score_sum_delta_ci95": [
+            -1.9375,
+            0.4375
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.21875,
+            "hypothesis_specificity": -0.34375,
+            "minimality_feasibility": -0.15625,
+            "decisive_metric": -0.125,
+            "falsifiability": 0.0625
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 2
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 3,
+            "loss": 4,
+            "win": 3
+          },
+          "topics": 8,
+          "lit2test_net_wins": -0.125,
+          "lit2test_net_wins_ci95": [
+            -0.625,
+            0.375
+          ],
+          "lit2test_score_sum_delta": -0.59375,
+          "lit2test_score_sum_delta_ci95": [
+            -2.0625,
+            0.875
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.09375,
+            "hypothesis_specificity": -0.1875,
+            "minimality_feasibility": -0.25,
+            "decisive_metric": -0.25,
+            "falsifiability": 0.0
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "qwen": {
+          "counts": {
+            "tie": 4,
+            "win": 3,
+            "loss": 3
+          },
+          "topics": 8,
+          "lit2test_net_wins": -0.0625,
+          "lit2test_net_wins_ci95": [
+            -0.5,
+            0.375
+          ],
+          "lit2test_score_sum_delta": 0.15625,
+          "lit2test_score_sum_delta_ci95": [
+            -1.15625,
+            1.5
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.0625,
+            "hypothesis_specificity": -0.125,
+            "minimality_feasibility": 0.03125,
+            "decisive_metric": -0.1875,
+            "falsifiability": 0.5
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.5625,
+            "verification_feasibility": 0.3125,
+            "method_novelty": 0.125,
+            "insight_novelty": 0.125
+          },
+          "claimnov_novelty_delta": 0.010287500000000002,
+          "order_sensitive_count": 4
+        },
+        "majority": {
+          "counts": {
+            "tie": 3,
+            "win": 3,
+            "loss": 4
+          },
+          "topics": 8,
+          "lit2test_net_wins": -0.1875,
+          "lit2test_net_wins_ci95": [
+            -0.625,
+            0.3125
+          ],
+          "lit2test_score_sum_delta": -0.40625,
+          "lit2test_score_sum_delta_ci95": [
+            -1.59375,
+            0.895753125
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "incomplete_e": {
+        "n": 8,
+        "glm": {
+          "counts": {
+            "loss": 5,
+            "win": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": -0.2,
+          "lit2test_net_wins_ci95": [
+            -1.0,
+            0.6
+          ],
+          "lit2test_score_sum_delta": -0.5,
+          "lit2test_score_sum_delta_ci95": [
+            -3.1,
+            2.1
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.15,
+            "hypothesis_specificity": -0.05,
+            "minimality_feasibility": -0.3,
+            "decisive_metric": -0.4,
+            "falsifiability": 0.1
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 5,
+            "win": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": -0.2,
+          "lit2test_net_wins_ci95": [
+            -1.0,
+            0.6
+          ],
+          "lit2test_score_sum_delta": -1.5,
+          "lit2test_score_sum_delta_ci95": [
+            -4.6,
+            1.6
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.2,
+            "hypothesis_specificity": -0.4,
+            "minimality_feasibility": -0.2,
+            "decisive_metric": -0.6,
+            "falsifiability": -0.1
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        },
+        "qwen": {
+          "counts": {
+            "loss": 5,
+            "win": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": -0.2,
+          "lit2test_net_wins_ci95": [
+            -1.0,
+            0.6
+          ],
+          "lit2test_score_sum_delta": -1.05,
+          "lit2test_score_sum_delta_ci95": [
+            -4.1,
+            2.001249999999982
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.2,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -0.2,
+            "decisive_metric": -0.35,
+            "falsifiability": 0.2
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.7,
+            "testability": 0.2,
+            "verification_feasibility": -0.1,
+            "method_novelty": -0.2,
+            "insight_novelty": -0.2
+          },
+          "claimnov_novelty_delta": -0.024429999999999997,
+          "order_sensitive_count": 0
+        },
+        "majority": {
+          "counts": {
+            "loss": 5,
+            "win": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": -0.2,
+          "lit2test_net_wins_ci95": [
+            -1.0,
+            0.6
+          ],
+          "lit2test_score_sum_delta": -1.0168999999999997,
+          "lit2test_score_sum_delta_ci95": [
+            -3.9335999999999998,
+            1.8998000000000002
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_host": {
+      "ai_scientist": {
+        "n": 15,
+        "glm": {
+          "counts": {
+            "tie": 4,
+            "win": 7,
+            "loss": 4
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.2,
+          "lit2test_net_wins_ci95": [
+            -0.2,
+            0.6
+          ],
+          "lit2test_score_sum_delta": 0.9,
+          "lit2test_score_sum_delta_ci95": [
+            -0.5333333333333333,
+            2.3
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.06666666666666667,
+            "hypothesis_specificity": -0.06666666666666667,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.3333333333333333,
+            "falsifiability": 0.5666666666666667
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 3,
+            "win": 8,
+            "loss": 4
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.26666666666666666,
+          "lit2test_net_wins_ci95": [
+            -0.2,
+            0.6666666666666666
+          ],
+          "lit2test_score_sum_delta": 0.9333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.8333333333333334,
+            2.6
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.1,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -0.06666666666666667,
+            "decisive_metric": 0.2,
+            "falsifiability": 0.7
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "qwen": {
+          "counts": {
+            "win": 9,
+            "loss": 3,
+            "tie": 3
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.4,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.8
+          ],
+          "lit2test_score_sum_delta": 1.6666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.0008333333333330491,
+            3.2
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.23333333333333334,
+            "hypothesis_specificity": 0.13333333333333333,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.4,
+            "falsifiability": 0.9
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.2,
+            "testability": 0.5333333333333333,
+            "verification_feasibility": 0.2,
+            "method_novelty": 0.06666666666666667,
+            "insight_novelty": -0.06666666666666667
+          },
+          "claimnov_novelty_delta": -0.022440000000000005,
+          "order_sensitive_count": 3
+        },
+        "majority": {
+          "counts": {
+            "tie": 3,
+            "win": 8,
+            "loss": 4
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.26666666666666666,
+          "lit2test_net_wins_ci95": [
+            -0.2,
+            0.6666666666666666
+          ],
+          "lit2test_score_sum_delta": 1.1666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.44474333333333327,
+            2.6334000000000004
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "direct": {
+        "n": 15,
+        "glm": {
+          "counts": {
+            "win": 7,
+            "loss": 7,
+            "tie": 1
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.0,
+          "lit2test_net_wins_ci95": [
+            -0.4666666666666667,
+            0.4666666666666667
+          ],
+          "lit2test_score_sum_delta": -0.3333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -1.5,
+            0.8666666666666667
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.16666666666666666,
+            "hypothesis_specificity": -0.2,
+            "minimality_feasibility": 0.13333333333333333,
+            "decisive_metric": -0.13333333333333333,
+            "falsifiability": 0.03333333333333333
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 7,
+            "loss": 6,
+            "tie": 2
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.06666666666666667,
+          "lit2test_net_wins_ci95": [
+            -0.4,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": -0.3,
+          "lit2test_score_sum_delta_ci95": [
+            -1.8666666666666667,
+            1.2666666666666666
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.13333333333333333,
+            "hypothesis_specificity": -0.2,
+            "minimality_feasibility": 0.1,
+            "decisive_metric": -0.2,
+            "falsifiability": 0.13333333333333333
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 2
+        },
+        "qwen": {
+          "counts": {
+            "win": 7,
+            "loss": 6,
+            "tie": 2
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.06666666666666667,
+          "lit2test_net_wins_ci95": [
+            -0.4,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": 0.06666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -1.4666666666666666,
+            1.6333333333333333
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.23333333333333334,
+            "hypothesis_specificity": -0.13333333333333333,
+            "minimality_feasibility": 0.13333333333333333,
+            "decisive_metric": 0.06666666666666667,
+            "falsifiability": 0.23333333333333334
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.13333333333333333,
+            "testability": 0.3333333333333333,
+            "verification_feasibility": -0.13333333333333333,
+            "method_novelty": 0.0,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": 0.007033333333333335,
+          "order_sensitive_count": 2
+        },
+        "majority": {
+          "counts": {
+            "win": 7,
+            "loss": 6,
+            "tie": 2
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.06666666666666667,
+          "lit2test_net_wins_ci95": [
+            -0.4,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": -0.18899999999999995,
+          "lit2test_score_sum_delta_ci95": [
+            -1.5779333333333332,
+            1.2222666666666668
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_benchmark": {
+      "AlphaIdeaBench_survey": {
+        "n": 8,
+        "glm": {
+          "counts": {
+            "loss": 3,
+            "win": 4,
+            "tie": 1
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.125,
+          "lit2test_net_wins_ci95": [
+            -0.375,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 0.75,
+          "lit2test_score_sum_delta_ci95": [
+            -0.625,
+            2.375
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.125,
+            "hypothesis_specificity": -0.125,
+            "minimality_feasibility": 0.0625,
+            "decisive_metric": -0.0625,
+            "falsifiability": 0.75
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 2,
+            "win": 5,
+            "tie": 1
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.375,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.0625,
+          "lit2test_score_sum_delta_ci95": [
+            -1.125,
+            3.25
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.375,
+            "hypothesis_specificity": -0.1875,
+            "minimality_feasibility": 0.25,
+            "decisive_metric": -0.125,
+            "falsifiability": 0.75
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "qwen": {
+          "counts": {
+            "loss": 2,
+            "win": 4,
+            "tie": 2
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.25,
+          "lit2test_net_wins_ci95": [
+            -0.25,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.625,
+          "lit2test_score_sum_delta_ci95": [
+            -0.375,
+            3.625
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.375,
+            "hypothesis_specificity": -0.0625,
+            "minimality_feasibility": 0.4375,
+            "decisive_metric": -0.0625,
+            "falsifiability": 0.9375
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.25,
+            "testability": 0.5,
+            "verification_feasibility": 0.125,
+            "method_novelty": 0.0,
+            "insight_novelty": -0.25
+          },
+          "claimnov_novelty_delta": -0.006487499999999995,
+          "order_sensitive_count": 2
+        },
+        "majority": {
+          "counts": {
+            "loss": 2,
+            "win": 4,
+            "tie": 2
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.25,
+          "lit2test_net_wins_ci95": [
+            -0.25,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.14575,
+          "lit2test_score_sum_delta_ci95": [
+            -0.7084999999999999,
+            3.0
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "Lit2Test_expansion40": {
+        "n": 22,
+        "glm": {
+          "counts": {
+            "win": 10,
+            "tie": 4,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.09090909090909091,
+          "lit2test_net_wins_ci95": [
+            -0.3181818181818182,
+            0.45568181818180165
+          ],
+          "lit2test_score_sum_delta": 0.11363636363636363,
+          "lit2test_score_sum_delta_ci95": [
+            -1.1363636363636365,
+            1.3409090909090908
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.11363636363636363,
+            "hypothesis_specificity": -0.13636363636363635,
+            "minimality_feasibility": 0.06818181818181818,
+            "decisive_metric": 0.1590909090909091,
+            "falsifiability": 0.13636363636363635
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "win": 10,
+            "tie": 4,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.09090909090909091,
+          "lit2test_net_wins_ci95": [
+            -0.2727272727272727,
+            0.45454545454545453
+          ],
+          "lit2test_score_sum_delta": 0.045454545454545456,
+          "lit2test_score_sum_delta_ci95": [
+            -1.5909090909090908,
+            1.5681818181818181
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.1590909090909091,
+            "hypothesis_specificity": -0.06818181818181818,
+            "minimality_feasibility": -0.06818181818181818,
+            "decisive_metric": 0.045454545454545456,
+            "falsifiability": 0.29545454545454547
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "qwen": {
+          "counts": {
+            "win": 12,
+            "loss": 7,
+            "tie": 3
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.22727272727272727,
+          "lit2test_net_wins_ci95": [
+            -0.18181818181818182,
+            0.5909090909090909
+          ],
+          "lit2test_score_sum_delta": 0.5909090909090909,
+          "lit2test_score_sum_delta_ci95": [
+            -1.0681818181818181,
+            2.046022727272719
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.13636363636363635,
+            "hypothesis_specificity": 0.022727272727272728,
+            "minimality_feasibility": -0.06818181818181818,
+            "decisive_metric": 0.3409090909090909,
+            "falsifiability": 0.4318181818181818
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.13636363636363635,
+            "testability": 0.4090909090909091,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.045454545454545456,
+            "insight_novelty": 0.09090909090909091
+          },
+          "claimnov_novelty_delta": -0.008145454545454546,
+          "order_sensitive_count": 3
+        },
+        "majority": {
+          "counts": {
+            "win": 11,
+            "tie": 3,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.13636363636363635,
+          "lit2test_net_wins_ci95": [
+            -0.2727272727272727,
+            0.5
+          ],
+          "lit2test_score_sum_delta": 0.24995454545454548,
+          "lit2test_score_sum_delta_ci95": [
+            -1.257825,
+            1.628818181818182
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "inter_judge_agreement": {
+      "glm_vs_deepseek": {
+        "n": 30,
+        "exact_agree": 26,
+        "direct_flips": 0
+      },
+      "glm_vs_qwen": {
+        "n": 30,
+        "exact_agree": 26,
+        "direct_flips": 0
+      },
+      "deepseek_vs_qwen": {
+        "n": 30,
+        "exact_agree": 26,
+        "direct_flips": 0
+      }
+    }
+  },
+  "v4": {
+    "label": "v4 Reference (15 topics, N=38)",
+    "n": 38,
+    "topics": 15,
+    "strata": {
+      "all": {
+        "n": 38,
+        "glm": {
+          "counts": {
+            "loss": 7,
+            "win": 25,
+            "tie": 6
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.4888888888888889,
+          "lit2test_net_wins_ci95": [
+            0.2,
+            0.7444444444444444
+          ],
+          "lit2test_score_sum_delta": 1.3833333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            0.34986111111111134,
+            2.227916666666665
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.05,
+            "hypothesis_specificity": 0.0055555555555555506,
+            "minimality_feasibility": 0.28888888888888886,
+            "decisive_metric": 0.4444444444444445,
+            "falsifiability": 0.5944444444444444
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.07777777777777777,
+            "testability": 0.03333333333333333,
+            "verification_feasibility": -0.022222222222222216,
+            "method_novelty": -0.011111111111111108,
+            "insight_novelty": 0.011111111111111108
+          },
+          "claimnov_novelty_delta": 0.004603333333333334,
+          "order_sensitive_count": 6
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 9,
+            "tie": 7,
+            "win": 22
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.3222222222222222,
+          "lit2test_net_wins_ci95": [
+            0.022222222222222216,
+            0.611111111111111
+          ],
+          "lit2test_score_sum_delta": 1.3277777777777777,
+          "lit2test_score_sum_delta_ci95": [
+            0.2277777777777777,
+            2.283333333333333
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.13333333333333333,
+            "hypothesis_specificity": 0.13888888888888887,
+            "minimality_feasibility": 0.06666666666666667,
+            "decisive_metric": 0.25,
+            "falsifiability": 0.7388888888888888
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 7
+        },
+        "qwen": {
+          "counts": {
+            "loss": 6,
+            "win": 22,
+            "tie": 10
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.4111111111111111,
+          "lit2test_net_wins_ci95": [
+            0.12222222222222222,
+            0.6666666666666666
+          ],
+          "lit2test_score_sum_delta": 1.45,
+          "lit2test_score_sum_delta_ci95": [
+            0.4666666666666666,
+            2.2168055555555535
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.13333333333333333,
+            "hypothesis_specificity": 0.07222222222222223,
+            "minimality_feasibility": 0.07777777777777777,
+            "decisive_metric": 0.41111111111111115,
+            "falsifiability": 0.7555555555555554
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 10
+        },
+        "majority": {
+          "counts": {
+            "loss": 7,
+            "win": 23,
+            "tie": 8
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.4,
+          "lit2test_net_wins_ci95": [
+            0.1111111111111111,
+            0.6555555555555554
+          ],
+          "lit2test_score_sum_delta": 1.3869444444444445,
+          "lit2test_score_sum_delta_ci95": [
+            0.3757644444444445,
+            2.1814225
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_closed_loop": {
+        "n": 20,
+        "glm": {
+          "counts": {
+            "win": 16,
+            "loss": 2,
+            "tie": 2
+          },
+          "topics": 13,
+          "lit2test_net_wins": 0.6538461538461539,
+          "lit2test_net_wins_ci95": [
+            0.3076923076923077,
+            0.9230769230769231
+          ],
+          "lit2test_score_sum_delta": 2.032051282051282,
+          "lit2test_score_sum_delta_ci95": [
+            0.8782051282051282,
+            3.0706730769230743
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.19230769230769232,
+            "hypothesis_specificity": 0.044871794871794865,
+            "minimality_feasibility": 0.3974358974358974,
+            "decisive_metric": 0.5448717948717949,
+            "falsifiability": 0.8525641025641026
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.025641025641025637,
+            "testability": 0.07692307692307693,
+            "verification_feasibility": 0.0,
+            "method_novelty": -0.07692307692307693,
+            "insight_novelty": 0.0641025641025641
+          },
+          "claimnov_novelty_delta": -0.005448717948717947,
+          "order_sensitive_count": 2
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 5,
+            "win": 13,
+            "loss": 2
+          },
+          "topics": 13,
+          "lit2test_net_wins": 0.48717948717948717,
+          "lit2test_net_wins_ci95": [
+            0.1282051282051282,
+            0.7948717948717948
+          ],
+          "lit2test_score_sum_delta": 1.8974358974358974,
+          "lit2test_score_sum_delta_ci95": [
+            0.8974358974358974,
+            2.9166666666666665
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.23717948717948717,
+            "hypothesis_specificity": 0.17307692307692307,
+            "minimality_feasibility": 0.16666666666666669,
+            "decisive_metric": 0.37179487179487175,
+            "falsifiability": 0.9487179487179488
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "qwen": {
+          "counts": {
+            "win": 15,
+            "tie": 5
+          },
+          "topics": 13,
+          "lit2test_net_wins": 0.7564102564102565,
+          "lit2test_net_wins_ci95": [
+            0.5384615384615384,
+            0.9487179487179487
+          ],
+          "lit2test_score_sum_delta": 2.269230769230769,
+          "lit2test_score_sum_delta_ci95": [
+            1.75,
+            2.8461538461538463
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.3012820512820513,
+            "hypothesis_specificity": 0.20512820512820512,
+            "minimality_feasibility": 0.2564102564102564,
+            "decisive_metric": 0.45512820512820507,
+            "falsifiability": 1.0512820512820513
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "win": 15,
+            "tie": 4,
+            "loss": 1
+          },
+          "topics": 13,
+          "lit2test_net_wins": 0.6282051282051282,
+          "lit2test_net_wins_ci95": [
+            0.28205128205128205,
+            0.9230769230769229
+          ],
+          "lit2test_score_sum_delta": 2.0660641025641024,
+          "lit2test_score_sum_delta_ci95": [
+            1.2562673076923079,
+            2.8973967948717942
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_len_le_1_15x": {
+        "n": 9,
+        "glm": {
+          "counts": {
+            "win": 6,
+            "loss": 2,
+            "tie": 1
+          },
+          "topics": 7,
+          "lit2test_net_wins": 0.2857142857142857,
+          "lit2test_net_wins_ci95": [
+            -0.42857142857142855,
+            0.8571428571428571
+          ],
+          "lit2test_score_sum_delta": 0.738095238095238,
+          "lit2test_score_sum_delta_ci95": [
+            -1.119047619047619,
+            2.452380952380952
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.14285714285714285,
+            "hypothesis_specificity": 0.11904761904761904,
+            "minimality_feasibility": -0.11904761904761907,
+            "decisive_metric": 0.33333333333333337,
+            "falsifiability": 0.5476190476190477
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.047619047619047616,
+            "testability": 0.0,
+            "verification_feasibility": -0.14285714285714285,
+            "method_novelty": -0.14285714285714285,
+            "insight_novelty": 0.047619047619047616
+          },
+          "claimnov_novelty_delta": 0.04228095238095238,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 4,
+            "loss": 2,
+            "tie": 3
+          },
+          "topics": 7,
+          "lit2test_net_wins": 0.19047619047619047,
+          "lit2test_net_wins_ci95": [
+            -0.2857142857142857,
+            0.6190476190476192
+          ],
+          "lit2test_score_sum_delta": 0.8095238095238095,
+          "lit2test_score_sum_delta_ci95": [
+            -0.33333333333333337,
+            1.9523809523809523
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.02380952380952382,
+            "hypothesis_specificity": 0.07142857142857142,
+            "minimality_feasibility": -0.11904761904761904,
+            "decisive_metric": 0.11904761904761904,
+            "falsifiability": 0.761904761904762
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "qwen": {
+          "counts": {
+            "win": 4,
+            "tie": 5
+          },
+          "topics": 7,
+          "lit2test_net_wins": 0.47619047619047616,
+          "lit2test_net_wins_ci95": [
+            0.14285714285714285,
+            0.8571428571428571
+          ],
+          "lit2test_score_sum_delta": 1.7142857142857142,
+          "lit2test_score_sum_delta_ci95": [
+            1.0,
+            2.5
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.2380952380952381,
+            "hypothesis_specificity": 0.23809523809523808,
+            "minimality_feasibility": -0.023809523809523787,
+            "decisive_metric": 0.3095238095238095,
+            "falsifiability": 0.9523809523809523
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "win": 4,
+            "tie": 4,
+            "loss": 1
+          },
+          "topics": 7,
+          "lit2test_net_wins": 0.23809523809523808,
+          "lit2test_net_wins_ci95": [
+            -0.2857142857142857,
+            0.6666666666666667
+          ],
+          "lit2test_score_sum_delta": 1.0871904761904763,
+          "lit2test_score_sum_delta_ci95": [
+            0.06319047619047619,
+            2.0871940476190476
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "incomplete_e": {
+        "n": 18,
+        "glm": {
+          "counts": {
+            "loss": 5,
+            "win": 9,
+            "tie": 4
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.2727272727272727,
+          "lit2test_net_wins_ci95": [
+            -0.18181818181818182,
+            0.6818181818181818
+          ],
+          "lit2test_score_sum_delta": 0.6590909090909091,
+          "lit2test_score_sum_delta_ci95": [
+            -0.8642045454545453,
+            2.0681818181818183
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.045454545454545456,
+            "hypothesis_specificity": -0.0075757575757575794,
+            "minimality_feasibility": 0.11363636363636363,
+            "decisive_metric": 0.21212121212121213,
+            "falsifiability": 0.38636363636363635
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.10606060606060605,
+            "testability": 0.060606060606060615,
+            "verification_feasibility": 0.07575757575757575,
+            "method_novelty": 0.015151515151515154,
+            "insight_novelty": -0.030303030303030297
+          },
+          "claimnov_novelty_delta": 0.023431818181818175,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 7,
+            "win": 9,
+            "tie": 2
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.22727272727272727,
+          "lit2test_net_wins_ci95": [
+            -0.22727272727272727,
+            0.6363636363636364
+          ],
+          "lit2test_score_sum_delta": 1.0075757575757576,
+          "lit2test_score_sum_delta_ci95": [
+            -0.5153409090909091,
+            2.4547348484848457
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.07575757575757573,
+            "hypothesis_specificity": 0.20454545454545456,
+            "minimality_feasibility": 0.022727272727272728,
+            "decisive_metric": 0.21212121212121213,
+            "falsifiability": 0.49242424242424243
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 2
+        },
+        "qwen": {
+          "counts": {
+            "loss": 6,
+            "tie": 5,
+            "win": 7
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.13636363636363635,
+          "lit2test_net_wins_ci95": [
+            -0.3181818181818182,
+            0.5454545454545454
+          ],
+          "lit2test_score_sum_delta": 0.9469696969696969,
+          "lit2test_score_sum_delta_ci95": [
+            -0.5833333333333334,
+            2.409090909090909
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.060606060606060594,
+            "hypothesis_specificity": 0.06818181818181818,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.3409090909090909,
+            "falsifiability": 0.4772727272727273
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "loss": 6,
+            "win": 8,
+            "tie": 4
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.18181818181818182,
+          "lit2test_net_wins_ci95": [
+            -0.2727272727272727,
+            0.5454545454545454
+          ],
+          "lit2test_score_sum_delta": 0.8711818181818182,
+          "lit2test_score_sum_delta_ci95": [
+            -0.6363659090909091,
+            2.2499113636363632
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_host": {
+      "ai_scientist": {
+        "n": 14,
+        "glm": {
+          "counts": {
+            "win": 13,
+            "loss": 1
+          },
+          "topics": 14,
+          "lit2test_net_wins": 0.8571428571428571,
+          "lit2test_net_wins_ci95": [
+            0.5714285714285714,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 2.7857142857142856,
+          "lit2test_score_sum_delta_ci95": [
+            1.2857142857142858,
+            4.0
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.14285714285714285,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.6785714285714286,
+            "decisive_metric": 0.75,
+            "falsifiability": 1.2142857142857142
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.07142857142857142,
+            "testability": 0.14285714285714285,
+            "verification_feasibility": 0.07142857142857142,
+            "method_novelty": -0.21428571428571427,
+            "insight_novelty": -0.07142857142857142
+          },
+          "claimnov_novelty_delta": -0.006192857142857143,
+          "order_sensitive_count": 0
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 2,
+            "win": 10,
+            "loss": 2
+          },
+          "topics": 14,
+          "lit2test_net_wins": 0.5714285714285714,
+          "lit2test_net_wins_ci95": [
+            0.14285714285714285,
+            0.9285714285714286
+          ],
+          "lit2test_score_sum_delta": 2.5357142857142856,
+          "lit2test_score_sum_delta_ci95": [
+            0.7857142857142857,
+            4.0
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.25,
+            "hypothesis_specificity": 0.07142857142857142,
+            "minimality_feasibility": 0.42857142857142855,
+            "decisive_metric": 0.5357142857142857,
+            "falsifiability": 1.25
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 2
+        },
+        "qwen": {
+          "counts": {
+            "win": 12,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 14,
+          "lit2test_net_wins": 0.7857142857142857,
+          "lit2test_net_wins_ci95": [
+            0.42857142857142855,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 2.5,
+          "lit2test_score_sum_delta_ci95": [
+            1.0714285714285714,
+            3.5714285714285716
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.14285714285714285,
+            "hypothesis_specificity": 0.03571428571428571,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 0.6428571428571429,
+            "falsifiability": 1.1785714285714286
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "majority": {
+          "counts": {
+            "win": 12,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 14,
+          "lit2test_net_wins": 0.7857142857142857,
+          "lit2test_net_wins_ci95": [
+            0.42857142857142855,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 2.6069999999999998,
+          "lit2test_score_sum_delta_ci95": [
+            1.0950714285714285,
+            3.8331428571428567
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "direct": {
+        "n": 15,
+        "glm": {
+          "counts": {
+            "loss": 5,
+            "win": 5,
+            "tie": 5
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.0,
+          "lit2test_net_wins_ci95": [
+            -0.4,
+            0.4
+          ],
+          "lit2test_score_sum_delta": -0.1,
+          "lit2test_score_sum_delta_ci95": [
+            -1.2,
+            1.0333333333333334
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.03333333333333333,
+            "hypothesis_specificity": -0.03333333333333333,
+            "minimality_feasibility": -0.1,
+            "decisive_metric": -0.03333333333333333,
+            "falsifiability": 0.1
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.0,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.13333333333333333,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": 0.031273333333333334,
+          "order_sensitive_count": 5
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 6,
+            "win": 5,
+            "tie": 4
+          },
+          "topics": 15,
+          "lit2test_net_wins": -0.06666666666666667,
+          "lit2test_net_wins_ci95": [
+            -0.5333333333333333,
+            0.4
+          ],
+          "lit2test_score_sum_delta": -0.13333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -1.3,
+            1.0008333333333213
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.1,
+            "minimality_feasibility": -0.23333333333333334,
+            "decisive_metric": -0.2,
+            "falsifiability": 0.2
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "qwen": {
+          "counts": {
+            "loss": 4,
+            "win": 6,
+            "tie": 5
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.13333333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.26666666666666666,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": 0.6333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.7666666666666667,
+            1.9666666666666666
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.16666666666666666,
+            "hypothesis_specificity": 0.03333333333333333,
+            "minimality_feasibility": -0.1,
+            "decisive_metric": 0.13333333333333333,
+            "falsifiability": 0.4
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "loss": 5,
+            "win": 4,
+            "tie": 6
+          },
+          "topics": 15,
+          "lit2test_net_wins": -0.06666666666666667,
+          "lit2test_net_wins_ci95": [
+            -0.4666666666666667,
+            0.3333333333333333
+          ],
+          "lit2test_score_sum_delta": 0.13326666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.9111333333333334,
+            1.177733333333333
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "edara": {
+        "n": 9,
+        "glm": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.3888888888888888,
+          "lit2test_score_sum_delta_ci95": [
+            -0.4444444444444444,
+            2.5555555555555554
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.1111111111111111,
+            "minimality_feasibility": 0.2222222222222222,
+            "decisive_metric": 0.6111111111111112,
+            "falsifiability": 0.4444444444444444
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.3333333333333333,
+            "testability": -0.1111111111111111,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.0,
+            "insight_novelty": 0.1111111111111111
+          },
+          "claimnov_novelty_delta": -0.024844444444444443,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.7777777777777777,
+          "lit2test_score_sum_delta_ci95": [
+            -0.16666666666666666,
+            3.2222222222222223
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.3333333333333333,
+            "minimality_feasibility": -0.05555555555555555,
+            "decisive_metric": 0.7777777777777778,
+            "falsifiability": 0.7222222222222222
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "qwen": {
+          "counts": {
+            "tie": 4,
+            "win": 4,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.3333333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.1111111111111111,
+            0.7777777777777778
+          ],
+          "lit2test_score_sum_delta": 1.0555555555555556,
+          "lit2test_score_sum_delta_ci95": [
+            -0.4444444444444444,
+            2.2222222222222223
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.16666666666666666,
+            "hypothesis_specificity": 0.3333333333333333,
+            "minimality_feasibility": -0.2777777777777778,
+            "decisive_metric": 0.5555555555555556,
+            "falsifiability": 0.6111111111111112
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "majority": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.4073333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.31488888888888883,
+            2.6111138888888887
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_benchmark": {
+      "AlphaIdeaBench": {
+        "n": 10,
+        "glm": {
+          "counts": {
+            "tie": 1,
+            "win": 7,
+            "loss": 2
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.5333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.13333333333333333,
+            0.9333333333333332
+          ],
+          "lit2test_score_sum_delta": 1.8833333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            0.8833333333333332,
+            2.8666666666666663
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.2333333333333333,
+            "hypothesis_specificity": -0.15,
+            "minimality_feasibility": 0.3833333333333333,
+            "decisive_metric": 0.7,
+            "falsifiability": 0.7166666666666667
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.1,
+            "testability": 0.1,
+            "verification_feasibility": -0.1,
+            "method_novelty": 0.1,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": -0.0035733333333333355,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 6,
+            "loss": 1,
+            "tie": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.8
+          ],
+          "lit2test_score_sum_delta": 1.75,
+          "lit2test_score_sum_delta_ci95": [
+            0.45,
+            3.05
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.4833333333333333,
+            "hypothesis_specificity": 0.1,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.15,
+            "falsifiability": 1.0166666666666666
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "qwen": {
+          "counts": {
+            "tie": 3,
+            "win": 6,
+            "loss": 1
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.06666666666666667,
+            0.8666666666666666
+          ],
+          "lit2test_score_sum_delta": 2.033333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            1.4,
+            2.6333333333333333
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.6166666666666666,
+            "hypothesis_specificity": -0.13333333333333336,
+            "minimality_feasibility": 0.11666666666666667,
+            "decisive_metric": 0.4333333333333333,
+            "falsifiability": 1.0
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "majority": {
+          "counts": {
+            "tie": 3,
+            "win": 6,
+            "loss": 1
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.1,
+            0.7666666666666666
+          ],
+          "lit2test_score_sum_delta": 1.8888000000000003,
+          "lit2test_score_sum_delta_ci95": [
+            1.1,
+            2.8221
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "Lit2Test": {
+        "n": 28,
+        "glm": {
+          "counts": {
+            "loss": 5,
+            "win": 18,
+            "tie": 5
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.4666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.08333333333333331,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.1333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.2333333333333333,
+            2.2416666666666663
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.041666666666666664,
+            "hypothesis_specificity": 0.08333333333333333,
+            "minimality_feasibility": 0.24166666666666664,
+            "decisive_metric": 0.3166666666666667,
+            "falsifiability": 0.5333333333333333
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.16666666666666666,
+            "testability": 0.0,
+            "verification_feasibility": 0.016666666666666673,
+            "method_novelty": -0.06666666666666667,
+            "insight_novelty": -0.01666666666666667
+          },
+          "claimnov_novelty_delta": 0.008691666666666667,
+          "order_sensitive_count": 5
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 8,
+            "tie": 4,
+            "win": 16
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.2833333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.1,
+            0.6499999999999999
+          ],
+          "lit2test_score_sum_delta": 1.1166666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.30041666666666667,
+            2.316666666666667
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.04166666666666667,
+            "hypothesis_specificity": 0.15833333333333333,
+            "minimality_feasibility": 0.1,
+            "decisive_metric": 0.3,
+            "falsifiability": 0.6
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "qwen": {
+          "counts": {
+            "loss": 5,
+            "win": 16,
+            "tie": 7
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.3833333333333333,
+          "lit2test_net_wins_ci95": [
+            -1.1102230246251566e-17,
+            0.7166666666666666
+          ],
+          "lit2test_score_sum_delta": 1.1583333333333332,
+          "lit2test_score_sum_delta_ci95": [
+            -0.16666666666666669,
+            2.275
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.10833333333333335,
+            "hypothesis_specificity": 0.175,
+            "minimality_feasibility": 0.05833333333333331,
+            "decisive_metric": 0.4,
+            "falsifiability": 0.6333333333333333
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 7
+        },
+        "majority": {
+          "counts": {
+            "loss": 6,
+            "win": 17,
+            "tie": 5
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.3833333333333333,
+          "lit2test_net_wins_ci95": [
+            -1.1102230246251566e-17,
+            0.7166666666666666
+          ],
+          "lit2test_score_sum_delta": 1.136016666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.200345,
+            2.213885416666666
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "inter_judge_agreement": {
+      "glm_vs_deepseek": {
+        "n": 38,
+        "exact_agree": 29,
+        "direct_flips": 2
+      },
+      "glm_vs_qwen": {
+        "n": 38,
+        "exact_agree": 27,
+        "direct_flips": 1
+      },
+      "deepseek_vs_qwen": {
+        "n": 38,
+        "exact_agree": 27,
+        "direct_flips": 0
+      }
+    }
+  },
+  "combined68": {
+    "label": "Combined (30 topics, N=68)",
+    "n": 68,
+    "topics": 30,
+    "strata": {
+      "all": {
+        "n": 68,
+        "glm": {
+          "counts": {
+            "loss": 18,
+            "win": 39,
+            "tie": 11
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.2944444444444444,
+          "lit2test_net_wins_ci95": [
+            0.06666666666666667,
+            0.5055555555555555
+          ],
+          "lit2test_score_sum_delta": 0.8333333333333334,
+          "lit2test_score_sum_delta_ci95": [
+            0.11111111111111108,
+            1.5111805555555546
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": -0.0638888888888889,
+            "minimality_feasibility": 0.17777777777777776,
+            "decisive_metric": 0.27222222222222225,
+            "falsifiability": 0.44722222222222224
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.07777777777777777,
+            "testability": 0.03333333333333333,
+            "verification_feasibility": -0.022222222222222216,
+            "method_novelty": -0.011111111111111108,
+            "insight_novelty": 0.011111111111111108
+          },
+          "claimnov_novelty_delta": 0.004603333333333334,
+          "order_sensitive_count": 11
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 19,
+            "tie": 12,
+            "win": 37
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.24444444444444444,
+          "lit2test_net_wins_ci95": [
+            0.03333333333333333,
+            0.4444444444444444
+          ],
+          "lit2test_score_sum_delta": 0.8222222222222222,
+          "lit2test_score_sum_delta_ci95": [
+            -0.04173611111111115,
+            1.625
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.058333333333333334,
+            "hypothesis_specificity": 0.019444444444444434,
+            "minimality_feasibility": 0.041666666666666664,
+            "decisive_metric": 0.125,
+            "falsifiability": 0.5777777777777778
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 12
+        },
+        "qwen": {
+          "counts": {
+            "loss": 15,
+            "win": 38,
+            "tie": 15
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.3222222222222222,
+          "lit2test_net_wins_ci95": [
+            0.1,
+            0.5333333333333333
+          ],
+          "lit2test_score_sum_delta": 1.1583333333333334,
+          "lit2test_score_sum_delta_ci95": [
+            0.3444444444444446,
+            1.8888888888888888
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.06666666666666665,
+            "hypothesis_specificity": 0.0361111111111111,
+            "minimality_feasibility": 0.07222222222222223,
+            "decisive_metric": 0.32222222222222224,
+            "falsifiability": 0.6611111111111111
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.16666666666666666,
+            "testability": 0.43333333333333335,
+            "verification_feasibility": 0.03333333333333333,
+            "method_novelty": 0.03333333333333333,
+            "insight_novelty": 0.0
+          },
+          "claimnov_novelty_delta": -0.00770333333333333,
+          "order_sensitive_count": 15
+        },
+        "majority": {
+          "counts": {
+            "loss": 17,
+            "win": 38,
+            "tie": 13
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.2833333333333333,
+          "lit2test_net_wins_ci95": [
+            0.06666666666666667,
+            0.48333333333333334
+          ],
+          "lit2test_score_sum_delta": 0.937888888888889,
+          "lit2test_score_sum_delta_ci95": [
+            0.1571665277777779,
+            1.636114027777777
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_closed_loop": {
+        "n": 42,
+        "glm": {
+          "counts": {
+            "win": 27,
+            "loss": 8,
+            "tie": 7
+          },
+          "topics": 25,
+          "lit2test_net_wins": 0.46,
+          "lit2test_net_wins_ci95": [
+            0.22,
+            0.68
+          ],
+          "lit2test_score_sum_delta": 1.3966666666666665,
+          "lit2test_score_sum_delta_ci95": [
+            0.67,
+            2.110083333333332
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.08,
+            "hypothesis_specificity": -0.04666666666666667,
+            "minimality_feasibility": 0.29666666666666663,
+            "decisive_metric": 0.41333333333333333,
+            "falsifiability": 0.6533333333333334
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.025641025641025637,
+            "testability": 0.07692307692307693,
+            "verification_feasibility": 0.0,
+            "method_novelty": -0.07692307692307693,
+            "insight_novelty": 0.0641025641025641
+          },
+          "claimnov_novelty_delta": -0.005448717948717947,
+          "order_sensitive_count": 7
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 10,
+            "win": 25,
+            "loss": 7
+          },
+          "topics": 25,
+          "lit2test_net_wins": 0.4333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.22,
+            0.6334999999999975
+          ],
+          "lit2test_score_sum_delta": 1.5466666666666669,
+          "lit2test_score_sum_delta_ci95": [
+            0.8199166666666666,
+            2.276749999999999
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.19333333333333336,
+            "hypothesis_specificity": 0.1,
+            "minimality_feasibility": 0.13666666666666666,
+            "decisive_metric": 0.3133333333333333,
+            "falsifiability": 0.8033333333333335
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 10
+        },
+        "qwen": {
+          "counts": {
+            "win": 28,
+            "tie": 10,
+            "loss": 4
+          },
+          "topics": 25,
+          "lit2test_net_wins": 0.5933333333333333,
+          "lit2test_net_wins_ci95": [
+            0.42,
+            0.76
+          ],
+          "lit2test_score_sum_delta": 2.01,
+          "lit2test_score_sum_delta_ci95": [
+            1.51,
+            2.52
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.2366666666666667,
+            "hypothesis_specificity": 0.18666666666666668,
+            "minimality_feasibility": 0.22333333333333336,
+            "decisive_metric": 0.44666666666666666,
+            "falsifiability": 0.9166666666666665
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.5,
+            "verification_feasibility": 0.08333333333333333,
+            "method_novelty": 0.125,
+            "insight_novelty": 0.041666666666666664
+          },
+          "claimnov_novelty_delta": 0.002766666666666667,
+          "order_sensitive_count": 10
+        },
+        "majority": {
+          "counts": {
+            "win": 27,
+            "tie": 9,
+            "loss": 6
+          },
+          "topics": 25,
+          "lit2test_net_wins": 0.48666666666666664,
+          "lit2test_net_wins_ci95": [
+            0.26666666666666666,
+            0.6866666666666665
+          ],
+          "lit2test_score_sum_delta": 1.6510333333333334,
+          "lit2test_score_sum_delta_ci95": [
+            1.0410118333333334,
+            2.2699005000000003
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "clean_len_le_1_15x": {
+        "n": 19,
+        "glm": {
+          "counts": {
+            "win": 9,
+            "loss": 7,
+            "tie": 3
+          },
+          "topics": 15,
+          "lit2test_net_wins": -0.03333333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.4666666666666667,
+            0.4
+          ],
+          "lit2test_score_sum_delta": -0.07222222222222226,
+          "lit2test_score_sum_delta_ci95": [
+            -1.1833333333333333,
+            1.0944444444444443
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.18333333333333332,
+            "hypothesis_specificity": -0.1277777777777778,
+            "minimality_feasibility": -0.1388888888888889,
+            "decisive_metric": 0.08888888888888889,
+            "falsifiability": 0.2888888888888889
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.047619047619047616,
+            "testability": 0.0,
+            "verification_feasibility": -0.14285714285714285,
+            "method_novelty": -0.14285714285714285,
+            "insight_novelty": 0.047619047619047616
+          },
+          "claimnov_novelty_delta": 0.04228095238095238,
+          "order_sensitive_count": 3
+        },
+        "deepseek": {
+          "counts": {
+            "win": 7,
+            "loss": 6,
+            "tie": 6
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.022222222222222216,
+          "lit2test_net_wins_ci95": [
+            -0.3333333333333333,
+            0.39999999999999997
+          ],
+          "lit2test_score_sum_delta": 0.06111111111111113,
+          "lit2test_score_sum_delta_ci95": [
+            -0.9668055555555555,
+            1.0777777777777777
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.03888888888888888,
+            "hypothesis_specificity": -0.06666666666666667,
+            "minimality_feasibility": -0.18888888888888886,
+            "decisive_metric": -0.07777777777777778,
+            "falsifiability": 0.35555555555555557
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 6
+        },
+        "qwen": {
+          "counts": {
+            "win": 7,
+            "tie": 9,
+            "loss": 3
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.18888888888888886,
+          "lit2test_net_wins_ci95": [
+            -0.13333333333333333,
+            0.49999999999999994
+          ],
+          "lit2test_score_sum_delta": 0.8833333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.01708333333333319,
+            1.7333333333333334
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.07777777777777778,
+            "hypothesis_specificity": 0.044444444444444446,
+            "minimality_feasibility": 0.005555555555555565,
+            "decisive_metric": 0.04444444444444443,
+            "falsifiability": 0.711111111111111
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.5625,
+            "verification_feasibility": 0.3125,
+            "method_novelty": 0.125,
+            "insight_novelty": 0.125
+          },
+          "claimnov_novelty_delta": 0.010287500000000002,
+          "order_sensitive_count": 9
+        },
+        "majority": {
+          "counts": {
+            "win": 7,
+            "tie": 7,
+            "loss": 5
+          },
+          "topics": 15,
+          "lit2test_net_wins": 0.011111111111111101,
+          "lit2test_net_wins_ci95": [
+            -0.3555555555555555,
+            0.3777777777777777
+          ],
+          "lit2test_score_sum_delta": 0.2906888888888889,
+          "lit2test_score_sum_delta_ci95": [
+            -0.5980444444444444,
+            1.1928283333333307
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "incomplete_e": {
+        "n": 26,
+        "glm": {
+          "counts": {
+            "loss": 10,
+            "win": 12,
+            "tie": 4
+          },
+          "topics": 16,
+          "lit2test_net_wins": 0.125,
+          "lit2test_net_wins_ci95": [
+            -0.28125,
+            0.53125
+          ],
+          "lit2test_score_sum_delta": 0.296875,
+          "lit2test_score_sum_delta_ci95": [
+            -1.0160156249999999,
+            1.609375
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.015625,
+            "hypothesis_specificity": -0.020833333333333336,
+            "minimality_feasibility": -0.015625,
+            "decisive_metric": 0.020833333333333336,
+            "falsifiability": 0.296875
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.10606060606060605,
+            "testability": 0.060606060606060615,
+            "verification_feasibility": 0.07575757575757575,
+            "method_novelty": 0.015151515151515154,
+            "insight_novelty": -0.030303030303030297
+          },
+          "claimnov_novelty_delta": 0.023431818181818175,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 12,
+            "win": 12,
+            "tie": 2
+          },
+          "topics": 16,
+          "lit2test_net_wins": 0.09375,
+          "lit2test_net_wins_ci95": [
+            -0.3125,
+            0.5
+          ],
+          "lit2test_score_sum_delta": 0.22395833333333331,
+          "lit2test_score_sum_delta_ci95": [
+            -1.3697916666666667,
+            1.796875
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.010416666666666685,
+            "hypothesis_specificity": 0.015625,
+            "minimality_feasibility": -0.046875,
+            "decisive_metric": -0.04166666666666666,
+            "falsifiability": 0.3072916666666667
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 2
+        },
+        "qwen": {
+          "counts": {
+            "loss": 11,
+            "tie": 5,
+            "win": 10
+          },
+          "topics": 16,
+          "lit2test_net_wins": 0.03125,
+          "lit2test_net_wins_ci95": [
+            -0.375,
+            0.4375
+          ],
+          "lit2test_score_sum_delta": 0.32291666666666663,
+          "lit2test_score_sum_delta_ci95": [
+            -1.1614583333333335,
+            1.807421874999998
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.020833333333333343,
+            "hypothesis_specificity": -0.109375,
+            "minimality_feasibility": -0.0625,
+            "decisive_metric": 0.125,
+            "falsifiability": 0.390625
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.7,
+            "testability": 0.2,
+            "verification_feasibility": -0.1,
+            "method_novelty": -0.2,
+            "insight_novelty": -0.2
+          },
+          "claimnov_novelty_delta": -0.024429999999999997,
+          "order_sensitive_count": 5
+        },
+        "majority": {
+          "counts": {
+            "loss": 11,
+            "win": 11,
+            "tie": 4
+          },
+          "topics": 16,
+          "lit2test_net_wins": 0.0625,
+          "lit2test_net_wins_ci95": [
+            -0.3125,
+            0.4375
+          ],
+          "lit2test_score_sum_delta": 0.28115625000000005,
+          "lit2test_score_sum_delta_ci95": [
+            -1.14071953125,
+            1.708439062499998
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_host": {
+      "ai_scientist": {
+        "n": 29,
+        "glm": {
+          "counts": {
+            "win": 20,
+            "loss": 5,
+            "tie": 4
+          },
+          "topics": 29,
+          "lit2test_net_wins": 0.5172413793103449,
+          "lit2test_net_wins_ci95": [
+            0.20689655172413793,
+            0.7586206896551724
+          ],
+          "lit2test_score_sum_delta": 1.8103448275862069,
+          "lit2test_score_sum_delta_ci95": [
+            0.7241379310344828,
+            2.793103448275862
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.10344827586206896,
+            "hypothesis_specificity": -0.034482758620689655,
+            "minimality_feasibility": 0.3275862068965517,
+            "decisive_metric": 0.5344827586206896,
+            "falsifiability": 0.8793103448275862
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.07142857142857142,
+            "testability": 0.14285714285714285,
+            "verification_feasibility": 0.07142857142857142,
+            "method_novelty": -0.21428571428571427,
+            "insight_novelty": -0.07142857142857142
+          },
+          "claimnov_novelty_delta": -0.006192857142857143,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "tie": 5,
+            "win": 18,
+            "loss": 6
+          },
+          "topics": 29,
+          "lit2test_net_wins": 0.41379310344827586,
+          "lit2test_net_wins_ci95": [
+            0.10344827586206896,
+            0.6896551724137931
+          ],
+          "lit2test_score_sum_delta": 1.706896551724138,
+          "lit2test_score_sum_delta_ci95": [
+            0.46508620689655183,
+            2.8448275862068964
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.1724137931034483,
+            "hypothesis_specificity": 0.034482758620689655,
+            "minimality_feasibility": 0.1724137931034483,
+            "decisive_metric": 0.3620689655172414,
+            "falsifiability": 0.9655172413793104
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 5
+        },
+        "qwen": {
+          "counts": {
+            "win": 21,
+            "tie": 4,
+            "loss": 4
+          },
+          "topics": 29,
+          "lit2test_net_wins": 0.5862068965517241,
+          "lit2test_net_wins_ci95": [
+            0.3103448275862069,
+            0.8275862068965517
+          ],
+          "lit2test_score_sum_delta": 2.0689655172413794,
+          "lit2test_score_sum_delta_ci95": [
+            0.9827586206896551,
+            3.0344827586206895
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.1896551724137931,
+            "hypothesis_specificity": 0.08620689655172414,
+            "minimality_feasibility": 0.2413793103448276,
+            "decisive_metric": 0.5172413793103449,
+            "falsifiability": 1.0344827586206897
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.2,
+            "testability": 0.5333333333333333,
+            "verification_feasibility": 0.2,
+            "method_novelty": 0.06666666666666667,
+            "insight_novelty": -0.06666666666666667
+          },
+          "claimnov_novelty_delta": -0.022440000000000005,
+          "order_sensitive_count": 4
+        },
+        "majority": {
+          "counts": {
+            "win": 20,
+            "tie": 4,
+            "loss": 5
+          },
+          "topics": 29,
+          "lit2test_net_wins": 0.5172413793103449,
+          "lit2test_net_wins_ci95": [
+            0.2413793103448276,
+            0.7586206896551724
+          ],
+          "lit2test_score_sum_delta": 1.862,
+          "lit2test_score_sum_delta_ci95": [
+            0.7470344827586207,
+            2.867724137931034
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "direct": {
+        "n": 30,
+        "glm": {
+          "counts": {
+            "loss": 12,
+            "win": 12,
+            "tie": 6
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.0,
+          "lit2test_net_wins_ci95": [
+            -0.3333333333333333,
+            0.3333333333333333
+          ],
+          "lit2test_score_sum_delta": -0.21666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -1.0333333333333334,
+            0.6166666666666667
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.1,
+            "hypothesis_specificity": -0.11666666666666667,
+            "minimality_feasibility": 0.016666666666666666,
+            "decisive_metric": -0.08333333333333333,
+            "falsifiability": 0.06666666666666667
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.0,
+            "testability": 0.0,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.13333333333333333,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": 0.031273333333333334,
+          "order_sensitive_count": 6
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 12,
+            "win": 12,
+            "tie": 6
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.0,
+          "lit2test_net_wins_ci95": [
+            -0.30083333333333306,
+            0.3333333333333333
+          ],
+          "lit2test_score_sum_delta": -0.21666666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -1.1833333333333333,
+            0.75
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.06666666666666667,
+            "hypothesis_specificity": -0.05,
+            "minimality_feasibility": -0.06666666666666667,
+            "decisive_metric": -0.2,
+            "falsifiability": 0.16666666666666666
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 6
+        },
+        "qwen": {
+          "counts": {
+            "loss": 10,
+            "win": 13,
+            "tie": 7
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.1,
+          "lit2test_net_wins_ci95": [
+            -0.2,
+            0.4
+          ],
+          "lit2test_score_sum_delta": 0.35,
+          "lit2test_score_sum_delta_ci95": [
+            -0.7166666666666667,
+            1.3666666666666667
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.03333333333333333,
+            "hypothesis_specificity": -0.05,
+            "minimality_feasibility": 0.016666666666666666,
+            "decisive_metric": 0.1,
+            "falsifiability": 0.31666666666666665
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.13333333333333333,
+            "testability": 0.3333333333333333,
+            "verification_feasibility": -0.13333333333333333,
+            "method_novelty": 0.0,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": 0.007033333333333335,
+          "order_sensitive_count": 7
+        },
+        "majority": {
+          "counts": {
+            "loss": 11,
+            "win": 11,
+            "tie": 8
+          },
+          "topics": 30,
+          "lit2test_net_wins": 0.0,
+          "lit2test_net_wins_ci95": [
+            -0.3,
+            0.3
+          ],
+          "lit2test_score_sum_delta": -0.027866666666666633,
+          "lit2test_score_sum_delta_ci95": [
+            -0.9111358333333333,
+            0.8223683333333314
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "edara": {
+        "n": 9,
+        "glm": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.3888888888888888,
+          "lit2test_score_sum_delta_ci95": [
+            -0.4444444444444444,
+            2.5555555555555554
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.1111111111111111,
+            "minimality_feasibility": 0.2222222222222222,
+            "decisive_metric": 0.6111111111111112,
+            "falsifiability": 0.4444444444444444
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.3333333333333333,
+            "testability": -0.1111111111111111,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.0,
+            "insight_novelty": 0.1111111111111111
+          },
+          "claimnov_novelty_delta": -0.024844444444444443,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.7777777777777777,
+          "lit2test_score_sum_delta_ci95": [
+            -0.16666666666666666,
+            3.2222222222222223
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.3333333333333333,
+            "minimality_feasibility": -0.05555555555555555,
+            "decisive_metric": 0.7777777777777778,
+            "falsifiability": 0.7222222222222222
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "qwen": {
+          "counts": {
+            "tie": 4,
+            "win": 4,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.3333333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.1111111111111111,
+            0.7777777777777778
+          ],
+          "lit2test_score_sum_delta": 1.0555555555555556,
+          "lit2test_score_sum_delta_ci95": [
+            -0.4444444444444444,
+            2.2222222222222223
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.16666666666666666,
+            "hypothesis_specificity": 0.3333333333333333,
+            "minimality_feasibility": -0.2777777777777778,
+            "decisive_metric": 0.5555555555555556,
+            "falsifiability": 0.6111111111111112
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "majority": {
+          "counts": {
+            "win": 7,
+            "tie": 1,
+            "loss": 1
+          },
+          "topics": 9,
+          "lit2test_net_wins": 0.6666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.21944444444444539,
+            1.0
+          ],
+          "lit2test_score_sum_delta": 1.4073333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.31488888888888883,
+            2.6111138888888887
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "by_benchmark": {
+      "AlphaIdeaBench": {
+        "n": 10,
+        "glm": {
+          "counts": {
+            "tie": 1,
+            "win": 7,
+            "loss": 2
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.5333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.13333333333333333,
+            0.9333333333333332
+          ],
+          "lit2test_score_sum_delta": 1.8833333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            0.8833333333333332,
+            2.8666666666666663
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.2333333333333333,
+            "hypothesis_specificity": -0.15,
+            "minimality_feasibility": 0.3833333333333333,
+            "decisive_metric": 0.7,
+            "falsifiability": 0.7166666666666667
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": 0.1,
+            "testability": 0.1,
+            "verification_feasibility": -0.1,
+            "method_novelty": 0.1,
+            "insight_novelty": 0.06666666666666667
+          },
+          "claimnov_novelty_delta": -0.0035733333333333355,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "win": 6,
+            "loss": 1,
+            "tie": 3
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.8
+          ],
+          "lit2test_score_sum_delta": 1.75,
+          "lit2test_score_sum_delta_ci95": [
+            0.45,
+            3.05
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.4833333333333333,
+            "hypothesis_specificity": 0.1,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.15,
+            "falsifiability": 1.0166666666666666
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "qwen": {
+          "counts": {
+            "tie": 3,
+            "win": 6,
+            "loss": 1
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.06666666666666667,
+            0.8666666666666666
+          ],
+          "lit2test_score_sum_delta": 2.033333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            1.4,
+            2.6333333333333333
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.6166666666666666,
+            "hypothesis_specificity": -0.13333333333333336,
+            "minimality_feasibility": 0.11666666666666667,
+            "decisive_metric": 0.4333333333333333,
+            "falsifiability": 1.0
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 3
+        },
+        "majority": {
+          "counts": {
+            "tie": 3,
+            "win": 6,
+            "loss": 1
+          },
+          "topics": 5,
+          "lit2test_net_wins": 0.4333333333333333,
+          "lit2test_net_wins_ci95": [
+            0.1,
+            0.7666666666666666
+          ],
+          "lit2test_score_sum_delta": 1.8888000000000003,
+          "lit2test_score_sum_delta_ci95": [
+            1.1,
+            2.8221
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "AlphaIdeaBench_survey": {
+        "n": 8,
+        "glm": {
+          "counts": {
+            "loss": 3,
+            "win": 4,
+            "tie": 1
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.125,
+          "lit2test_net_wins_ci95": [
+            -0.375,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 0.75,
+          "lit2test_score_sum_delta_ci95": [
+            -0.625,
+            2.375
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.125,
+            "hypothesis_specificity": -0.125,
+            "minimality_feasibility": 0.0625,
+            "decisive_metric": -0.0625,
+            "falsifiability": 0.75
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 2,
+            "win": 5,
+            "tie": 1
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.375,
+          "lit2test_net_wins_ci95": [
+            0.0,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.0625,
+          "lit2test_score_sum_delta_ci95": [
+            -1.125,
+            3.25
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.375,
+            "hypothesis_specificity": -0.1875,
+            "minimality_feasibility": 0.25,
+            "decisive_metric": -0.125,
+            "falsifiability": 0.75
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 1
+        },
+        "qwen": {
+          "counts": {
+            "loss": 2,
+            "win": 4,
+            "tie": 2
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.25,
+          "lit2test_net_wins_ci95": [
+            -0.25,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.625,
+          "lit2test_score_sum_delta_ci95": [
+            -0.375,
+            3.625
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": 0.375,
+            "hypothesis_specificity": -0.0625,
+            "minimality_feasibility": 0.4375,
+            "decisive_metric": -0.0625,
+            "falsifiability": 0.9375
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.25,
+            "testability": 0.5,
+            "verification_feasibility": 0.125,
+            "method_novelty": 0.0,
+            "insight_novelty": -0.25
+          },
+          "claimnov_novelty_delta": -0.006487499999999995,
+          "order_sensitive_count": 2
+        },
+        "majority": {
+          "counts": {
+            "loss": 2,
+            "win": 4,
+            "tie": 2
+          },
+          "topics": 4,
+          "lit2test_net_wins": 0.25,
+          "lit2test_net_wins_ci95": [
+            -0.25,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.14575,
+          "lit2test_score_sum_delta_ci95": [
+            -0.7084999999999999,
+            3.0
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "Lit2Test": {
+        "n": 28,
+        "glm": {
+          "counts": {
+            "loss": 5,
+            "win": 18,
+            "tie": 5
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.4666666666666666,
+          "lit2test_net_wins_ci95": [
+            0.08333333333333331,
+            0.75
+          ],
+          "lit2test_score_sum_delta": 1.1333333333333333,
+          "lit2test_score_sum_delta_ci95": [
+            -0.2333333333333333,
+            2.2416666666666663
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.041666666666666664,
+            "hypothesis_specificity": 0.08333333333333333,
+            "minimality_feasibility": 0.24166666666666664,
+            "decisive_metric": 0.3166666666666667,
+            "falsifiability": 0.5333333333333333
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.16666666666666666,
+            "testability": 0.0,
+            "verification_feasibility": 0.016666666666666673,
+            "method_novelty": -0.06666666666666667,
+            "insight_novelty": -0.01666666666666667
+          },
+          "claimnov_novelty_delta": 0.008691666666666667,
+          "order_sensitive_count": 5
+        },
+        "deepseek": {
+          "counts": {
+            "loss": 8,
+            "tie": 4,
+            "win": 16
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.2833333333333333,
+          "lit2test_net_wins_ci95": [
+            -0.1,
+            0.6499999999999999
+          ],
+          "lit2test_score_sum_delta": 1.1166666666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.30041666666666667,
+            2.316666666666667
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.04166666666666667,
+            "hypothesis_specificity": 0.15833333333333333,
+            "minimality_feasibility": 0.1,
+            "decisive_metric": 0.3,
+            "falsifiability": 0.6
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "qwen": {
+          "counts": {
+            "loss": 5,
+            "win": 16,
+            "tie": 7
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.3833333333333333,
+          "lit2test_net_wins_ci95": [
+            -1.1102230246251566e-17,
+            0.7166666666666666
+          ],
+          "lit2test_score_sum_delta": 1.1583333333333332,
+          "lit2test_score_sum_delta_ci95": [
+            -0.16666666666666669,
+            2.275
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.10833333333333335,
+            "hypothesis_specificity": 0.175,
+            "minimality_feasibility": 0.05833333333333331,
+            "decisive_metric": 0.4,
+            "falsifiability": 0.6333333333333333
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 7
+        },
+        "majority": {
+          "counts": {
+            "loss": 6,
+            "win": 17,
+            "tie": 5
+          },
+          "topics": 10,
+          "lit2test_net_wins": 0.3833333333333333,
+          "lit2test_net_wins_ci95": [
+            -1.1102230246251566e-17,
+            0.7166666666666666
+          ],
+          "lit2test_score_sum_delta": 1.136016666666667,
+          "lit2test_score_sum_delta_ci95": [
+            -0.200345,
+            2.213885416666666
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      },
+      "Lit2Test_expansion40": {
+        "n": 22,
+        "glm": {
+          "counts": {
+            "win": 10,
+            "tie": 4,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.09090909090909091,
+          "lit2test_net_wins_ci95": [
+            -0.3181818181818182,
+            0.45568181818180165
+          ],
+          "lit2test_score_sum_delta": 0.11363636363636363,
+          "lit2test_score_sum_delta_ci95": [
+            -1.1363636363636365,
+            1.3409090909090908
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.11363636363636363,
+            "hypothesis_specificity": -0.13636363636363635,
+            "minimality_feasibility": 0.06818181818181818,
+            "decisive_metric": 0.1590909090909091,
+            "falsifiability": 0.13636363636363635
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "deepseek": {
+          "counts": {
+            "win": 10,
+            "tie": 4,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.09090909090909091,
+          "lit2test_net_wins_ci95": [
+            -0.2727272727272727,
+            0.45454545454545453
+          ],
+          "lit2test_score_sum_delta": 0.045454545454545456,
+          "lit2test_score_sum_delta_ci95": [
+            -1.5909090909090908,
+            1.5681818181818181
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.1590909090909091,
+            "hypothesis_specificity": -0.06818181818181818,
+            "minimality_feasibility": -0.06818181818181818,
+            "decisive_metric": 0.045454545454545456,
+            "falsifiability": 0.29545454545454547
+          },
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 4
+        },
+        "qwen": {
+          "counts": {
+            "win": 12,
+            "loss": 7,
+            "tie": 3
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.22727272727272727,
+          "lit2test_net_wins_ci95": [
+            -0.18181818181818182,
+            0.5909090909090909
+          ],
+          "lit2test_score_sum_delta": 0.5909090909090909,
+          "lit2test_score_sum_delta_ci95": [
+            -1.0681818181818181,
+            2.046022727272719
+          ],
+          "lit2test_dimension_deltas": {
+            "grounding": -0.13636363636363635,
+            "hypothesis_specificity": 0.022727272727272728,
+            "minimality_feasibility": -0.06818181818181818,
+            "decisive_metric": 0.3409090909090909,
+            "falsifiability": 0.4318181818181818
+          },
+          "alphaideabench_dimension_deltas": {
+            "context_grounding": -0.13636363636363635,
+            "testability": 0.4090909090909091,
+            "verification_feasibility": 0.0,
+            "method_novelty": 0.045454545454545456,
+            "insight_novelty": 0.09090909090909091
+          },
+          "claimnov_novelty_delta": -0.008145454545454546,
+          "order_sensitive_count": 3
+        },
+        "majority": {
+          "counts": {
+            "win": 11,
+            "tie": 3,
+            "loss": 8
+          },
+          "topics": 11,
+          "lit2test_net_wins": 0.13636363636363635,
+          "lit2test_net_wins_ci95": [
+            -0.2727272727272727,
+            0.5
+          ],
+          "lit2test_score_sum_delta": 0.24995454545454548,
+          "lit2test_score_sum_delta_ci95": [
+            -1.257825,
+            1.628818181818182
+          ],
+          "lit2test_dimension_deltas": {},
+          "alphaideabench_dimension_deltas": {},
+          "claimnov_novelty_delta": null,
+          "order_sensitive_count": 0
+        }
+      }
+    },
+    "inter_judge_agreement": {
+      "glm_vs_deepseek": {
+        "n": 68,
+        "exact_agree": 55,
+        "direct_flips": 2
+      },
+      "glm_vs_qwen": {
+        "n": 68,
+        "exact_agree": 53,
+        "direct_flips": 1
+      },
+      "deepseek_vs_qwen": {
+        "n": 68,
+        "exact_agree": 53,
+        "direct_flips": 0
+      }
+    }
+  }
+}

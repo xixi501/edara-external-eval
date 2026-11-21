@@ -374,3 +374,39 @@ def test_design_field_picks_existing_field_and_strips_preregistration():
                          scope="local")
     assert log[0]["status"] == "applied"
     assert "pre-registered" not in log[0]["replacement"].lower()
+
+
+def test_autodl_glm_disables_reasoning_effort_when_thinking_disabled():
+    from types import SimpleNamespace
+    from edara_mvp_eval.llm_client import LLMRunner, ModelEndpoint
+
+    captured = []
+
+    class FakeCompletions:
+        def create(self, **kwargs):
+            captured.append(kwargs)
+            msg = SimpleNamespace(content='{"ok": true}')
+            usage = SimpleNamespace(prompt_tokens=10, completion_tokens=5)
+            return SimpleNamespace(choices=[SimpleNamespace(message=msg)], usage=usage)
+
+    ep = ModelEndpoint(
+        model="GLM-5.3-flash",
+        base_url="https://www.autodl.art/api/v1",
+        credential_env="AUTODL_API_KEY",
+        extra_body={"reasoning_effort": "low", "thinking": {"type": "enabled"}},
+    )
+    runner = LLMRunner(ep, dry_run=False)
+    runner._client = SimpleNamespace(chat=SimpleNamespace(completions=FakeCompletions()))
+    runner.chat_text("sys", "user", tag="normalize", json_mode=True)
+    assert captured[0]["extra_body"] == {"reasoning_effort": "none", "thinking": {"type": "disabled"}}
+
+    ep2 = ModelEndpoint(
+        model="GLM-5.3-flash",
+        base_url="https://www.autodl.art/api/v1",
+        credential_env="AUTODL_API_KEY",
+        extra_body={"thinking": {"type": "disabled"}},
+    )
+    runner2 = LLMRunner(ep2, dry_run=False)
+    runner2._client = SimpleNamespace(chat=SimpleNamespace(completions=FakeCompletions()))
+    runner2.chat_text("sys", "user", tag="paired_general_review")
+    assert captured[1]["extra_body"] == {"reasoning_effort": "none", "thinking": {"type": "disabled"}}

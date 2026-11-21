@@ -1,0 +1,271 @@
+{
+  "substantive_correct": 12,
+  "substantive_total": 12,
+  "sham_ties": 4,
+  "sham_total": 4,
+  "qualified": true,
+  "mean_target_dimension_deltas": {
+    "grounding": -1.75,
+    "decisive_metric": -2.0,
+    "falsifiability": -1.625
+  },
+  "cases": [
+    {
+      "id": "lit2test-corrupt-grounding-01",
+      "kind": "substantive",
+      "target_dimension": "grounding",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.0,
+      "dimension_deltas": {
+        "grounding": -2.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-grounding-02",
+      "kind": "substantive",
+      "target_dimension": "grounding",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.0,
+      "dimension_deltas": {
+        "grounding": -2.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-grounding-03",
+      "kind": "substantive",
+      "target_dimension": "grounding",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -1.5,
+      "dimension_deltas": {
+        "grounding": -1.5,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-grounding-04",
+      "kind": "substantive",
+      "target_dimension": "grounding",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -1.5,
+      "dimension_deltas": {
+        "grounding": -1.5,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-decisive_metric-01",
+      "kind": "substantive",
+      "target_dimension": "decisive_metric",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.5,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": -2.0,
+        "falsifiability": -0.5
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-decisive_metric-02",
+      "kind": "substantive",
+      "target_dimension": "decisive_metric",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -3.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": -2.0,
+        "falsifiability": -1.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-decisive_metric-03",
+      "kind": "substantive",
+      "target_dimension": "decisive_metric",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.5,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": -2.0,
+        "falsifiability": -0.5
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-decisive_metric-04",
+      "kind": "substantive",
+      "target_dimension": "decisive_metric",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": -2.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-falsifiability-01",
+      "kind": "substantive",
+      "target_dimension": "falsifiability",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -1.5,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": -1.5
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-falsifiability-02",
+      "kind": "substantive",
+      "target_dimension": "falsifiability",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -1.5,
+      "dimension_deltas": {
+        "grounding": -0.5,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": -1.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-falsifiability-03",
+      "kind": "substantive",
+      "target_dimension": "falsifiability",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": -2.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-corrupt-falsifiability-04",
+      "kind": "substantive",
+      "target_dimension": "falsifiability",
+      "expected": "loss",
+      "status": "loss",
+      "score_sum_delta": -2.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": -2.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-sham-01",
+      "kind": "style",
+      "target_dimension": "sham",
+      "expected": "tie",
+      "status": "tie",
+      "score_sum_delta": 0.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-sham-02",
+      "kind": "style",
+      "target_dimension": "sham",
+      "expected": "tie",
+      "status": "tie",
+      "score_sum_delta": 0.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-sham-03",
+      "kind": "style",
+      "target_dimension": "sham",
+      "expected": "tie",
+      "status": "tie",
+      "score_sum_delta": 0.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    },
+    {
+      "id": "lit2test-sham-04",
+      "kind": "style",
+      "target_dimension": "sham",
+      "expected": "tie",
+      "status": "tie",
+      "score_sum_delta": 0.0,
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      },
+      "correct": true
+    }
+  ],
+  "eval_mode": "unified"
+}

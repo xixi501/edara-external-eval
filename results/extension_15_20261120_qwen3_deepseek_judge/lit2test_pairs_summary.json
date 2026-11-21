@@ -1,0 +1,3392 @@
+[
+  {
+    "job": "smallari_expansion40_003_quantum_circuits_algorithms_design_parameterized__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 2.5,
+    "dimension_deltas": {
+      "grounding": 0.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 0.5,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B wins on stronger alternative-explanation controls and more operational falsification thresholds; A is close but lacks capacity/regularization matching and has a looser ablation criterion.",
+        "score_sum_left": 13,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately cite SGLBO, ORB, and diffusion paper; both flag ORB classification transfer as untested; B additionally marks simulator availability unverified."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a testable ORB+SGLBO OOD/calibration claim with symmetry-breaking ablation; B explicitly rules out capacity/regularization alternatives."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both are feasible with 8-qubit simulation; B adds a decisive capacity/regularization-matched baseline and matched checkpoints, while A lacks that alternative-explanation control."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use noisy OOD balanced-accuracy gap with OOD ECE secondary, directly targeting robustness/calibration; B's ID-accuracy-matched checkpoints reduce confounds."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B gives stricter thresholds, including >=25% ablation retention and CI rules; A's 'adequately powered' caveat and vague 'retains same' weaken decisive falsification."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "Both proposals are well grounded and similarly specific, but A has a stronger discriminating control design and more operational falsification rules. B's matching and statistical caveats are useful, yet its baseline choice and null-result language are less decisive.",
+        "score_sum_left": 12,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use the supplied SGLBO, ORB, and diffusion-inspired noise-mitigation papers, do not present planned outcomes as observed, and avoid fabricated support. B is slightly more explicit that ORB's transfer from ground-state proble"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose the same clear, testable claim: ORB-style symmetry-equivariant parameter sharing plus SGLBO should reduce noisy OOD gap and ECE versus an SGLBO-optimized generic PQC, with the gain shrinking under symmetry-breaking ablation. Bo"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A specifies a concrete three-arm design including a regularization/effective-capacity-matched generic-PQC control and ID-accuracy-matched checkpoints, which better separates symmetry structure from capacity or optimizer effects. B includes "
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives a primary noisy OOD generalization gap evaluated on ID-accuracy-matched checkpoints, plus concrete ECE binning and shot-count details, making the metric more directly tied to the claimed OOD/calibration mechanism. B's OOD gap and EC"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states quantitative support/falsification thresholds: at least 5 pp OOD-gap reduction and 0.03 ECE reduction, CI rules, and a precise <25% ablation-retention falsification condition. B also pre-registers thresholds and a paired permutatio"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_003_quantum_circuits_algorithms_design_parameterized__v02_expansion40/ai_scientist",
+    "status": "tie",
+    "folded_winner": "tie",
+    "order_sensitive": true,
+    "score_sum_delta": -0.5,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": 0.5,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "A is more scientifically grounded and minimal, especially in its careful OOD label-preservation design and ORB scoping. B has stronger explicit falsification language, but its OOD-shift validity and dataset concreteness are weaker.",
+        "score_sum_left": 13,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A correctly scopes ORB to ground-state problems, excludes the unrelated schools paper, and restricts clean OOD to an explicitly invariant synthetic construction. B cites supplied papers but applies ORB-style symmetry to classification witho"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose specific, non-generic, testable claims about whether noise robustness transfers to OOD robustness and whether parameter-sharing/equivariance mediates that transfer. B is more directional, while A is more explicitly diagnostic, "
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a concrete small-circuit protocol within budget: synthetic invariant primary data, ID-accuracy matching, SGLBO baseline, and a structure-removal/mismatch failure-mode ablation. B is feasible but adds many arms and leaves dataset/cla"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 2,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "A evaluates the right OOD-robustness gain under matched ID accuracy but does not distill a single primary metric. B explicitly names the structure-ablation delta, but its OOD-accuracy basis relies on shifts claimed label-preserving without "
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B pre-specifies a quantitative support/falsification rule using a bootstrap CI on the structure-ablation delta plus a Kendall tau criterion, though the tau rule is imperfect. A gives directional predictions and bootstrap-CI language but lac"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A better matches the task's demand for a minimal falsifiable test: it specifies a decisive structure-ablation metric and explicit decision thresholds. B has cleaner grounding and OOD control but weaker decisive metric and falsification rules.",
+        "score_sum_left": 13,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses the relevant SGLBO/diffusion/ORB papers but loosely treats diffusion-inspired training as an optimizer and assumes rotations/amplitude scaling are label-preserving shifts. B distinguishes optimizer vs training procedure, labels ORB a"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state non-generic, testable PQC claims about noise robustness vs OOD robustness and structure mediation. A is more directional; B is more cautious but still scoped to specific mechanisms and conditions."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A is feasible but overloaded with many arms and rank analyses and uses questionable OOD shifts. B is more minimal/valid by restricting clean OOD to a synthetic permutation-invariant target, using UCI only diagnostically, and specifying matc"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A defines a single primary structure-ablation delta with ID-accuracy matching that directly tests the mediation claim. B's decisive_metric field repeats setup/evaluation and lacks one clear primary metric, though sharpness is a relevant pro"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit bootstrap-CI support/falsification rules. B offers qualitative predictions but no concrete thresholds, has an empty supporting_result, and its falsifying text is malformed/ambiguous."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_006_backdoor_attacks_perspective_attack_triggers__v02_expansion40/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -2.5,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -0.5,
+      "decisive_metric": -1.0,
+      "falsifiability": 0.5
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "tie",
+      "decisive_metric": "left",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is better grounded, more minimal, and uses a direct detector-transfer metric; Answer B relies on an unsupported diffusion ASR-bound operationalization.",
+        "score_sum_left": 15,
+        "score_sum_right": 11,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A correctly limits 2310.10780's bound to constant-trigger classification metrics and avoids inventing a diffusion ASR ceiling; B overclaims a correlation-derived bound."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a precise, scoped claim: identity-trigger detector AUC drops at least 0.15 on held-out homographies versus identity. B's bound-based claim is underspecified."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses three LoRA runs, public COCO/open SD, and inference-transform controls within budget. B adds a useful control arm but also an underspecified diffusion-bound derivation."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's primary AUC drop directly measures detector transfer with rotation/scale controls. B's excess-ASR-over-derived-bound metric depends on an unsupported bound operationalization."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state explicit supporting and falsifying thresholds with operational CIs and control-arm checks; A is cleaner but both are falsifiable."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "B is better grounded and has a cleaner decisive metric; A has stronger falsification and control detail, but its core bound-based ASR claim is less directly supported.",
+        "score_sum_left": 14,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A over-extends the supplied statistical paper by predicting a diffusion ASR upper bound from trigger-target correlation without a supplied formula; B correctly notes the bound is classification-style and uses an empirical constant-trigger A"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state concrete, non-generic claims with thresholds in a specified LoRA diffusion setting; A combines bound violation plus detector drop, B focuses on detector transfer, but both are testable."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both fit the budget with public COCO and open-weight SD inpainting and include a supplied-paper-matched baseline plus rotation/scale controls; A adds a fourth poisoning arm but remains feasible, while B is more economical with some optional"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B's primary AUC drop directly measures detector transfer with rotation/scale controls; A's primary excess ASR over a derived statistical bound depends on an approximate bound-to-CLIP-ASR mapping, so it is less direct despite a secondary AUC"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit numerical support/falsification thresholds plus calibration and control-void rules; B has explicit CI rules but its equivalence wording and secondary ASR handling are less precise."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_006_backdoor_attacks_perspective_attack_triggers__v02_expansion40/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 1.5,
+    "dimension_deltas": {
+      "grounding": 0.0,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": 0.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "tie",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B wins on the decisive metric, falsifiability, and matched controls needed to rule out trigger-strength and backdoor-success confounds; A is more hypothesis-specific and careful, but its core metric and falsification criteria are less operationally sharp.",
+        "score_sum_left": 12,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both proposals accurately use 2310.10780 as a constant-trigger theory source and 2311.16646 as a resilient-trigger analog, with explicit caveats about adapting from classification/dataset distillation to diffusion. Neither fabricates observ"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A states two separable, scoped claims: H1 compares a theory-derived frontier against a generic monotone trade-off baseline, and H2 predicts detector TPR from off-frontier distance. B's H2 is clear, but its H1 is only that the frontier is 'q"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both are feasible within the open-weight and <=8 A100-day constraints using pretrained diffusion checkpoints plus fine-tuning. B provides better discriminating controls by budgeting strength-matched, target-hit-rate-matched, and no-trigger "
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B clearly defines the primary metric as TPR@1%FPR of a trigger-inversion detector versus off-frontier distance on held-out operating points, with an explicit operational definition of off-frontier distance. A includes this metric in its met"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B gives explicit operational falsification rules: rho >= 0 or monotonicity p >= 0.05, plus matched-arm outcomes and no-trigger FPR control. A contains decision rules in the method/minimal-test text, but its dedicated supporting_result and f"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A wins on the core detector metric and concrete falsification controls; B is more minimal and careful about hypotheses but leaves decisive_metric and supporting/falsifying fields malformed or empty.",
+        "score_sum_left": 12,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use supplied backdoor papers and flag proxy or scope limits; no fabricated observed results. B notes the unrelated Brazil paper."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state testable off-frontier versus detectability claims; B separates the H1 proxy claim from the novel H2 detectability claim more cleanly."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B is leaner: one primary DDPM, inference-heavy sweep, generic monotone baseline. A adds many matched arms that strain eight A100-days."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A explicitly makes TPR at one percent FPR versus held-out off-frontier distance primary. B's decisive_metric field duplicates setup and omits TPR as primary."
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 2,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives concrete rho and p thresholds plus matched-control failure checks, though supporting_result is mislabeled. B leaves supporting and falsifying fields empty."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_007_conformal_prediction_sets_provably_efficiency__v02_expansion40/direct",
+    "status": "tie",
+    "folded_winner": "tie",
+    "order_sensitive": true,
+    "score_sum_delta": 0.0,
+    "dimension_deltas": {
+      "grounding": 0.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 0.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "right",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "A is more concrete and internally coherent on feasibility and decision rules; B has a stronger matched-coverage metric but weaker feasibility and threshold consistency.",
+        "score_sum_left": 14,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use CBMA, RPS, and RSCP+ abstracts; neither treats planned results as observed. A adds explicit caveat that weighted vote forfeits RPS proof."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a testable aggregation-weighting claim scoped to calibration poisoning, with all-partition failure case. B adds attribution condition; A clearly limits claim to empirical coverage."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A specifies CIFAR-10, ResNet-18, K=5, 3 seeds, baseline and diagnostic within budget. B leaves dataset/architecture unconfirmed and has split-total arithmetic inconsistency."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B enforces matched coverage within 0.005 and non-informative-weight control, isolating weights. A uses size ratio with coverage floor but lacks exact matched-coverage comparison."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives coherent numeric success, falsification, and inconclusive bands. B has asymmetric 10% success versus 5% falsification thresholds and broader vague conjunctive criteria."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is stronger on decisive metric and falsifiability; B is more concrete and feasible. The core test is more rigorously bounded in A.",
+        "score_sum_left": 13,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately cite CBMA, RPS, and RSCP; B is more concrete about public CIFAR-10/ResNet-18, but A commits no misattribution or fabricated support."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state testable, non-generic claims; A adds specificity-to-weights and all-partition diagnostics, while B clearly limits the claim to aggregation-step robustness."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B fixes CIFAR-10 and ResNet-18 with K=5 and 3 seeds, clearly feasible; A leaves dataset/architecture unconfirmed and its 65k split exceeds CIFAR-10."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A requires matched coverage within 0.005 before comparing set size, directly isolating efficiency; B lacks a matched-coverage tolerance, so its size ratio can be confounded."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A specifies falsifiers for size, coverage, non-informative-weight control, weight-source sensitivity, and all-partition failure; B omits control and sensitivity from its falsification rules."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_007_conformal_prediction_sets_provably_efficiency__v02_expansion40/ai_scientist",
+    "status": "tie",
+    "folded_winner": "tie",
+    "order_sensitive": true,
+    "score_sum_delta": 0.0,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": 0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": 0.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger on the core requirements of a minimal falsifiable next-step test because its decisive metric and falsification rules are quantitative and include a well-matched random-poisoning control. A is more concrete and feasible in datasets/models/baselines, but B's sharper decision rules make it the better overall",
+        "score_sum_left": 13,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground the proposal in the supplied CBMA, RPS, and RSCP+/PTT/RCT papers. A is especially careful to label reimplementations as approximate and to flag unverified novelty; B also correctly notes that the supplied papers repor"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose a clear, non-generic hypothesis: robustness-induced set-size inflation is non-uniform across subgroups, so aggregate efficiency can mask subgroup failure. Both specify a targeted single-subgroup calibration-poisoning test; B ad"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a more concrete and feasible design with public tabular datasets, CIFAR-10, open-weight models, an explicit supplied-paper baseline (RPS), matched clean controls, and Mondrian/k diagnostics within budget. B is more minimal in arm st"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both target the right quantity, the subgroup-specific coverage/set-size deviation relative to clean calibration. B makes this decisive by fixing a within-subgroup inflation/coverage delta with 95% bootstrap CIs and comparing it against a ra"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states qualitative support/falsification conditions but lacks explicit numeric decision cutoffs. B provides clear quantitative rules for support and falsification, including aggregate coverage/set-size stability thresholds, subgroup cover"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "B better grounds the methods and adds a crucial control for the global-threshold confound, making the audit more scientifically discriminating. A is more falsifiable in its numeric decision rules, but B's design is more accurate and better controlled overall.",
+        "score_sum_left": 13,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B more accurately distinguishes RPS poisoning robustness from RSCP adversarial-input robustness, flags CBMA as an approximation, and reuses released RSCP code. A is broadly grounded but labels plain split conformal as a supplied-paper basel"
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states a scoped subgroup-masking hypothesis with explicit quantitative support conditions (aggregate nominal while targeted subgroup coverage drops >=5pp and set size inflates >=20%). B states the same idea but relies on the vague phrase "
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A is minimal and feasible, but its random-poisoning control does not fully separate subgroup-specific effects from a global conformal-threshold shift. B adds a matched clean control and a Mondrian-stratified comparison arm while staying wit"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses a direct within-subgroup inflation delta, but it remains vulnerable to the global-threshold confound. B's primary comparison of subgroup deviation versus aggregate deviation, plus stratified calibration and score-distribution reporti"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit quantitative decision rules for support and falsification, including bootstrap-CI separation from the random-poisoning control. B says 'materially exceeds' without numeric thresholds, and its falsifying_result field largely"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_008_graph_networks_message_passing_representation__v02_expansion40/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -5.0,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": -1.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "left",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is a more rigorous and operational version of the same core test, with clearer grounding, better-defined strata, explicit handling of edge cases, and pre-registered support/falsification/inconclusive rules. Answer B is directionally similar but less precise and less complete.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both proposals use the supplied papers accurately overall, but A is more careful about what the packet supports: it distinguishes its own effective-resistance/Jacobian proxies from the simplicial message-passing paper's framework and explic"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both state the same core oversquashing-linked adaptive-depth hypothesis, but A operationalizes it more sharply with a label-free R_k high/low stratum, depth-resistance correlation, degree controls, and random-depth matching. B's phrase 'inf"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a more complete minimal design: fixed-depth baseline, adaptive-depth model, shuffled-depth failure-mode ablation, degree-matched checks, depth-entropy collapse check, 5 seeds, primary synthetic long-range task, and confirmatory cita"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's high-minus-low R_k interaction gain directly tests whether adaptive depth selectively helps the nodes expected to suffer oversquashing, with a secondary random-depth ablation and depth-resistance correlation. B uses essentially the same"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A pre-registers quantitative support, falsification, and inconclusive outcomes, including thresholds for interaction gain and Spearman correlation, plus checks for random-depth matching, degree matching, and depth-entropy collapse. B provid"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "B is a more precise and better-scoped version of the same minimal test: its label-free R_k definition, disconnected-component handling, primary/confirmatory split, and explicit inconclusive zone improve grounding, metric validity, and falsifiability without exceeding the budget.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both proposals stay within the supplied papers, but B is more careful: it correctly treats the catalyst-design paper as out of scope and clarifies that the simplicial paper frames oversquashing analysis rather than supplying the empirical d"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both propose the specific claim that adaptive depth acts as an oversquashing intervention concentrated in high-resistance nodes. B makes this more testable by defining high resistance as a label-free mean effective resistance to the k-hop b"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both designs are feasible within the budget using small GCN/GAT models, public PyG datasets, a synthetic long-range task, fixed-depth and random-depth-matched baselines, and degree/entropy diagnostics. B is more concrete about computing R_k"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both use a high-minus-low resistance-stratum interaction gain plus a random-depth ablation, which directly targets the hypothesized oversquashing mechanism rather than aggregate accuracy alone. B's R_k is better operationalized as a label-f"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both give quantitative support and falsification thresholds. B is stronger because it explicitly pre-registers an inconclusive zone for intermediate interaction gains and Spearman correlations, and it states that citation-graph nulls are co"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_008_graph_networks_message_passing_representation__v02_expansion40/ai_scientist",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -4.0,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is stronger on concrete feasibility, direct AUC-based mechanism testing, and explicit falsification rules. Answer B is scientifically similar but vaguer about datasets and metric commitment.",
+        "score_sum_left": 15,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use supplied ADMP-GNN, oversquashing, TANGNN, and chemistry papers; neither fabricates results. A more explicitly notes unspecified ADMP-GNN router details and train-label use."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a testable resistance-gap predictor of per-node depth utility. A gives a clearer pre-registered signed prediction plus sign-agnostic alternatives."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A names concrete datasets, backbones, depths, seeds, and compute. B leaves datasets 'to be confirmed' and adds extra arms that weaken minimality."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A clearly pre-registers AUC for predicting sign(depth utility) from resistance gap. B hedges AUC as 'unverified' and its decisive-metric field emphasizes auxiliary distributions."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A specifies symmetric support and rejection rules using AUC confidence intervals across a majority of depths. B rejects only if intervals include 0.5 at every depth."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "B refines A on the key weaknesses: it fixes the ambiguous resistance-gap sign prediction, clearly states that g is train-label-using rather than label-free, and provides stronger pre-registered support/falsification rules with better-specified public datasets and controls.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both cite the supplied papers accurately, but A calls g essentially label-free-at-test-time while using training labels and leaves datasets/backbones/metric choices as unconfirmed; B explicitly states g uses train-split labels, specifies da"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both propose the same resistance-gap predictor, but A's directional meaning of high g is ambiguous and can imply competing-class proximity should help; B makes the signed prediction explicit, clarifies what high vs low g means, and distingu"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both fit the <=8 A100-day budget with public data and an ADMP-style baseline plus ablations. B is more concrete about datasets, depth range, and controls, while A has more unconfirmed choices and extra diagnostics that are useful but less m"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both use per-node depth-utility and AUC of sign prediction from g. B improves the primary metric with a tolerance band for noisy Delta, a pre-registered signed direction, sign-agnostic and |g| variants, and a pooled plus per-depth decision "
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a clear rejection rule only if AUC CIs include 0.5 at every depth, with a less explicit support rule. B specifies symmetric support/rejection criteria based on a majority of depths, requires correct signed direction for support, and"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_009_detection_out_of_distribution_ood_post_hoc_in_di__v02_expansion40/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -4.5,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "Both propose the same tractable-OOD audit, but A has cleaner directional metrics and falsification rules, while B contains contradictory auxiliary conditions and less concrete baseline/data handling.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A accurately uses packet claims and keeps SCALE in its native trained-classifier setting without head-to-head comparison; B suggests adapting SCALE to CLIP and leaves datasets conditional, weakening baseline grounding."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A states a scoped, testable trade-off for SimLabel cross-class consistency versus a per-class ablation; B's auxiliary claim about the per-class arm retaining ΔAUROC_sem relative to SimLabel is directionally inconsistent."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives fixed public subsets, 5k ID images, CLIP inference, one per-class ablation, and a separate SCALE checkpoint run within the no-training budget; B's conditional datasets and CLIP-adapted SCALE are less concrete."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's ΔAUROC_sem and ΔFPR_cov pair directly tests semantic rejection versus covariate-ID acceptance with separate full-label and restricted-label conditions; B adds coverage purification but muddles the primary direction."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives explicit ≥2-point support, <1-point falsification, and 1-2-point inconclusive rules; B's support condition includes a contradictory per-class ΔAUROC_sem requirement."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "Both proposals are specific and well aligned, but B is more feasible and falsifiable, correctly handles the SCALE baseline, and avoids the ImageNet-R label-set confound in its primary metric. A is strong but has a less clean baseline and decision rule.",
+        "score_sum_left": 15,
+        "score_sum_right": 11,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B correctly treats SCALE as requiring a trained classifier's intermediate activations and runs it under its native setting; A's suggestion to adapt SCALE to the same CLIP encoder is more speculative, though A does flag unverified dataset av"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose a clear, testable SimLabel cross-class-consistency trade-off with explicit AUROC and FPR deltas. B adds a precise 200-class ImageNet-R restriction, while A's contingent substitutions are less clean but still specific."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B gives the more minimal and feasible design: one open-weight backbone, one ablation, no training, and a pre-registered SCALE checkpoint. A's attempted CLIP adaptation of SCALE and broader conditional covariate/strata design add ambiguity a"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B cleanly separates full-label ImageNet-C from the restricted 200-class ImageNet-R condition, so covariate-ID FPR is not confounded by label-set mismatch. A's class-coverage purification helps, but its primary metric and SCALE comparison ar"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B pre-registers support, falsification, and an explicit 1-2 point inconclusive zone, and makes per-class ablation FPR inflation descriptive rather than a gate. A leaves a 1-2 point gray zone and mixes ablation conditions into falsification."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_009_detection_out_of_distribution_ood_post_hoc_in_di__v02_expansion40/ai_scientist",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -5.0,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": -1.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "left",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is more rigorously grounded, more mechanistically specific, and provides clearer controls and falsification rules. Answer B is relevant and feasible but relies on conditional resources and weaker metric specificity.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A accurately attributes SCALE as the supplied baseline, treats ASH as auxiliary and originating elsewhere, and explicitly marks the SimLabel clean-ID assumption as inferred. B is mostly grounded but states SimLabel is evaluated on standard "
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A states a precise mechanism claim: a pre-registered covariate-deviation proxy predicts score shift after controlling for semantic novelty. B's claim that contamination degrades detectors and ASH/SCALE degrade more than SimLabel is testable"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives concrete datasets, open-weight backbones, detectors, contamination fractions, controls, and a 4-6 A100 GPU-day estimate. B has a similar budget but leaves key datasets, backbones, and covariate pipelines conditional or unverified, r"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's primary test is the covariate coefficient predicting score shift after semantic-novelty control, plus a matched semantic-preserving control, directly targeting the hypothesized mechanism. B's main metric is aggregate AUROC degradation w"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A specifies operational rejection rules including a null/non-positive covariate coefficient after semantic control and comparable shifts under covariate-matched semantic-preserving controls. B has a falsifying ablation but weaker thresholds"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer B is more precise about grounding, attribution, resource concreteness, and the decisive covariate-specific test with explicit falsification rules. Answer A is viable but uses a more confounded aggregate primary metric and less concrete experimental commitments.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both ground in the supplied OOD papers, but B more carefully avoids misattributing ASH to the supplied SCALE paper and flags inferred versus established claims; A is mostly accurate but less precise about detector provenance and some availa"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a testable degradation/ranking claim, while B states a sharper primary claim: a pre-specified covariate-deviation proxy predicts detector score shift after controlling for semantic novelty, with explicit falsification conditions."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both fit the public-data and <=8 A100 GPU-day budget, but B names concrete datasets, backbones, and a required supplied-paper baseline (SCALE) more clearly; A leaves more setup choices conditional and adds extra arms."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A relies mainly on AUROC/AUPR degradation under contamination, which can be a confounded aggregate; B uses a regression of score shift on a pre-registered covariate proxy with a semantic-novelty control and explicit FPR95 protocols."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A offers a useful matched true-OOD ablation, but B gives clearer operational rejection rules: null/non-positive covariate coefficient after semantic control, or comparable shifts from covariate-matched semantic-preserving ID samples."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_010_problems_inverse_diffusion_projected_solving__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 3.5,
+    "dimension_deltas": {
+      "grounding": 0.5,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger because it adds a decisive random-subspace control, effective-guidance-matched calibration, and explicit falsification thresholds while staying budget-feasible. A is accurate and minimal but less able to separate direction-specific effects from generic projection or norm effects.",
+        "score_sum_left": 12,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground the gap in the supplied DiffStateGrad/Tweedie/RED-Diff abstracts and do not present planned experiments as observed results; B adds an explicit paper ID but makes no material grounding error beyond A."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state the same specific testable claim: on nonlinear inverse tasks, DiffStateGrad robustness is largely due to guidance-norm attenuation rather than prior-manifold-aligned projection directions, with a norm-preserving ablation as the t"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A is simple and feasible but lacks a random-subspace control and guidance-matched calibration, leaving generic low-rank smoothing or hyperparameter mismatch as alternatives. B adds these discriminating controls while remaining within the st"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both use worst-decile gain ratios and rho-gain correlation, but B adds R_rand from a norm-preserving random-subspace arm and a quantified step-size sensitivity threshold, better isolating direction content from norm attenuation."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives support and falsifying thresholds but leaves step-size sensitivity qualitative and has a 0.5-0.8 inconclusive region. B specifies operational thresholds including >=1.0 dB-equivalent/decade sensitivity, R_gain<0.5 support, R_gain>=0"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "Answer A is more rigorous and better controlled: it adds random-subspace and effective-guidance-matched diagnostics that cleanly separate norm attenuation from direction content and hyperparameter mismatch, whereas B is a simpler but less discriminating version.",
+        "score_sum_left": 11,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A accurately cites DiffStateGrad's reported robustness and treats unconfirmed dataset/checkpoint choices conditionally. B adds an unsupported claim that evaluations mainly report average PSNR/SSIM and names FFHQ-256 without packet confirmat"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear, non-generic, testable mechanism: norm attenuation versus prior-manifold-aligned projection directions, scoped to nonlinear inverse problems."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A includes the supplied-paper baseline plus a random-subspace control and effective-guidance-matched condition to separate direction content from norm attenuation and hyperparameter mismatch. B is simpler but lacks these discriminating cont"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's worst-decile R_gain, rho-gain correlation, step-size sensitivity, and random-subspace R_rand directly test the attenuation mechanism and its alternatives. B uses a similar PSNR-based R_gain but no direction-content control."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives operational support and falsification thresholds, including R_gain < 0.5, rho > 0.5, >=1.0 dB/decade sensitivity, and R_rand < 0.8. B states thresholds for R_gain and rho but leaves step-size sensitivity unquantified and lacks the r"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_010_problems_inverse_diffusion_projected_solving__v02_expansion40/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 3.0,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 0.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "B is better grounded and more falsifiable, with clearer concrete controls; A has strong diagnostic ideas but overclaims the supplied evidence and lacks numeric decision thresholds.",
+        "score_sum_left": 11,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A overstates supplied evidence by calling DiffStateGrad's projection rank fixed and robustness aggregate-only, while B explicitly notes that rank/orthogonal handling is not stated and that worst-case performance is reported."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both specify a testable normalized orthogonal-residual claim under operator and noise mismatch; A adds z-scoring and directional quality association, while B adds within-condition scoping."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B gives concrete calibration/evaluation splits, matched-rate random-trigger control, and a clear restart rule; A has useful matched-noise and step-size controls but is more sprawling and less specified for sample size/budget accounting."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B's within-condition per-image Spearman correlation with a numeric floor and difficulty-matched trivial predictor directly tests per-instance predictive value; A uses per-image correlation but less tightly controls condition-pooling and dec"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B pre-registers explicit numeric support/falsification thresholds and a matched-rate intervention control; A says near-zero or unstable correlations falsify but lacks operational quantitative rules."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is better grounded and has sharper falsification plus a matched-rate intervention control. B improves metric design and confound awareness, but relies on unsupported fixed-rank claims and weaker decision thresholds.",
+        "score_sum_left": 12,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A accurately limits claims to what supplied papers state, including that DiffStateGrad does not specify fixed rank or use of the orthogonal component. B asserts a fixed rank and discarded component as established facts not supported by the "
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear, testable claim that the normalized orthogonal residual predicts per-instance failure under operator/noise mismatch. B adds useful per-timestep normalization, but the core claim is equally specific."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both are inference-only and budget-conscious, but A includes a matched-rate random-trigger control, difficulty-matched predictor, and multi-seed check that better isolate the diagnostic and intervention. B has strong confound controls but l"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B makes PSNR/SSIM the primary outcome and explicitly demotes the circular denoiser-residual proxy. A commits to the manifold-deviation proxy despite its circularity, although it also correlates with reconstruction error."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit numeric decision rules, e.g. within-condition Spearman rho >= 0.4 supports and < 0.2 falsifies. B says only near-zero or unstable correlations falsify, with no quantitative threshold."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_012_series_time_anomaly_anomalies_detection__v02_expansion40/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -3.0,
+    "dimension_deltas": {
+      "grounding": 0.5,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "A wins on separable hypotheses, minimal design, direct comparator, and clean decision rules; B's stronger grounding caution does not offset weaker compound falsification and heavier design.",
+        "score_sum_left": 14,
+        "score_sum_right": 11,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B explicitly flags dataset identities and AUPRC as unverified in packet; A names SMAP/MSL/SMD/PSM without packet support."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A separates transfer and prompt-dependence into two independently evaluated quantitative sub-hypotheses; B combines both into one compound claim."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses three domains and four conditions with source-only DADA retraining; B adds four domains, six conditions, and target-tuned DADA, increasing cost."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's primary DADA forecast-then-threshold delta better matches future-anomaly mechanism; B's primary source-trained DADA max-score mapping is less direct despite floor control."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives separate, unambiguous support/falsification rules for each sub-hypothesis and treats CI including zero as inconclusive; B's compound rules are less clean."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer B is more feasible and methodologically decisive: its DADA forecast-then-threshold comparator avoids future-score leakage, and its split hypotheses have clearer falsification rules. Answer A's six-condition four-domain sweep is heavier and less valid.",
+        "score_sum_left": 15,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground A2P, DADA, and CaPulse claims; A flags unverified AUPRC/datasets, B labels inference and notes DADA is immediate detection."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state non-generic, testable transfer and SAP-ablation claims with fixed horizon and numeric thresholds; B splits them into independent sub-hypotheses."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's four-domain leave-one-out with six conditions and target-tuned DADA sweeps is heavy and uses a flawed future-score DADA mapping; B is tighter with leakage checks."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses event-level AUPRC but maps DADA scores from the future window, leaking information; B's forecast-then-threshold comparator directly tests future prediction."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives thresholds but treats a CI including zero as support and requires 3/4 domains; B pre-registers separate H1/H2 bounds and handles inconclusive CIs."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_012_series_time_anomaly_anomalies_detection__v02_expansion40/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 3.5,
+    "dimension_deltas": {
+      "grounding": 0.5,
+      "hypothesis_specificity": 1.0,
+      "minimality_feasibility": 0.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "right",
+      "minimality_feasibility": "tie",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger on hypothesis precision, decisive controls, and falsification rules, though A is more minimal and avoids B's questionable periodicity-ablation design.",
+        "score_sum_left": 12,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground the test in the supplied A2P, CaPulse, and DADA abstracts, explicitly flag missing protocol/dataset details, and avoid claiming unobserved results."
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both target recurrence vs foresight in A2P, but B adds sharper operational predictions, including effect-size thresholds and a persistence-baseline comparison that scope the claim more precisely."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A is leaner: audit, re-score, phase baseline, and a periodic-shuffle diagnostic, with a stop condition. B adds reproduction gate, persistence and floor controls, corrections, and an ablation retrain; its periodicity ablation is also questio"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both use a horizon-stratified foresight gap, but B's added persistence baseline and prevalence-floor control better separate genuine multi-step foresight from autocorrelation and chance than A's phase-only gap."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states a CI-based refutation rule but lacks an effect-size threshold and fully operational supporting condition. B pre-specifies bootstrap settings, 0.02 AUROC threshold, Holm correction, and explicit support/refute branches."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "Both proposals target a plausible anomaly-prediction evaluation gap, but A is more rigorously grounded, quantitatively falsifiable, and includes the needed persistence control and ablation diagnostics within budget; B is similar in spirit but weaker on controls and decision thresholds.",
+        "score_sum_left": 10,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A stays tightly tied to the supplied packet, explicitly flags that dataset names and checkpoints are not attested, and treats point-adjustment inflation as an unverified hypothesis. B is generally grounded but asserts point-adjustment criti"
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives a precise testable claim: A2P's advantage should shrink to a foresight gap <= 0.02 at long horizons (>= half dominant period), with a short-horizon persistence comparison. B states a similar claim but leaves 'match' and the falsific"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A specifies a feasible <=8 A100-day plan with a supplied-paper baseline (A2P), a periodic-phase baseline, a persistence matched control, a floor control, and a periodicity ablation. B is also feasible and leaner, but omits the persistence-m"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's primary metric is a horizon-stratified foresight gap with bootstrap CIs, directly separating periodic recurrence from genuine multi-step foresight via both phase and persistence controls. B uses the same core metric but lacks the persis"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A provides explicit quantitative support and falsification rules, including a 0.02 AUROC equivalence bound, short-horizon persistence comparison, bootstrap CI procedure, and Holm correction. B gives only a one-sided falsification rule (long"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_014_spurious_correlations_features_networks_activati__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 1.0,
+    "dimension_deltas": {
+      "grounding": 0.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": -0.5,
+      "falsifiability": 0.5
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger overall because its group-balanced and nonlinear-probe controls better isolate selective spurious-feature removal, though A's simpler absolute metric is cleaner.",
+        "score_sum_left": 13,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use the pruning paper and do not present planned results as observed; B also correctly classifies other supplied papers."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a quantitative differential prediction: spurious-probe drop >=10 points, core-probe drop <=2, and worst-group gain >=3."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B adds a matched group-balanced control that separates rebalancing from selective pruning; A lacks it, though both are feasible within budget."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses separate absolute spurious/core thresholds directly; B's weighted M composite is less transparent and its success rule can omit the stated 10-point spurious drop."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B operationalizes CI overlap, attribution, and nonlinear-probe recovery thresholds; A leaves 'statistically indistinguishable' less defined and lacks recovery diagnostic."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A and B share strong grounding, hypothesis specificity, and falsifiability, but A better separates selective spurious-feature removal from implicit rebalancing and representational compression while remaining feasible within the stated budget.",
+        "score_sum_left": 14,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both correctly ground the test in the supplied pruning paper, avoid presenting planned results as observed, and flag external choices such as ResNet-50 and statistical conventions; neither fabricates support."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a concrete, testable differential-retention claim with thresholds: spurious-probe drop >=10 points, core-probe drop <=2 points, worst-group gain >=3 points on weakened-spurious public image datasets."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A uses public data and open ResNet-50 with four conditions, including random pruning and a matched group-balanced subsampling control, within the budget. B is more minimal but omits a matched rebalancing control, leaving a key alternative l"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both primary metrics directly compare core-label and spurious-attribute probe accuracy rather than relying on overall accuracy; A pre-specifies a differential-retention margin with component thresholds, while B uses direct absolute probe-dr"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give explicit quantitative success and failure rules, including worst-group and probe-drop thresholds plus random-pruning attribution checks; A adds a tertiary nonlinear-recovery falsifier, but B is already operationally falsifiable."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_014_spurious_correlations_features_networks_activati__v02_expansion40/ai_scientist",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -3.5,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -0.5,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "tie",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "A is more minimal and budget-feasible (ResNet-18, restricted ablation) and its falsifiability rules are more cleanly decoupled; B is also strong but heavier and slightly less precise in decision rules.",
+        "score_sum_left": 15,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately cite the anchor paper's claims and do not fabricate support; A additionally notes the anchor's unspecified data-space scoring function and explicitly excludes the irrelevant supplied papers."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear, testable claim: an activation-space selector recovers the same shortcut-driving samples as data-space pruning without being a protected-attribute proxy; A decomposes it into mechanism, utility, and safety sub-claims."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A uses lighter ResNet-18, restricts the weak-signal ablation to one dataset/budget, and is more budget-conscious; B uses heavier ResNet-50 and adds an extra conflict-score selector, risking the <=8 A100 GPU-day limit."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use worst-group accuracy for utility, Jaccard overlap for mechanism, and protected-attribute probe AUC for safety, directly measuring the hypothesized mechanism rather than a confounded proxy."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives decoupled, pre-registered thresholds for mechanism, utility, and safety so any sub-claim can fail independently; B's conjunctive success criterion and less explicit decoupling make partial failures less informative."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Both target the same anchor, but B is more precise, honest about scope, and better controlled and feasible within budget; A overclaims label-free operation and risks an overfull design.",
+        "score_sum_left": 15,
+        "score_sum_right": 10,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both use the anchor accurately, but B explicitly limits scope to it and flags irrelevant papers; A's 'label-free' claim is looser because selectors use class labels."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B decouples mechanism, utility, and safety subclaims with scoped conditions; A states a clear claim but conflates overlap, accuracy, and proxy criteria."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B uses lighter ResNet-18, one selector, and a budget-restricted ablation; A adds two selectors, two datasets, and broader sweeps likely straining 8 A100-days."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B's metrics and difficulty-chance baseline separate shortcut specificity from generic hard-sample removal; A includes similar metrics but less cleanly organizes decisive comparisons."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B gives pre-registered margins and separate M/U/S decision rules; A's thresholds appear mostly in metric text, while its falsifying field restates the question without operational cutoffs."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_017_group_fairness_individual_in_processing_fair__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 4.0,
+    "dimension_deltas": {
+      "grounding": 0.5,
+      "hypothesis_specificity": 0.5,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is slightly stronger: it grounds dataset availability, adds calibration- and constraint-matched controls, and aligns quantitative success/falsification thresholds; A's nearest-neighbor metric is useful but less cleanly controlled.",
+        "score_sum_left": 11,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A is accurate but assumes FFB includes Adult/COMPAS; B conditions dataset availability and labels predictions as unobserved, avoiding unsupported claims."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a concrete group-fairness-induced consistency degradation and repair claim with bounded fairness/accuracy tolerances; A adds nearest-neighbor alignment."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both fit budget, but B adds calibration-matched and constraint-matched ERM controls that better separate fairness-constraint effects from generic regularization/smoothing."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B's calibrated perturbation-consistency metric better avoids scale/calibration confounds; A's co-primary includes useful NN correlation but remains calibration-sensitive."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives thresholds but a success/falsification gap (0.02-0.05, 0.01-0.03); B uses aligned thresholds and calibration/control failures as explicit falsifiers."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "A provides a more tightly controlled, quantitatively falsifiable test with better confound controls while remaining feasible. B is similar but weaker on specificity, controls, and threshold consistency.",
+        "score_sum_left": 11,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use FFB, FairGI, and Aranyani; neither fabricates observed results or misattributes claims."
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A specifies degradation/repair conditions, numeric thresholds, and alternative explanations; B is testable but less explicit about confound-specific predictions."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A stays within budget while adding a constraint-matched ERM control and calibration check; B omits these discriminating controls."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's calibrated consistency-error metric directly targets local consistency and controls smoothing/calibration; B's co-primary proxy metrics are less cleanly controlled."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives consistent quantitative support/falsification rules; B's falsification thresholds conflict with its stated success thresholds."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_017_group_fairness_individual_in_processing_fair__v02_expansion40/ai_scientist",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -2.5,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 0.0,
+      "decisive_metric": -1.0,
+      "falsifiability": -0.5
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "tie",
+      "decisive_metric": "left",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "Both proposals are close and feasible, but A is more accurately grounded and defines the decisive ERM-relative, metric-robust tax more rigorously; B's stronger absence claims and raw-IF foregrounding make it less precise.",
+        "score_sum_left": 15,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A accurately maps FFB, FairGI, and Aranyani and explicitly marks FFB's lack of individual-fairness evaluation as needing code confirmation; B overstates that FFB evaluates ONLY group notions and that individual fairness is entirely absent, "
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose a concrete Lipschitz-style individual-fairness tax and metric-robustness claim with monotonicity and rank-agreement tests; A is more carefully scoped to at least one method, B to every method, but both are specific and testable"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both reuse FFB code, an ERM baseline, two similarity metrics, permutation/null diagnostics, and a failure-mode control within the 8 A100 GPU-day budget; A adds an accuracy-matched ERM, B adds a reusable distribution-matched control."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A makes the standardized ERM-relative tax primary and raw IF secondary, with cross-metric sign/rank robustness directly tied to the mechanism; B foregrounds raw scale-dependent IF and relies partly on an arbitrary tau>0.7 cutoff, though it "
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give explicit quantitative falsifiers using CIs excluding zero, cross-metric rank/sign agreement, monotonicity tests, and permutation nulls; A is more logically careful about a single non-positive method, while B states explicit any-me"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "Both proposals are strong and closely related, but B is better grounded, uses a sharper ERM-relative tax metric with permutation calibration, and states more coherent falsification rules and controls.",
+        "score_sum_left": 15,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both rely on the supplied FFB, FairGI, and Aranyani papers, but A overstates that FFB evaluates only DP/EO and that individual fairness is entirely absent without verification. B explicitly flags code inspection and avoids overclaiming abse"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state clear, non-generic, testable individual-fairness-tax claims; B is more carefully scoped with sign consistency and accuracy controls, while A's universal formulation remains specific and falsifiable."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both reuse FFB public code and tabular data with an ERM baseline, two similarity metrics, and diagnostics feasible under 8 A100 GPU-days. A adds a distribution-matched control; B adds an accuracy-matched ERM and clearer contingency for meth"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's primary raw IF is scale-dependent and relies on an arbitrary tau>0.7 cutoff. B makes the ERM-relative tax primary, adds a permutation-calibrated standardized effect, epsilon sensitivity, and per-method sign consistency, directly targeti"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives explicit CI and rank thresholds, but its universal claim and single-method falsification logic are less coherent and the tau cutoff is arbitrary. B specifies coherent falsifiers: nonsignificant cross-metric rank agreement, per-metho"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_019_protein_language_structural_structure_sequence__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 3.0,
+    "dimension_deltas": {
+      "grounding": 0.0,
+      "hypothesis_specificity": 0.5,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 0.5
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "B is the stronger proposal because it adds protein-disjoint evaluation and an in-distribution mismatched-structure control, making the causal test less confounded while remaining feasible. A is solid but slightly less minimal and less protected against split and OOD artifacts.",
+        "score_sum_left": 13,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately cite PST, MULAN, and the vision-language papers only as motivation; neither presents planned outcomes as observed or invents unsupported results."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear testable claim: MULAN PPI gain depends causally on residue-aligned structural input, with permutation predicted to collapse the gain toward ESM2."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B is more minimal and better controlled: one model family, fixed head, explicit split auditing, and a protein-disjoint primary analysis. A adds PST and several extra arms without verifying split leakage."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both use PPI AUROC, but B measures it on a pre-specified protein-disjoint split and makes the other-protein structure arm part of the decision rule, reducing leakage and generic-OOD confounds."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give quantitative supporting and falsifying thresholds; B adds an inconclusive band and an OOD falsifier, but A already meets the explicit decision-rule requirement."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is slightly stronger and more self-contained, especially through protein-disjoint primary evaluation and an explicit OOD/alignment control. B is close but less minimal and less decisive on split confounding.",
+        "score_sum_left": 11,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground claims in the supplied PST, MULAN, and vision-language papers without presenting planned results as observed; both only assume the MULAN PPI benchmark is public."
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states the predicted AUROC drop and ESM2-equivalence band directly in the hypothesis; B defers the margin to pre-registration and method, making the central claim slightly less self-contained."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A pre-specifies a protein-disjoint primary split and an other-protein OOD control, tightening the test within budget; B adds PST and extra diagnostics but relies mainly on the official split, which is less minimal and less controlled."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's primary metric is AUROC on a pre-specified protein-disjoint split with an other-protein control, directly probing residue-aligned structure; B's official-split AUROC is more confounded and its cross-protein control is only secondary."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit supporting and falsifying thresholds including the other-protein control and an inconclusive band; B gives clear thresholds but does not make its cross-protein diagnostic a falsification condition."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_019_protein_language_structural_structure_sequence__v02_expansion40/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 6.0,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 2.0,
+      "falsifiability": 2.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "Answer B is more rigorous and decision-ready: it fixes A's malformed metric and falsifiability sections, adds an equivalence test and committed fine-tune control, and grounds pLDDT more carefully. The core hypothesis is shared, but B operationalizes it decisively within the stated budget.",
+        "score_sum_left": 9,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both ground the core claim in PST/MULAN and ESM-2, but A adds an unsupported 'lazy modality' generalization and some provenance assumptions; B cites the supplied pLDDT caution and explicitly avoids asserting prior lazy-modality evidence."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state the same clear, non-generic claim: the structure-aware minus sequence-only gain is confidence-dependent, concentrated at high pLDDT, and indistinguishable from ESM-2 in low-pLDDT bins."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A has a feasible frozen-probe design with good controls but leaves the fine-tune check optional and budget-unspecified; B commits the fine-tune arm within budget and adds data/split/power pre-checks and fixed pLDDT provenance."
+          },
+          "decisive_metric": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A's decisive_metric field is malformed and does not cleanly name the primary metric; B explicitly defines the per-bin real-structure AUROC gap adjudicated by monotonicity, equivalence margin, shuffled-arm contrast, and lazy-fraction thresho"
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A lacks operational falsifying rules and leaves supporting_result empty; B gives explicit supporting and falsifying conditions with a pre-specified +/-1 AUROC equivalence margin, monotonicity test, and 30% lazy-fraction threshold."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "Answer A provides a complete, operationalized falsification protocol with a valid decisive metric and explicit decision rules, whereas Answer B shares the same core hypothesis but has corrupted or empty decisive-metric and falsifiability fields and a less supported provenance claim.",
+        "score_sum_left": 9,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Answer A accurately uses the supplied PST, MULAN, pLDDT, and vision-language papers and explicitly limits pLDDT to a confidence proxy rather than a flexibility measure. Answer B is mostly accurate but asserts that both MULAN and PST were pr"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose the same specific, testable claim: the structure-aware-minus-sequence-only gain should shrink monotonically with pLDDT and become indistinguishable from ESM-2 in low-confidence bins. The claim is scoped to a mechanism and condi"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Answer A gives a concrete public-data/open-weight design with fixed probes, matched ESM-2 baseline, pLDDT binning, within-bin shuffled-structure control, structure-branch ablation, and a committed short fine-tune within budget. Answer B has"
+          },
+          "decisive_metric": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "Answer A clearly defines the primary metric as the per-bin structure-aware minus sequence-only AUROC gap, adjudicated by monotonicity and equivalence-to-zero in low bins, with a supporting modality-contribution/lazy-fraction diagnostic. Ans"
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "Answer A provides explicit supporting and falsifying outcomes with quantitative thresholds: monotone shrinkage, +/-1 AUROC-point equivalence margin in low bins, two one-sided tests, shuffled-arm contrast, and a 30% lazy-fraction threshold. "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_023_quantization_quantization_aware_fine_tuning_diff__v02_expansion40/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 3.0,
+    "dimension_deltas": {
+      "grounding": 0.5,
+      "hypothesis_specificity": 0.5,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 0.5,
+      "falsifiability": 0.5
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "Both are grounded and falsifiable, but B is stronger because its frozen-codebook and non-QAT controls better separate genuine additive-VQ QALoRA recovery from adapter compensation or generic fine-tuning.",
+        "score_sum_left": 14,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use the supplied AQUATIC-Diff, EfficientDM, and L4Q evidence; no fabricated observations or misattributed claims."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a scoped LDM-4 W2A8 sFID-gap recovery claim with thresholds; B adds diagnostic conditions but the central claim is equally specific."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A has a baseline and scalar ablation within budget, but B adds frozen-codebook and non-QAT controls that better isolate VQ-specific QAT recovery while staying under 8 A100-days."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use relative sFID-gap recovery, which directly measures the hypothesized recovery; B defines codebook utilization more operationally."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give explicit support/falsify thresholds including R>=0.5, R<0.1, scalar-ablation and codebook-collapse conditions; B enumerates more falsifiers."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "A is the stronger falsifiable test: it keeps the same core synthesis but adds matched scalar, frozen-codebook, and non-QAT controls with explicit quantitative decision rules. B is plausible and efficient but under-specified for separating additive-VQ recovery from generic fine-tuning or adapter compensation.",
+        "score_sum_left": 10,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both accurately use the supplied papers, but A gives a more precise protocol: fixed evaluation subset, exact baseline B0, matched-bit ablation, frozen-codebook and non-QAT controls, and explicit acknowledgement of possible AQUATIC-Diff reim"
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states a specific, testable claim: EfficientDM-style QALoRA on AQUATIC-Diff W2A8 should recover at least 50% of the sFID gap while preserving codebook utilization and beating scalar, frozen-codebook, and non-QAT controls. B states the sam"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A is feasible within <=8 A100-days by budgeting each training arm at <=1.5 days and includes necessary matched baselines and discriminating controls. B is more minimal but under-specified as a validation design because it lacks frozen-codeb"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both use relative sFID-gap recovery R, which directly measures recovery of low-bit diffusion quality. A strengthens this with codebook-utilization and residual-norm checks plus comparisons to B2/B3/B4, making it clearer that gains reflect c"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A provides explicit supporting and falsifying thresholds: support if R >= 0.5, utilization >= 0.8x B0, and B1 beats B2/B3/B4; falsification if R < 0.1, B1 fails to beat B0, B2/B3/B4 match or beat B1, or utilization collapses. B gives clear "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "smallari_expansion40_023_quantization_quantization_aware_fine_tuning_diff__v02_expansion40/ai_scientist",
+    "status": "tie",
+    "folded_winner": "tie",
+    "order_sensitive": true,
+    "score_sum_delta": 0.5,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": 0.5,
+      "minimality_feasibility": 0.0,
+      "decisive_metric": -0.5,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "tie",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger because its hypothesis and decision rule separate codebook-specific recovery from generic fine-tuning or added parameters; A is well grounded and feasible but less discriminating.",
+        "score_sum_left": 11,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately ground claims in AQUATIC-Diff, EfficientDM, and L4Q, flag checkpoint availability, and avoid presenting planned results as observed."
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both propose a testable codebook-aware recovery claim, but B sharpens it with explicit scale-only and parameter-matched controls that define codebook specificity."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A is lean and within budget but lacks the scale-only control; B adds decisive matched controls and prioritizes experiments to stay feasible under 8 A100-days."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 2,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both rely on FID recovery fraction, a standard but aggregate proxy, with sFID and ISC as corroborating signals rather than a direct mechanism metric."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both give r >= 0.5 success and negative-result criteria, but B adds explicit control comparisons, seed-variance thresholds, and CIs for clearer falsification."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "B is more feasible and has a cleaner, better-gated recovery metric and baseline protocol. A has stronger control logic, but its over-budget arm count and inconsistent gap definition make it a riskier minimal test.",
+        "score_sum_left": 14,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both use the packet accurately overall, but A treats W4A8 as a straightforward FP-gap ablation despite AQUATIC-Diff reporting W4A8 sFID below full precision, making that denominator unclear. B explicitly flags this and gates the W2A8 baseli"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear cross-family claim: codebook-aware adaptation should recover at least half of the AVQ-vs-full-precision FID gap at W2A8. B usefully separates the QALoRA non-codebook control from codebook-transfer evidence."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A includes seven experiments whose stated allocations exceed the 8 A100-day budget unless several arms are demoted to stretch goals. B uses five experiments summing to about 6 A100-days, includes a supplied-paper baseline and diagnostic, an"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both use FID recovery fraction, but A inconsistently defines the gap as FID_FP - FID_AVQ while using FID_AVQ - FID_FP in the recovery formula. B defines Delta = FID_AVQ - FID_FP, checks Delta > 0, and avoids an undefined W4A8 FP-gap compari"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives stronger operational rules: r >= 0.5 must also exceed scale-only and parameter-matched controls, with 2 SD and 95% CI criteria. B gives a clear 50% success/failure threshold and gap-sign check but lacks a statistical decision rule a"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_01_llm_reasoning_cot/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -4.0,
+    "dimension_deltas": {
+      "grounding": -1.0,
+      "hypothesis_specificity": -1.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": 0.0
+    },
+    "dimension_folded": {
+      "grounding": "left",
+      "hypothesis_specificity": "left",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is similarly feasible but more precise and better grounded: it avoids mislabeling symbolic step validity as faithfulness, provides stricter compute matching, and includes symbolic/hybrid controls that sharpen causal attribution. Answer B is strong on falsifiability but is weakened by its 'faithful' framing and",
+        "score_sum_left": 15,
+        "score_sum_right": 11,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Answer A accurately distinguishes its target Challenges 2 and 3 from Challenge 1, explicitly stating that symbolic deductive validity is not internal faithfulness. Answer B instead labels the same symbolic entailment metric as 'faithful acc"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Answer A gives a precise, testable claim about depth-conditional step-valid accuracy and decay under matched FLOPs, with explicit scope and OOD perturbation conditions. Answer B is similar but uses the ambiguous and partly incorrect term 'f"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both propose feasible 8-week, ~60 GPU-hour minimal tests with open 7-8B models and a compact verifier. Answer A adds stronger matched compute accounting, a symbolic forward-chaining ceiling, and a hybrid symbolic-gating baseline that help i"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Answer A's primary metric, depth-conditional step-valid accuracy using a symbolic gold checker over derivation graphs, directly measures whether accepted reasoning steps are deductively valid and final answers are correct. Answer B's metric"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both proposals specify quantitative success and failure thresholds, including absolute-point gains, AUROC cutoffs, OOD retention, and random-verifier control outcomes. Their operational decision rules are comparably explicit and falsifiable"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "B is stronger on grounding, hypothesis precision, feasibility/compute matching, and the decisive metric; A remains feasible and falsifiable but uses a mislabeled and compute-confounded primary metric.",
+        "score_sum_left": 15,
+        "score_sum_right": 11,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A is mostly grounded but labels symbolic step validity as 'faithful' reasoning, blurring Challenge 1; B explicitly distinguishes deductive soundness from internal faithfulness and is more careful about what its checker measures."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's claim is testable but uses ambiguous 'faithful final-answer rate' that actually measures soundness, not internal fidelity; B's step-valid accuracy claim is more precisely scoped to deductive chains and matched-FLOP conditions."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's 60 GPU-hour test is feasible but matches only generated tokens, ignoring verifier and backtracking FLOPs; B pre-registers total forward-FLOP matching and adds useful symbolic/hybrid controls while remaining within budget."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's depth-conditional faithful accuracy is direct but confounded by generated-token-only matching and mislabeled as faithfulness; B's step-valid accuracy under total-FLOP matching directly measures the verifier/backtracking mechanism."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both proposals give explicit quantitative success/falsification thresholds, including AUROC cutoffs, depth>=12 gain thresholds, OOD retention, and random-verifier controls."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_01_llm_reasoning_cot/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 2.5,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 0.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "B preserves the same core idea but has stronger grounding discipline, better budget matching, cleaner discriminating controls, and more explicit falsification conditions; A is less grounded and its falsification section is essentially procedural.",
+        "score_sum_left": 10,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A asserts the error-accumulation premise as established and cites unverified external baselines; B explicitly treats survey claims as hypotheses and conditions uncertain datasets/baselines on confirmed availability."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose a clear, mechanistic, testable claim about selective counterfactual step ablation, pruning, and targeted backtracking, with scoped predictions and ablations."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B is tighter: fewer datasets, explicit held-out/validation splits, token-budget matching, and reduced exhaustive-ablation subset fit the 200 GPU-hour/8-week envelope better than A’s broader dataset and baseline set."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "B’s primary long-chain accuracy at matched token budget, paired against random-resample and exhaustive-ablation controls, more directly isolates selective causal localization than A’s broader but less controlled metric set."
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 2,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A’s falsifying_result repeats method steps rather than stating concrete falsifying outcomes; B gives operational decision rules and explicit controls whose failure would falsify the selective-localization claim."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is stronger on grounding, feasibility, and explicit falsification controls, with a coherent budget-matched design. B has the sharper hypothesis framing and localization metric, but its weaker grounding and missing key resampling control make it slightly less decisive overall.",
+        "score_sum_left": 12,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A carefully treats survey claims as hypotheses and conditions unverified datasets or baselines on availability. B similarly flags external citations, but states long-chain failure and unfaithfulness as established facts and leans more on no"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B separates the strong accuracy/backtracking prediction from the weaker faithfulness/pruning prediction and explicitly notes that causal necessity is not faithfulness. A's claim is testable but bundles pruning, backtracking, accuracy, and f"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives clearer split/tuning discipline, matched-token budgeting, and two key discriminating controls: random resampling and exhaustive ablation. B adds extra datasets and a PRM baseline but lacks an explicit random-resample control and has"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B defines error-localization precision more sharply using human-annotated first-error position to avoid counting propagated downstream errors as correct localization. A measures relevant outcomes but its primary metric is less tightly speci"
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A provides clearer pre-specified decision rules and explicit falsifiers against random-resample and exhaustive-ablation controls. B includes repeated-probe guards but does not state quantitative thresholds or falsifying outcomes as cleanly."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_02_vlm_hallucination/direct",
+    "status": "loss",
+    "folded_winner": "left",
+    "order_sensitive": false,
+    "score_sum_delta": -4.5,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": -1.5,
+      "falsifiability": -1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "left",
+      "falsifiability": "left"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "left",
+        "confidence": "high",
+        "overall_reason": "Answer A is more internally valid, especially because its primary metric measures generated outputs for a decoding intervention, whereas Answer B's likelihood-based CADA is effectively nonresponsive to the proposed decoder.",
+        "score_sum_left": 15,
+        "score_sum_right": 9,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both anchor on the target survey and supplied 2025 surveys, but A explicitly flags external baseline citations as unconfirmed within the packet, while B lists many externals with less caveating and only scattered availability notes."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A specifies H1-H3, limits claims to color-attribute grounding, and adds a two-instance misbinding secondary probe; B claims attribute-object misbinding but tests only single-instance color edits."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives concrete matched baselines, distribution-matched random-gate ablation, prior-approximation check, and a Qwen attention-extraction fallback; B is feasible but uses a weaker mean-matched gate and lacks a clear attention-extraction fal"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 1,
+            "delta": -2,
+            "winner": "left",
+            "reason": "A's generation-based CADA directly measures decoder output changes; B's primary forced-choice sequence-likelihood CADA is largely unaffected by decoding interventions, so it cannot test AGIP's effect."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A states both supporting and falsifying thresholds and handles H3 via per-pair discordance and McNemar asymmetry; B also gives thresholds and prior-asymmetry controls but relies on its invalid primary metric and a four-configuration rank co"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "left",
+        "confidence": "medium",
+        "overall_reason": "B is preferred because its generation-based metric matches the decoding intervention and its feasibility and falsification checks are more robust; A's likelihood-based CADA and four-point correlation H3 are less decisive.",
+        "score_sum_left": 15,
+        "score_sum_right": 12,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately anchor to the survey challenges and caveat unverified resources; neither presents planned results as observed. B adds explicit citation-verification and prior-approximation caveats, but there is no material grounding differe"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state testable mechanisms with numeric thresholds: visual-attention evidence gating plus prior subtraction improving counterfactual attribute discrimination. B scopes claims more tightly to color-attribute grounding, but A's central hy"
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "Both fit the budget and include matched baselines and ablations, but A leaves Qwen2-VL attention extraction and image-blind-prior approximation unresolved and makes the artifact control optional. B adds concrete fallback and validity checks"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A's primary CADA is likelihood-based, measuring model preference rather than the generated output that decoding interventions change. B's CADA-gen scores actual generated descriptions with human validation and length-stratified reporting, d"
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives clear H2 thresholds but its H3 relies on a correlation across only four configurations, a weak decision rule. B preserves explicit H2 thresholds and replaces H3 with per-pair discordance and McNemar testing, including correct interp"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_02_vlm_hallucination/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 1.5,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": -1.0,
+      "decisive_metric": 0.5,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "left",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "B is stronger on grounding, mechanistic metric focus, and explicit falsifiability, while A has a more complete experimental design. The audit favors B despite A's feasibility advantage.",
+        "score_sum_left": 11,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A grounds the challenge in the survey but asserts external baselines/datasets and some expected behaviors with limited packet support. B explicitly labels unverified external models/comparators and ties claims to supplied survey evidence."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose a clear, testable coupling between language-prior dominance and token dilution, mediated by local corruption-probe evidence scores. B is more hedged but still specific and operational."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A gives a more complete matched-baseline and control design within budget, including global-vs-region, random-vs-corruption, and covariate controls. B is minimal but relies on conditional external comparators and a reduced one-model fallbac"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A includes regional AUROC but also mixes in aggregate AMBER/CHAIR as primary metrics. B more cleanly makes size/prior-matched regional AUROC with a prior-only baseline the decisive mechanism metric."
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 2,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives predictions but no concrete falsifying rule or decision thresholds. B states an operational rejection rule if probe AUROC fails to beat prior-only and fails within matched bins, though quantitative thresholds remain absent."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is more cautious in grounding and provides a concrete falsification rule; B is more feasible and polished on controls but lacks an explicit falsifying outcome. The balance favors A.",
+        "score_sum_left": 12,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A explicitly marks external models, baselines, and benchmarks as unverified/conditional and ties claims to the supplied packet; B asserts external comparators/datasets such as VCD/OPERA, AMBER, and LLaVA-1.6 more strongly than the packet su"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a non-generic coupling mechanism: corruption-fragile regions indicate visual-evidence dilution, per-region gating should beat global contrastive decoding, and a region-aware metric should resist gaming."
+          },
+          "minimality_feasibility": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B gives a concrete top-K candidate-region batched single-forward-pass probe with caching and measured compute matching; A uses a broader multi-corruption probe with inconsistent pass-count wording and more conditional fallbacks."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use regional AUROC of the evidence score as the primary mechanism test and add region-attributed hallucination metrics; B adds covariate-adjusted stratified AUROC and a coverage denominator, while A adds size/prior-matched bins."
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 2,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives an explicit coupling falsification rule: probe AUROC must beat the prior-only baseline and stay above chance in matched bins; B leaves falsifying_result empty and states no concrete decision threshold for EPD success or failure."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_03_rag_systems/direct",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 1.5,
+    "dimension_deltas": {
+      "grounding": -0.5,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 0.0,
+      "falsifiability": 1.0
+    },
+    "dimension_folded": {
+      "grounding": "tie",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "tie",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "Both proposals are strong and similarly grounded, but B has better matched controls and internally consistent falsification rules. A is slightly more minimal but lacks a random-gate control.",
+        "score_sum_left": 13,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both accurately use supplied sources, label thresholds as conventions, and avoid fabricated support; B also flags unverified model availability."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state clear, testable claims about calibrated gating, cascade latency, faithfulness, and domain shift with operational mechanisms."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A is feasible but lacks a matched random-gate control; B adds stage-1-only and random-gate controls with dev/test separation within budget."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use an accuracy-vs-p95-latency frontier with supported-claim rate and EM, directly testing gating and cascade effects."
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's success uses a 1-point faithfulness margin while falsification uses a 3-point loss; B unifies the margin and adds explicit control failures."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A provides stronger discriminating controls and more complete falsification, especially for calibration versus distractor avoidance and adaptive escalation versus stage-1 truncation. B is better grounded and more concrete in some setup details, but its missing controls and looser falsification criteria make the causal ",
+        "score_sum_left": 13,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B explicitly limits its novelty claim to the reviewed corpus, acknowledges broader adaptive-retrieval work, and flags thresholds as study conventions. A is mostly accurate but makes less scoped missing-work and official-style baseline claim"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both propose clear, mechanistic, testable claims about calibrated pre-retrieval gating and cascaded reranking under latency and faithfulness constraints. A adds a cascade-attribution hypothesis, while B remains focused but still specific."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A includes the key discriminating controls: stage-1-only reranking and a random gate matched on trigger rate, which separate cascade attribution and calibration from mere distractor avoidance. B is feasible and names concrete components, bu"
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both use supported-claim rate and EM at fixed p95 latency, plus calibration and retrieval-trigger diagnostics, rather than a single confounded aggregate. A adds a D-vs-E frontier comparison; B reports the full frontier and compares against "
+          },
+          "falsifiability": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states one consistent non-inferiority margin and explicit rejection rules for all hypotheses, including D-vs-E and random-gate controls. B is quantitative but has a 1-point success versus >3-point falsification mismatch and no explicit fa"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_03_rag_systems/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 5.0,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": 0.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 2.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "B is substantially stronger on falsifiability, primary metric specification, and grounding discipline. A shares the core hypothesis but has a diffuse metric, a malformed/empty falsification section, and a broader experiment scope with less explicit discriminating controls.",
+        "score_sum_left": 10,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A grounds its noise-pruning motivation in the supplied GraphRAG and selective-augmentation passages, but cites external systems such as Self-RAG, Adaptive-RAG, FLARE, and Kuhn et al. without clearly marking them as outside the packet. B exp"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both proposals state a clear, testable mechanism: paraphrase-answer divergence as a retrieval gate and leave-one-chunk-out divergence as a distractor-pruning signal. Both scope the claim to adaptive retrieval calibration and noise-robust RA"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A includes four datasets, two model families, multiple adaptive baselines, ambiguity annotation, and five experiments, with only a fallback plan if costs exceed the 200 GPU-hour budget. B is tighter: two datasets plus a constructed noisy sp"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A lists several relevant metrics but its decisive_metric section is diffuse and does not identify a single primary observable. B clearly specifies gate ROC/AUC against oracle retrieval-benefit labels, with thresholds selected on a disjoint "
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A leaves supporting_result empty and its falsifying_result is malformed, mostly repeating calibration/clustering setup rather than stating a concrete falsifying outcome. B gives explicit quantitative decision rules, including AUC margin >=0"
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "Answer A is substantially stronger on decisive metric specification, falsifiability, and discriminating controls, while Answer B has missing/malformed falsification criteria and weaker matched baselines. The shared core hypothesis is similar, but A's execution plan is more rigorously testable within the budget.",
+        "score_sum_left": 10,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A anchors its claims in the supplied Graph RAG and selective-augmentation papers and explicitly marks external adaptive-RAG systems as unverified; B cites the supplied papers but makes uncaveated specific claims about external systems and l"
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a clear, non-generic, testable dual-use divergence hypothesis; B adds an ambiguity alternative and fixed gate direction, while A is equally specific about the gating and pruning mechanisms."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives a concrete, budget-aware design with matched controls such as same-prompt resampling, random-chunk removal, and similarity-removal baselines; B includes cost accounting and ambiguity annotation but omits key matched controls and add"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A explicitly names gate ROC/AUC against oracle retrieval-benefit labels as the primary decisive metric; B mentions ROC/AUC in the experiment text but its decisive_metric section is a list of experiments rather than a single primary observab"
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A provides explicit quantitative decision rules for both support and falsification, including margins and paired bootstrap CIs; B's supporting_result is empty and its falsifying_result is malformed method text with no operational falsificat"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_05_mechanistic_interpretability/direct",
+    "status": "tie",
+    "folded_winner": "tie",
+    "order_sensitive": true,
+    "score_sum_delta": 0.5,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": -0.5,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": -1.0,
+      "falsifiability": 0.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "tie",
+      "minimality_feasibility": "right",
+      "decisive_metric": "left",
+      "falsifiability": "tie"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "tie",
+        "confidence": "medium",
+        "overall_reason": "A is stronger on hypothesis precision, causal metric design, and falsification logic; B is stronger on evidence discipline and budget feasibility. The dimension wins balance out rather than favoring one proposal overall.",
+        "score_sum_left": 13,
+        "score_sum_right": 13,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A treats external facts such as Braun et al., SAELens, GPT-2/Pythia, and IOI as established and states supporting results in achieved terms; B explicitly marks these as unverified/conditional and labels predictions prospective."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A names matched L0 and matched output-KL, multiple comparator SAEs, and a 10% activation-MSE bound; B has a similar core claim but a vaguer standard sparse baseline and conditional tooling."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A proposes a broad 5-baseline grid across L0s, seeds, layers, and models without a GPU-hour allocation; B uses fewer arms and gives an explicit 200 GPU-hour split with split isolation and an MSE-matched control."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "A separates CircuitFaithfulness@k, a normalized task-logit drop from selected-latent ablation, from attribution fidelity, directly measuring causal necessity/sufficiency; B's Faithfulness@k is a Spearman attribution-agreement proxy, though "
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give quantitative success/failure rules, matched controls, and concrete falsifiers; A emphasizes output-KL control while B adds an MSE-matched baseline arm, so neither clearly dominates."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "medium",
+        "overall_reason": "A is better grounded and feasible within budget, while B has stronger causal metric controls but an unverified external citation and heavier design.",
+        "score_sum_left": 13,
+        "score_sum_right": 14,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A flags external tools and tasks as unverified and cites only packet SAE work; B introduces Braun et al. 2024 and SAELens without packet support."
+          },
+          "hypothesis_specificity": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both state a testable L0=64 RC-SAE claim with a 10% MSE bound; B adds matched output-KL, while A is equally non-generic."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives explicit 200-GPU-hour allocation and an MSE-matched control; B adds many baselines without a budget plan, straining feasibility."
+          },
+          "decisive_metric": {
+            "score_left": 3,
+            "score_right": 2,
+            "delta": -1,
+            "winner": "left",
+            "reason": "B separates normalized CircuitFaithfulness@k from AttributionFidelity@k and controls matched KL; A's correlation-based Faithfulness@k conflates attribution quality with causal necessity."
+          },
+          "falsifiability": {
+            "score_left": 3,
+            "score_right": 3,
+            "delta": 0,
+            "winner": "tie",
+            "reason": "Both give quantitative support and falsification thresholds; B adds matched-KL control, but A's MSE-matched and CI rules are operational."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "job": "survey_05_mechanistic_interpretability/ai_scientist",
+    "status": "win",
+    "folded_winner": "right",
+    "order_sensitive": false,
+    "score_sum_delta": 6.0,
+    "dimension_deltas": {
+      "grounding": 1.0,
+      "hypothesis_specificity": 1.0,
+      "minimality_feasibility": 1.0,
+      "decisive_metric": 1.0,
+      "falsifiability": 2.0
+    },
+    "dimension_folded": {
+      "grounding": "right",
+      "hypothesis_specificity": "right",
+      "minimality_feasibility": "right",
+      "decisive_metric": "right",
+      "falsifiability": "right"
+    },
+    "orders": [
+      {
+        "order": "forward",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "B is a sharpened version of A: it adds packet grounding, pre-specified quantitative decoupling thresholds, matched L0 controls, and explicit supporting/falsifying decision rules that A lacks.",
+        "score_sum_left": 9,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both cite Challenge 1 correctly; B grounds methodology explicitly in supplied pLM SAE papers and notes neither tests decoupling, giving tighter packet-linked attribution."
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states decoupling qualitatively; B pre-specifies quantitative thresholds (|rho|<0.5, CI excluding 0.8) conditioned on a reliability gate, a sharper testable claim."
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "Both fit 200 GPU-hours; B adds stronger discriminating controls—random baseline, exact L0 pairing, disjoint selection/eval halves, reliability gate—while remaining budget-feasible."
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A's metric field is a grab-bag of proxies; B pre-specifies a primary full-vocabulary KL and a defined steering success protocol measuring the mechanism directly."
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A leaves supporting_result empty and restates the claim as its disconfirmer; B gives concrete quantitative supporting and falsifying rules with bootstrap/alpha thresholds."
+          }
+        }
+      },
+      {
+        "order": "reverse",
+        "overall_winner": "right",
+        "confidence": "high",
+        "overall_reason": "A is substantially stronger on all audit dimensions: it has precise quantitative decision rules, a matched SAE grid with exact L0-paired baselines, a KL-reliability gate, and tighter grounding in the supplied packet. B shares the core idea but lacks operational falsification criteria, exact controls, and clear packet-g",
+        "score_sum_left": 9,
+        "score_sum_right": 15,
+        "dimensions": {
+          "grounding": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A accurately grounds the SAE premise in the supplied survey and pLM SAE papers, clearly separating proposed experiments from observed evidence. B relies heavily on external, non-packet citations (e.g., SAEBench, Anthropic/Bricken/Cunningham"
+          },
+          "hypothesis_specificity": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A states a precise, scoped claim: MSE and behavioral KL are decoupled if Spearman |rho| < 0.5 with CI excluding 0.8, conditional on a split-half reliability gate, across a matched SAE grid. B's claim is similar but uses vague 'substantially"
+          },
+          "minimality_feasibility": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A gives a concrete matched self-trained SAE grid, exact L0-paired MSE-selected and random-selected baselines, a reliability control, and budgeted compute. B lists public SAE baselines and matched SAEs but lacks checkpoint counts, exact spar"
+          },
+          "decisive_metric": {
+            "score_left": 2,
+            "score_right": 3,
+            "delta": 1,
+            "winner": "right",
+            "reason": "A fixes full-vocabulary KL at temperature 1.0 as the primary behavioral-fidelity metric, reports sensitivity variants, and adds non-behavioral readouts plus regression controls to test whether the selection gain is KL-specific. B also uses "
+          },
+          "falsifiability": {
+            "score_left": 1,
+            "score_right": 3,
+            "delta": 2,
+            "winner": "right",
+            "reason": "A provides explicit supporting and falsifying outcomes with quantitative thresholds, alpha levels, effect-size minima, and a reliability gate. B's supporting_result is empty and its falsifying_result merely restates the central claim withou"
+          }
+        }
+      }
+    ]
+  }
+]

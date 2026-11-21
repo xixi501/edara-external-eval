@@ -184,11 +184,14 @@ def source_text(value: str) -> str:
 
 
 def ai_citations(root: Path, task_id: str, draft: dict, evidence: Evidence, sources: list[dict],
-                 originals: list[PriorWorkItem]) -> dict[str, str]:
+                 originals: list[PriorWorkItem], extra_md_dirs: tuple[Path, ...] = ()) -> dict[str, str]:
     body = json.dumps(draft, ensure_ascii=False)
     normalized = source_text(body)
-    paths = (root.parent / "pilot3_runs/ai_scientist_v2" / f"{task_id}.md",
-             root / "outputs/hosts_v1/ai_scientist_topics" / f"{task_id}.md")
+    paths = (
+        *(d / task_id / f"{task_id}.md" for d in extra_md_dirs),
+        root.parent / "pilot3_runs/ai_scientist_v2" / f"{task_id}.md",
+        root / "outputs/hosts_v1/ai_scientist_topics" / f"{task_id}.md",
+    )
     path = next((file for file in paths if file.exists()), None)
     aliases = {}
     if path:
@@ -225,7 +228,7 @@ def direct_aliases(payload: dict, evidence: Evidence) -> dict[str, str]:
             for old in row["sources"] if f"[{old}]" in body}
 
 
-def prepare_inputs(root: Path, cohort: str) -> dict:
+def prepare_inputs(root: Path, cohort: str, *, extension_dir: Path | None = None) -> dict:
     outputs = root / "outputs"
     hosts = outputs / "hosts_v1"
     run = outputs / ("repair_v3/expansion" if cohort == "extension" else "mvp15_ablation_v2")
@@ -233,8 +236,23 @@ def prepare_inputs(root: Path, cohort: str) -> dict:
     ai = {row["task_id"]: row for row in read_rows(hosts / "ai_scientist_v1/ai_scientist_15.jsonl")}
     native = {row["task_id"]: row for row in read_rows(hosts / "edara_15.jsonl")}
     ai_sources = load(hosts / "ai_scientist_15_evidence.json")
+    tasks_path = run / "tasks_frozen.json"
+    extra_md_dirs: tuple[Path, ...] = ()
+    if cohort == "extension" and extension_dir is not None:
+        ext_path = Path(extension_dir)
+        candidate_tasks = ext_path / "selected_15_tasks.json"
+        if candidate_tasks.is_file():
+            tasks_path = candidate_tasks
+        ext_ai = sorted(ext_path.glob("ai_scientist*.jsonl"))
+        if ext_ai:
+            ai = {row["task_id"]: row for row in read_rows(ext_ai[0])}
+        ext_ev = sorted(ext_path.glob("ai_scientist*_evidence.json"))
+        if ext_ev:
+            ai_sources = load(ext_ev[0])
+        if (ext_path / "ai_scientist_runs").is_dir():
+            extra_md_dirs = (ext_path / "ai_scientist_runs",)
     topics = {}
-    for raw in load(run / "tasks_frozen.json"):
+    for raw in load(tasks_path):
         task = TaskSpec.model_validate(raw).model_copy(update={"strict_evidence": True})
         key = task.task_id
         if cohort == "pilot" and key not in development:
@@ -255,6 +273,8 @@ def prepare_inputs(root: Path, cohort: str) -> dict:
         originals = {"direct": direct.get("candidate") if direct["status"] == "produced" else None}
         if cohort != "extension":
             originals.update({"ai_scientist": ai.get(key), "edara": native.get(key)})
+        elif extension_dir is not None and key in ai:
+            originals["ai_scientist"] = ai.get(key)
         versions = {}
         for host, payload in originals.items():
             if not payload:
@@ -268,7 +288,8 @@ def prepare_inputs(root: Path, cohort: str) -> dict:
                 unresolved = sorted(set(EVIDENCE_ID.findall(json.dumps(draft))) - aliases.keys())
                 draft = substitute(draft, EVIDENCE_ID, lambda match: aliases.get(match[0], "[unmapped citation]"))
             if host == "ai_scientist":
-                aliases = ai_citations(root, key, payload, papers, ai_sources.get(key, []), task.prior_work)
+                aliases = ai_citations(root, key, payload, papers, ai_sources.get(key, []),
+                                       task.prior_work, extra_md_dirs=extra_md_dirs)
                 unresolved = sorted(set(token.lower() for token in _MARKERS.findall(json.dumps(draft))) - aliases.keys())
                 draft = substitute(draft, _MARKERS, lambda match: aliases.get(match[0].lower(), "[unmapped citation]"))
             if host == "direct":

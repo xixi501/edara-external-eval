@@ -605,7 +605,10 @@ class Trial:
             self.endpoints["editor"] = replace(editor, extra_body={"thinking": {"type": "disabled"}})
         auditor = self.endpoints["audit"]
         if "glm" in auditor.model.lower():
-            self.endpoints["audit"] = replace(auditor, extra_body={"thinking": {"type": "disabled"}})
+            audit_extra = {"thinking": {"type": "disabled"}}
+            if "autodl" in (auditor.base_url or "").lower():
+                audit_extra["reasoning_effort"] = "none"
+            self.endpoints["audit"] = replace(auditor, extra_body=audit_extra)
         self.eval_mode = getattr(args, "eval_mode", "unified")
         manifest = {
             "protocol_version": PROTOCOL_VERSION,
@@ -620,6 +623,9 @@ class Trial:
         }
         if self.eval_mode != "legacy":
             manifest["eval_mode"] = self.eval_mode
+        self.extension_dir = getattr(args, "extension_dir", None)
+        if self.extension_dir is not None:
+            manifest["extension_dir"] = str(self.extension_dir)
         if args.calibration_from:
             report = args.calibration_from / "calibration.json"
             manifest["calibration_source"] = {"run": args.calibration_from.name, "sha256": path_hash(report)}
@@ -638,6 +644,8 @@ class Trial:
         path = self.out / f"inputs_{cohort}.json"
         if cohort == "pilot":
             inputs = cached(path, lambda: {k: v for k, v in self.freeze("core").items() if v["development"]})
+        elif cohort == "extension" and self.extension_dir is not None:
+            inputs = cached(path, lambda: prepare_inputs(ROOT, cohort, extension_dir=self.extension_dir))
         else:
             inputs = cached(path, lambda: prepare_inputs(ROOT, cohort))
         available = sum(row["status"] == "ready" for topic in inputs.values() for row in topic["originals"].values())
@@ -1112,8 +1120,11 @@ def main() -> int:
     parser.add_argument("--gen-profile", type=Path, default=WORKSPACE / "data/p1b-idea-profile.json")
     parser.add_argument("--audit-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
     parser.add_argument("--judge-profile", type=Path, default=WORKSPACE / "data/p1b-critic-profile.json")
+    parser.add_argument("--extension-dir", type=Path, default=None)
     args = parser.parse_args()
     args.out = args.out.resolve()
+    if args.extension_dir is not None:
+        args.extension_dir = args.extension_dir.resolve()
     if args.out.parent != ROOT / "outputs":
         parser.error("--out must be a new direct child of the staging evaluation outputs directory")
     if args.calibration_from:
@@ -1132,7 +1143,9 @@ def main() -> int:
             trial.freeze("core")
             trial.freeze("extension")
             return 0
-        if args.phase in ("all", "calibrate"):
+        if args.phase in ("all", "calibrate") or (
+            args.calibration_from is not None and not (args.out / "calibration.json").is_file()
+        ):
             if args.phase == "all":
                 trial.freeze("core")
                 trial.freeze("extension")
@@ -1155,7 +1168,10 @@ def main() -> int:
             pilot = trial.trial("pilot", trial.freeze("pilot"), axes)
             if len(pilot["results"]) != 9:
                 raise RuntimeError("Pilot input does not contain the nine frozen source drafts")
-        if args.phase in ("core", "extension") and not (args.out / "pilot_results.json").is_file():
+        has_pilot = (args.out / "pilot_results.json").is_file() or bool(
+            args.calibration_from and (args.calibration_from / "pilot_results.json").is_file()
+        ) or (args.phase == "extension" and args.extension_dir is not None)
+        if args.phase in ("core", "extension") and not has_pilot:
             parser.error("Run the three-topic pilot before the core or extension trial")
         for cohort in ("core", "extension"):
             if args.phase in ("all", cohort):
