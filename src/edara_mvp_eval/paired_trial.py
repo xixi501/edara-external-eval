@@ -95,6 +95,7 @@ draft object retains the proposal. Keep this JSON compact."""
 _GUIDED_REVISE = """This is a governed multi-field revision (guided_revise). Do NOT replace the
 original valid core mechanism unless diagnosis explicitly requests regeneration. Instead, return
 {"draft": {...}} updating ONLY the fields needed to:
+0) strictly preserve the input draft's core algorithmic/mathematical mechanism (e.g., query-dependent vs static formulation, specific operator/circuit structure, or label-preserving/OOD evaluation protocol) and decisive metric precision — never simplify a concrete technical mechanism into a weaker generic approximation;
 1) insert ONLY the single decisive discriminating control arm named in design_confounds concretely into the experimental test/metric field (do NOT expand into a multi-arm factorial grid);
 2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
 3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
@@ -102,8 +103,7 @@ original valid core mechanism unless diagnosis explicitly requests regeneration.
 5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact;
 6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding the discriminating arm, reallocate samples/seeds cleanly rather than silently overrunning stated budgets, and compute any complexity/calibration features strictly from pre-outcome decision-time observables (never label/diagnosis leakage);
 7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with clean dataset-parameterized formulas or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
-8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording;
-9) keep prose compact, cohesive, and close in length to the input draft (do NOT pad with generic commentary or repetitive disclaimers; aim within ~1.12x of input word count while preserving all concrete controls, metrics, decision thresholds, and supplied citations)."""
+8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording."""
 
 
 class BudgetExceeded(RuntimeError):
@@ -580,7 +580,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         record["design_regression_blocked"] = regressions
                         revised = current
             if action == "guided_revise":
-                was_consolidating = state.needs_final_consolidation or (state.revised and state.searched)
+                was_consolidating = state.needs_final_consolidation
                 if record.get("design_regression_blocked") and revised == current:
                     state.revision_blocked = True
                 else:
@@ -592,11 +592,11 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                 state.needs_post_search_revision = False
             if action == "clarify":
                 state.clarified = True
-                if arm == "E" and state.revised and not state.consolidated and revised != current:
+                if arm == "E" and state.revised and state.patched and not state.consolidated and revised != current:
                     state.needs_final_consolidation = True
             if action == "local_patch":
                 state.patched = True
-                if arm == "E" and state.revised and not state.consolidated and revised != current:
+                if arm == "E" and state.revised and state.clarified and not state.consolidated and revised != current:
                     state.needs_final_consolidation = True
             record["changed"] = revised != current
             current = revised

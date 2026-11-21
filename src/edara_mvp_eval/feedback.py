@@ -105,7 +105,7 @@ def eligible_actions(
             actions.append(("seek_evidence", "novelty_evidence_missing"))
         if (
             state.revised
-            and (state.needs_final_consolidation or state.searched)
+            and state.needs_final_consolidation
             and not state.consolidated
             and not state.revision_blocked
             and _has_remaining_defect(bundle)
