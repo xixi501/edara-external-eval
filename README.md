@@ -8,12 +8,53 @@ E-DARA 主体框架代码位于 [`xixi501/edara`](https://github.com/xixi501/eda
 
 ## 核心组件
 
+- `src/edara_mvp_eval/plugin.py` & `cli.py`：宿主无关即插即用公共接口（`govern_proposal()` Python API 与 `edara-mvp govern` CLI），零侵入包裹任意 Agent / LLM 产出的 JSON 提案或实验计划。
 - `src/edara_mvp_eval/host_adapter.py`：多宿主字段适配（`filter_proposal_fields`、`_ROLE_BASES`、`to_lit2test_card`、`to_alphaideabench_idea`、`confound_addressed` 与 `collect_design_text` 同源对齐，以及 `_title_anchor_tokens` / `preserves_related_work_anchors` 防误删已入库文献护栏）。
 - `src/edara_mvp_eval/confound_audit.py`：假设特异性替代解释 / 混淆因子与鉴别对照臂审计。
 - `src/edara_mvp_eval/factual_audit.py`：Claim 级事实审计、未入库外部命名实体扫描（`audit_unverified_entities`）、跨字段定量阈值与证伪一致检查（`audit_draft_consistency`）、残余未执行 `pre-registered` 断言拦截，以及高信息优先证据切片（`_prioritize_passages`）。
-- `src/edara_mvp_eval/epistemic_audit.py` & `spec_locator.py` & `governance.py`：前瞻边界区分、证据边界准入及由 `factual_audit` 派生零冗余 `_tri_state_from_factual`。
-- `src/edara_mvp_eval/feedback.py` & `middleware.py` & `paired_trial.py`：五动作状态路由（含 `guided_revise` 多字段协同修订、预算守恒与结构/文献锚点保留护栏、单次恢复重试、`clarify` 就地澄清放行及搜证后强制落实）。
-- `src/edara_mvp_eval/unified_eval.py` & `claimnov_adapter.py` & `llm_client.py`：`Lit2Test` 正反互换去偏五维评判、`AlphaIdeaBench` 批量五维打分与 `ContextVar` + facet 缓存并发 `ClaimNov`。
+- `src/edara_mvp_eval/epistemic_audit.py` & `spec_locator.py` & `governance.py`：前瞻边界区分、证据边界准入及由 `factual_audit` 派生零冗余 `_tri_state_from_factual`（内置离线回退，无需额外安装非 PyPI 本地包即可独立运行）。
+- `src/edara_mvp_eval/feedback.py` & `middleware.py` & `paired_trial.py`：五动作状态路由（含 `guided_revise` 多字段协同修订、碎片补丁后的终局协同收口 `needs_final_consolidation`、`verification_prerequisites` 边界隔离、预算守恒与结构/文献锚点保留护栏）。
+- `src/edara_mvp_eval/unified_eval.py` & `claimnov_adapter.py` & `tasks_loader.py`：`Lit2Test` 正反互换去偏五维评判（含未背书虚假流程包装词惩罚）、`AlphaIdeaBench` 批量五维打分、内置 BM25 回退并发 `ClaimNov` 以及 50 题分层主基准加载器（`load_benchmark50_tasks()`，详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)）。
+
+---
+
+## 快速上手（作为独立治理外挂）
+
+### 1. Python 一行接入
+
+```python
+from edara_mvp_eval import govern_proposal
+
+outcome = govern_proposal(
+    draft={
+        "title": "Adaptive KV Eviction for Long-Context Reasoning",
+        "literature_gap": "Existing methods never consider step-level attention drift.",
+        "hypothesis": "Entropy-guided eviction improves reasoning accuracy.",
+        "method": "Evict low-entropy heads dynamically during decoding.",
+        "minimal_test": "Compare against H2O on GSM8K-Long.",
+        "decisive_metric": "Exact-match accuracy at 25% KV budget.",
+    },
+    task_title="KV-Cache Compression for Long-Context LLMs",
+    prior_work=[{"id": "P1", "title": "H2O: Heavy-Hitter Oracle", "year": "2023", "abstract": "..."}],
+    editor_profile="configs/dashscope-deepseek-profile.json",
+    audit_profile="configs/p1b-critic-profile.json",
+)
+print(outcome.status, outcome.rounds, outcome.draft.keys())
+```
+
+### 2. CLI 命令行治理单份提案
+
+```bash
+# 离线冒烟验证（无需 API Key）
+PYTHONPATH=src python -m edara_mvp_eval.cli govern --input proposal.json --output governed.json --dry-run
+
+# 真实模型治理
+PYTHONPATH=src python -m edara_mvp_eval.cli govern \
+  --input proposal.json \
+  --output governed.json \
+  --editor-profile configs/dashscope-deepseek-profile.json \
+  --audit-profile configs/p1b-critic-profile.json
+```
 
 ---
 
@@ -37,12 +78,12 @@ E-DARA 主体框架代码位于 [`xixi501/edara`](https://github.com/xixi501/eda
 ## 目录结构
 
 ```text
-src/edara_mvp_eval/      # 外挂治理引擎、多宿主适配与统一评测器
-tests/                   # 离线单元测试套件（129 项）
+src/edara_mvp_eval/      # 外挂治理引擎、多宿主适配、公共 API 与统一评测器
+tests/                   # 离线单元测试套件（130 项，零外部仓库依赖即可全绿运行）
 pilots/                  # 运行入口（run_unified_eval.py, run_paired_isolated.py, verify_paired_trial.py 等）
 configs/                 # 模型端点 profile（不含任何 API key，凭据通过环境变量注入）
-data/                    # 冻结任务、输入快照与校准用例
-docs/                    # 评审协议与证据映射文档
+data/                    # 冻结 50 题主基准（benchmark_50_topics.json / tasks_benchmark50.json）、输入快照与校准用例
+docs/                    # 50 题分层说明（BENCHMARK_50_TOPICS.md）、评审协议与证据映射文档
 results/                 # unified v4、ext15 (N=30)、N=68 三裁判汇总、校准与客观机制台账产物
 ```
 

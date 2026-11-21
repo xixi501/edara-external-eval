@@ -1,0 +1,848 @@
+{
+  "schema_version": "edara.benchmark-50-topics/v1",
+  "total_topics": 50,
+  "benchmark_balance": {
+    "lit2test": 25,
+    "alphaideabench": 25
+  },
+  "domains_count": 10,
+  "topics_per_domain": 5,
+  "waves": {
+    "wave1": 10,
+    "wave2": 20,
+    "wave3": 20
+  },
+  "zero_fifth40_calibration_overlap": true,
+  "domains": [
+    {
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文"
+    },
+    {
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解"
+    },
+    {
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模"
+    },
+    {
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体"
+    },
+    {
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性"
+    },
+    {
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性"
+    },
+    {
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统"
+    },
+    {
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模"
+    },
+    {
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论"
+    },
+    {
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）"
+    }
+  ],
+  "topics": [
+    {
+      "index": 1,
+      "task_id": "survey_01_llm_reasoning_cot",
+      "source_track": "alphaideabench",
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文",
+      "wave": "wave1",
+      "raw_field": "llm_and_reasoning",
+      "title": "Towards Reasoning in Large Language Models: A Survey",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 2,
+      "task_id": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: retrieval and long-context systems: cache, compression, llms, long, context",
+      "title": "cache, compression, llms, long, context (PyramidKV: Dynamic KV Cache Compression based on Pyramidal Inform...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist",
+        "edara"
+      ]
+    },
+    {
+      "index": 3,
+      "task_id": "survey_03_rag_systems",
+      "source_track": "alphaideabench",
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文",
+      "wave": "wave2",
+      "raw_field": "llm_and_reasoning",
+      "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 4,
+      "task_id": "smallari_expansion40_033_retrieval_generation_retrieval_augmented_languag__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: retrieval and long-context systems: retrieval, generation, retrieval-augmented, language, augmented",
+      "title": "retrieval, generation, retrieval-augmented, language, augmented (Corrective Retrieval Augmented Generation...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 5,
+      "task_id": "survey_07_test_time_scaling",
+      "source_track": "alphaideabench",
+      "domain_id": "D01_llm_reasoning_rag",
+      "domain_en": "LLM Reasoning, RAG & Long-Context",
+      "domain_zh": "大模型推理、检索增强与长上下文",
+      "wave": "wave3",
+      "raw_field": "llm_and_reasoning",
+      "title": "Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 6,
+      "task_id": "survey_02_vlm_hallucination",
+      "source_track": "alphaideabench",
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解",
+      "wave": "wave1",
+      "raw_field": "multimodal_and_cv",
+      "title": "A Survey on Hallucination in Large Vision-Language Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 7,
+      "task_id": "ws_09_world_models_simulation",
+      "source_track": "alphaideabench",
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解",
+      "wave": "wave2",
+      "raw_field": "multimodal_and_cv",
+      "title": "Workshop on World Models: Understanding, Modelling and Scaling",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct"
+      ]
+    },
+    {
+      "index": 8,
+      "task_id": "smallari_expansion40_025_audio_visual_multimodal_aligned_language_visual__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: multimodal and vision-language learning: audio-visual, multimodal, aligned, language, visual",
+      "title": "audio-visual, multimodal, aligned, language, visual (Aligned Better, Listen Better for Audio-Visual Large Language Mod...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 9,
+      "task_id": "smallari_expansion40_018_speech_continuation_language_llm_potential__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: speech, continuation, language, llm, potential",
+      "title": "speech, continuation, language, llm, potential (BLSP: Bootstrapping Language-Speech Pre-training via Behavior Ali...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 10,
+      "task_id": "ws_08_video_language_models",
+      "source_track": "alphaideabench",
+      "domain_id": "D02_multimodal_vlm_speech",
+      "domain_en": "Multimodal, Vision-Language & Speech",
+      "domain_zh": "多模态、视觉语言与语音理解",
+      "wave": "wave3",
+      "raw_field": "multimodal_and_cv",
+      "title": "Workshop on Video-Language Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 11,
+      "task_id": "smallari_expansion40_010_problems_inverse_diffusion_projected_solving__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模",
+      "wave": "wave1",
+      "raw_field": "OpenReview ICLR expansion neighborhood: diffusion and generative modeling: problems, inverse, diffusion, projected, solving",
+      "title": "problems, inverse, diffusion, projected, solving (Diffusion State-Guided Projected Gradient for Inverse Problems...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 12,
+      "task_id": "smallari_expansion40_013_motion_generation_human_editing_flow__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: diffusion and generative modeling: motion, generation, human, editing, flow",
+      "title": "motion, generation, human, editing, flow (Motion Flow Matching for Efficient Human Motion Synthesis and Edi...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 13,
+      "task_id": "survey_14_diffusion_3d_generation",
+      "source_track": "alphaideabench",
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模",
+      "wave": "wave2",
+      "raw_field": "multimodal_and_cv",
+      "title": "Diffusion Models in 3D Vision: A Survey",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 14,
+      "task_id": "smallari_expansion40_020_transport_optimal_generative_map_networks__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: diffusion and generative modeling: transport, optimal, generative, map, networks",
+      "title": "transport, optimal, generative, map, networks (Analyzing and Improving Optimal-Transport-based Adversarial Netwo...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 15,
+      "task_id": "ws_11_diffusion_models",
+      "source_track": "alphaideabench",
+      "domain_id": "D03_diffusion_generative",
+      "domain_en": "Diffusion, Flow & Generative Modeling",
+      "domain_zh": "扩散、流匹配与生成建模",
+      "wave": "wave3",
+      "raw_field": "multimodal_and_cv",
+      "title": "Workshop on Diffusion Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 16,
+      "task_id": "ws_02_agentic_ai",
+      "source_track": "alphaideabench",
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体",
+      "wave": "wave1",
+      "raw_field": "llm_and_reasoning",
+      "title": "Towards Agentic AI for Science: Hypothesis Generation, Comprehension, Quantification, and Validation",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist",
+        "edara"
+      ]
+    },
+    {
+      "index": 17,
+      "task_id": "smallari_expansion40_040_critic_reinforcement_actor_critic_actor_continuo__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: reinforcement learning and agents: critic, reinforcement, actor-critic, actor, continuous",
+      "title": "critic, reinforcement, actor-critic, actor, continuous (Afterstate Reinforcement Learning for Continuous Control...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 18,
+      "task_id": "survey_04_llm_agent_collaboration",
+      "source_track": "alphaideabench",
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体",
+      "wave": "wave2",
+      "raw_field": "llm_and_reasoning",
+      "title": "A Survey on Large Language Model based Autonomous Agents",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 19,
+      "task_id": "survey_10_embodied_ai_vla",
+      "source_track": "alphaideabench",
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体",
+      "wave": "wave3",
+      "raw_field": "robotics_and_rl",
+      "title": "A Survey on Vision-Language-Action Models for Embodied AI",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 20,
+      "task_id": "ws_35_real_world_rl",
+      "source_track": "alphaideabench",
+      "domain_id": "D04_rl_robotics_agents",
+      "domain_en": "Reinforcement Learning, Robotics & Agents",
+      "domain_zh": "强化学习、具身智能与自主智能体",
+      "wave": "wave3",
+      "raw_field": "robotics_and_rl",
+      "title": "Reincarnating RL",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 21,
+      "task_id": "smallari_expansion40_002_unlearning_machine_language_use_algorithms__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性",
+      "wave": "wave1",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: unlearning, machine, language, use, algorithms",
+      "title": "unlearning, machine, language, use, algorithms (A Closer Look at Machine Unlearning for Large Language Models...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist",
+        "edara"
+      ]
+    },
+    {
+      "index": 22,
+      "task_id": "survey_06_llm_safety_jailbreak",
+      "source_track": "alphaideabench",
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性",
+      "wave": "wave2",
+      "raw_field": "trustworthy_and_safety",
+      "title": "Jailbreak Attacks and Defenses Against Large Language Models: A Survey",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 23,
+      "task_id": "smallari_expansion40_006_backdoor_attacks_perspective_attack_triggers__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: diffusion and generative modeling: backdoor, attacks, perspective, attack, triggers",
+      "title": "backdoor, attacks, perspective, attack, triggers (Demystifying Poisoning Backdoor Attacks from a Statistical Perspe...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 24,
+      "task_id": "smallari_expansion40_007_conformal_prediction_sets_provably_efficiency__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: conformal, prediction, sets, provably, efficiency",
+      "title": "conformal, prediction, sets, provably, efficiency (CBMA: Improving Conformal Prediction through Bayesian Model Avera...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 25,
+      "task_id": "smallari_expansion40_017_group_fairness_individual_in_processing_fair__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D05_trustworthy_safety",
+      "domain_en": "Trustworthy AI, Safety & Fairness",
+      "domain_zh": "可信 AI、安全攻防与公平性",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: group, fairness, individual, in-processing, fair",
+      "title": "group, fairness, individual, in-processing, fair (FFB: A Fair Fairness Benchmark for In-Processing Group Fairness M...)",
+      "cutoff_date": "2024-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 26,
+      "task_id": "smallari_expansion40_011_test_time_adaptation_active_tta_test__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性",
+      "wave": "wave1",
+      "raw_field": "OpenReview ICLR expansion neighborhood: continual, meta, and test-time adaptation: test-time, adaptation, active, tta, test",
+      "title": "test-time, adaptation, active, tta, test (Active Test-Time Adaptation: Theoretical Analyses and An Algorith...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 27,
+      "task_id": "smallari_expansion40_009_detection_out_of_distribution_ood_post_hoc_in_di__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: robustness, ood, and uncertainty: detection, out-of-distribution, ood, post-hoc, in-distribution",
+      "title": "detection, out-of-distribution, ood, post-hoc, in-distribution (Semantic or Covariate? A Study on the Intractable Case of Out-of-...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 28,
+      "task_id": "smallari_expansion40_014_spurious_correlations_features_networks_activati__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: spurious, correlations, features, networks, activations",
+      "title": "spurious, correlations, features, networks, activations (The Invariance Starvation Hypothesis...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 29,
+      "task_id": "ws_44_distribution_shifts",
+      "source_track": "alphaideabench",
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性",
+      "wave": "wave3",
+      "raw_field": "adaptation_and_continual",
+      "title": "Workshop on Distribution Shifts: New Frontiers with Foundation Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 30,
+      "task_id": "survey_09_llm_continual_learning",
+      "source_track": "alphaideabench",
+      "domain_id": "D06_adaptation_continual_ood",
+      "domain_en": "Adaptation, Continual & OOD Robustness",
+      "domain_zh": "测试时自适应、持续学习与分布外鲁棒性",
+      "wave": "wave3",
+      "raw_field": "adaptation_and_continual",
+      "title": "Continual Learning of Large Language Models: A Comprehensive Survey",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 31,
+      "task_id": "survey_08_kv_cache_compression",
+      "source_track": "alphaideabench",
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统",
+      "wave": "wave1",
+      "raw_field": "efficiency_and_systems",
+      "title": "Keep the Cost Down: A Review on Methods to Optimize LLM' s KV-Cache Consumption",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 32,
+      "task_id": "smallari_expansion40_023_quantization_quantization_aware_fine_tuning_diff__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: efficient inference and compression: quantization, quantization-aware, fine-tuning, diffusion, post-training",
+      "title": "quantization, quantization-aware, fine-tuning, diffusion, post-training (AQUATIC-Diff: Additive Quantization for Truly Tiny Compressed Dif...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 33,
+      "task_id": "smallari_expansion40_030_pruning_language_llms_however_layer_wise__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: efficient inference and compression: pruning, language, llms, however, layer-wise",
+      "title": "pruning, language, llms, however, layer-wise (RotPruner: Large Language Model Pruning in Rotated Space...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 34,
+      "task_id": "smallari_expansion40_026_low_rank_full_rank_llms_fine_tuning_memory__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: low-rank, full-rank, llms, fine-tuning, memory",
+      "title": "low-rank, full-rank, llms, fine-tuning, memory (AdaRankGrad: Adaptive Gradient Rank and Moments for Memory-Effici...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 35,
+      "task_id": "survey_18_speculative_decoding",
+      "source_track": "alphaideabench",
+      "domain_id": "D07_efficiency_systems",
+      "domain_en": "Efficiency, Compression & ML Systems",
+      "domain_zh": "高效推理、模型压缩与机器学习系统",
+      "wave": "wave3",
+      "raw_field": "efficiency_and_systems",
+      "title": "Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 36,
+      "task_id": "smallari_expansion40_008_graph_networks_message_passing_representation__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模",
+      "wave": "wave1",
+      "raw_field": "OpenReview ICLR expansion neighborhood: graph, geometry, and structured learning: graph, networks, message, passing, representation",
+      "title": "graph, networks, message, passing, representation (Scalable Message Passing Neural Networks: No Need for Attention i...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 37,
+      "task_id": "smallari_expansion40_012_series_time_anomaly_anomalies_detection__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: time series and dynamical systems: series, time, anomaly, anomalies, detection",
+      "title": "series, time, anomaly, anomalies, detection (When Will It Fail?: Anomaly to Prompt for Forecasting Future Anom...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 38,
+      "task_id": "ws_38_temporal_graph_learning",
+      "source_track": "alphaideabench",
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模",
+      "wave": "wave2",
+      "raw_field": "graph_and_geometric_ml",
+      "title": "Temporal Graph Learning Workshop",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 39,
+      "task_id": "smallari_expansion40_034_equivariant_networks_breaking_symmetry_simple__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模",
+      "wave": "wave3",
+      "raw_field": "OpenReview ICLR expansion neighborhood: graph, geometry, and structured learning: equivariant, networks, breaking, symmetry, simple",
+      "title": "equivariant, networks, breaking, symmetry, simple (Improving Equivariant Networks with Probabilistic Symmetry Breaki...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 40,
+      "task_id": "survey_24_graph_foundation_models",
+      "source_track": "alphaideabench",
+      "domain_id": "D08_graph_geometric_temporal",
+      "domain_en": "Graph, Geometric & Temporal ML",
+      "domain_zh": "图神经网络、几何对称性与时序建模",
+      "wave": "wave3",
+      "raw_field": "graph_and_geometric_ml",
+      "title": "Graph Foundation Models: Concepts, Opportunities and Challenges",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 41,
+      "task_id": "survey_05_mechanistic_interpretability",
+      "source_track": "alphaideabench",
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论",
+      "wave": "wave1",
+      "raw_field": "interpretability_and_theory",
+      "title": "A Practical Review of Mechanistic Interpretability for Transformer-Based Language Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 42,
+      "task_id": "smallari_expansion40_029_bottleneck_concept_concepts_information_cbms__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: interpretability and explainability: bottleneck, concept, concepts, information, cbms",
+      "title": "bottleneck, concept, concepts, information, cbms (Zero-shot Concept Bottleneck Models via Sparse Regression of Retr...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist",
+        "edara"
+      ]
+    },
+    {
+      "index": 43,
+      "task_id": "smallari_expansion40_005_memorization_deep_generalization_necessary_funda__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: alignment, safety, fairness, and privacy: memorization, deep, generalization, necessary, fundamentals",
+      "title": "memorization, deep, generalization, necessary, fundamentals (Back to Fundamentals: Re-Examining Memorization in Deep Learning ...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 44,
+      "task_id": "ws_50_causal_learning_theory",
+      "source_track": "alphaideabench",
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论",
+      "wave": "wave3",
+      "raw_field": "interpretability_and_theory",
+      "title": "Causality and Large Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 45,
+      "task_id": "survey_46_causal_representation_learning",
+      "source_track": "alphaideabench",
+      "domain_id": "D09_interpretability_causality_theory",
+      "domain_en": "Interpretability, Causality & Theory",
+      "domain_zh": "机制可解释性、因果推断与学习理论",
+      "wave": "wave3",
+      "raw_field": "interpretability_and_theory",
+      "title": "Towards Causal Representation Learning",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 46,
+      "task_id": "smallari_expansion40_003_quantum_circuits_algorithms_design_parameterized__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）",
+      "wave": "wave1",
+      "raw_field": "OpenReview ICLR expansion neighborhood: robustness, ood, and uncertainty: quantum, circuits, algorithms, design, parameterized",
+      "title": "quantum, circuits, algorithms, design, parameterized (Provably Noise-Resilient Training of Parameterized Quantum Circui...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 47,
+      "task_id": "smallari_expansion40_019_protein_language_structural_structure_sequence__v02_expansion40",
+      "source_track": "lit2test",
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）",
+      "wave": "wave2",
+      "raw_field": "OpenReview ICLR expansion neighborhood: multimodal and vision-language learning: protein, language, structural, structure, sequence",
+      "title": "protein, language, structural, structure, sequence (Endowing Protein Language Models with Structural Knowledge...)",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "ext15",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 48,
+      "task_id": "ws_18_scientific_foundation_models",
+      "source_track": "alphaideabench",
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）",
+      "wave": "wave2",
+      "raw_field": "ai_for_science",
+      "title": "Workshop on Open Science for Foundation Models",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "v4",
+      "cached_hosts": [
+        "direct",
+        "ai_scientist"
+      ]
+    },
+    {
+      "index": 49,
+      "task_id": "ws_14_physics_for_ml",
+      "source_track": "alphaideabench",
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）",
+      "wave": "wave3",
+      "raw_field": "ai_for_science",
+      "title": "Physics for Machine Learning",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    },
+    {
+      "index": 50,
+      "task_id": "survey_30_medical_vlm_healthcare",
+      "source_track": "alphaideabench",
+      "domain_id": "D10_ai_for_science_biomed",
+      "domain_en": "AI for Science & Biomedicine",
+      "domain_zh": "科学智能（物理/量子/生物分子/临床医疗）",
+      "wave": "wave3",
+      "raw_field": "ai_for_science",
+      "title": "Medical Multimodal Foundation Models in Clinical Diagnosis and Treatment: Applications, Challenges, and Future Directions",
+      "cutoff_date": "2025-12-31",
+      "prior_cohort": "new25",
+      "cached_hosts": []
+    }
+  ]
+}

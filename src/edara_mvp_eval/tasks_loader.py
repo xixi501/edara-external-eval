@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any
@@ -12,10 +13,21 @@ from pypdf import PdfReader
 
 from .schemas import PriorWorkItem, TaskSpec
 
-AIIB_ROOT = Path("/workspace/edara/data/aiib-pilot-20261105/prepared")
-REFS_ROOT = Path("/workspace/edara/staging/04_external_eval_refs")
-AIB_ROOT = REFS_ROOT / "AlphaIdeaBench"
-LIT2TEST_DATA = REFS_ROOT / "lit2test-benchmark/data/lit2test_v02_expansion40_smallari_contexts.jsonl"
+PACKAGE_ROOT = Path(__file__).resolve().parents[2]
+REFS_ROOT = Path(os.environ.get("EDARA_REFS_ROOT") or PACKAGE_ROOT.parent)
+WORKSPACE_ROOT = Path(
+    os.environ.get("EDARA_WORKSPACE")
+    or (PACKAGE_ROOT.parents[2] if len(PACKAGE_ROOT.parents) >= 3 else PACKAGE_ROOT.parent)
+)
+DATA_ROOT = Path(os.environ.get("EDARA_DATA_ROOT") or (WORKSPACE_ROOT / "data"))
+AIIB_ROOT = Path(os.environ.get("AIIB_ROOT") or (DATA_ROOT / "aiib-pilot-20261105/prepared"))
+AIB_ROOT = Path(os.environ.get("ALPHAIDEABENCH_ROOT") or (REFS_ROOT / "AlphaIdeaBench"))
+LIT2TEST_ROOT = Path(os.environ.get("LIT2TEST_ROOT") or (REFS_ROOT / "lit2test-benchmark"))
+LIT2TEST_DATA = LIT2TEST_ROOT / "data/lit2test_v02_expansion40_smallari_contexts.jsonl"
+LIT2TEST_FIFTH40_DATA = LIT2TEST_ROOT / "data/lit2test_v02_fifth40_smallari_contexts.jsonl"
+BENCHMARK_50_MANIFEST = PACKAGE_ROOT / "data/benchmark_50_topics.json"
+FROZEN_MVP15_PATH = PACKAGE_ROOT / "data/tasks_mvp15.json"
+FROZEN_BENCHMARK50_PATH = PACKAGE_ROOT / "data/tasks_benchmark50.json"
 
 DEFAULT_AIB_IDS = (
     "ws_02_agentic_ai",
@@ -256,12 +268,145 @@ def load_alphaideabench_tasks(
     return tasks
 
 
+def load_lit2test_by_ids(
+    task_ids: tuple[str, ...] | list[str],
+    jsonl_path: Path = LIT2TEST_DATA,
+) -> list[TaskSpec]:
+    rows_by_id = {
+        str(row["context_id"]): row
+        for line in jsonl_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+        for row in (json.loads(line),)
+    }
+    tasks: list[TaskSpec] = []
+    for tid in task_ids:
+        if tid not in rows_by_id:
+            raise KeyError(f"Lit2Test context_id not found: {tid}")
+        r = rows_by_id[tid]
+        prior_work: list[PriorWorkItem] = []
+        paper_blocks: list[str] = []
+        years: list[int] = []
+        for idx, p in enumerate(r.get("papers") or [], 1):
+            pid = str(p.get("paper_id") or f"p{idx}")
+            yr = str(p.get("year") or "2025")
+            if yr.isdigit():
+                years.append(int(yr))
+            prior_work.append(
+                PriorWorkItem(
+                    id=pid,
+                    title=str(p.get("title") or ""),
+                    abstract=str(p.get("abstract") or ""),
+                    key_contribution=str(p.get("key_contribution") or ""),
+                    limitation=str(p.get("limitation") or ""),
+                    important_result=str(p.get("important_result") or ""),
+                    year=yr,
+                    url=p.get("url"),
+                    source="lit2test_paper",
+                )
+            )
+            paper_blocks.append(
+                f"- [{pid}] ({yr}) {p.get('title', '')}\n"
+                f"  Contribution: {p.get('key_contribution', '')}\n"
+                f"  Important Result: {p.get('important_result', '')}\n"
+                f"  Reviewer Limitation: {p.get('limitation', '')}\n"
+                f"  Abstract: {str(p.get('abstract') or '')[:450]}"
+            )
+        max_year = max(years) if years else 2025
+        cutoff = f"{max_year}-12-31"
+        prompt_context = (
+            f"Research Context: {r.get('research_context', '')}\n"
+            f"Open Problem: {r.get('open_problem', '')}\n"
+            f"Cutoff Date: {cutoff}\n"
+            f"Resource Constraint: {r.get('resource_constraint', '')}\n"
+            f"Task Instruction: {r.get('task_instruction', '')}\n\n"
+            f"Literature Neighborhood:\n" + "\n".join(paper_blocks)
+        )
+        tasks.append(
+            TaskSpec(
+                task_id=tid,
+                source_track="lit2test",
+                field=str(r.get("field") or "lit2test"),
+                title=str(r.get("open_problem") or tid)[:140],
+                prompt_context=prompt_context,
+                cutoff_date=cutoff,
+                forbidden_title_hashes=[],
+                budget={"constraint_text": str(r.get("resource_constraint") or "")},
+                prior_work=prior_work,
+            )
+        )
+    return tasks
+
+
+def load_benchmark50_tasks(
+    *,
+    wave: str | None = None,
+    manifest_path: Path = BENCHMARK_50_MANIFEST,
+    lit2test_jsonl: Path = LIT2TEST_DATA,
+    fifth40_jsonl: Path = LIT2TEST_FIFTH40_DATA,
+    aib_root: Path = AIB_ROOT,
+) -> list[TaskSpec]:
+    """Load the locked 50-topic (10 domains x 5 topics, 25 Lit2Test + 25 AlphaIdeaBench) benchmark or a specific wave."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    entries = manifest["topics"]
+    if fifth40_jsonl.is_file():
+        fifth_ids = {
+            str(json.loads(line)["context_id"])
+            for line in fifth40_jsonl.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+        overlap = {e["task_id"] for e in entries} & fifth_ids
+        if overlap:
+            raise ValueError(f"Benchmark-50 overlaps with fifth40 calibration suite: {sorted(overlap)}")
+    if wave is not None:
+        if wave not in {"wave1", "wave2", "wave3", "wave1_2"}:
+            raise ValueError(f"Unsupported wave {wave!r}; choose wave1, wave2, wave3, wave1_2, or None")
+        allowed_waves = {"wave1", "wave2"} if wave == "wave1_2" else {wave}
+        entries = [e for e in entries if e["wave"] in allowed_waves]
+
+    lit_ids = [e["task_id"] for e in entries if e["source_track"] == "lit2test"]
+    aib_ids = [e["task_id"] for e in entries if e["source_track"] == "alphaideabench"]
+    by_id: dict[str, TaskSpec] = {}
+    raw_available = (not lit_ids or lit2test_jsonl.is_file()) and (not aib_ids or (aib_root / "tasks/index.json").is_file())
+    if raw_available:
+        if lit_ids:
+            for t in load_lit2test_by_ids(lit_ids, jsonl_path=lit2test_jsonl):
+                by_id[t.task_id] = t
+        if aib_ids:
+            for t in load_alphaideabench_tasks(aib_root=aib_root, task_ids=tuple(aib_ids)):
+                by_id[t.task_id] = t
+    elif FROZEN_BENCHMARK50_PATH.is_file():
+        frozen_items = json.loads(FROZEN_BENCHMARK50_PATH.read_text(encoding="utf-8"))
+        for item in frozen_items:
+            t = TaskSpec.model_validate(item)
+            by_id[t.task_id] = t
+    else:
+        raise FileNotFoundError(
+            f"Raw benchmark datasets ({lit2test_jsonl}, {aib_root}) and frozen snapshot ({FROZEN_BENCHMARK50_PATH}) not found."
+        )
+    ordered: list[TaskSpec] = []
+    for e in entries:
+        spec = by_id[e["task_id"]]
+        ordered.append(spec.model_copy(update={"field": f"{e['domain_id']}:{e['domain_en']}"}))
+    return ordered
+
+
 def build_mvp15_tasks(cache_path: Path | None = None) -> list[TaskSpec]:
     if cache_path and cache_path.is_file():
         data = json.loads(cache_path.read_text(encoding="utf-8"))
         return [TaskSpec.model_validate(item) for item in data]
 
-    tasks = load_aiib_tasks() + load_lit2test_tasks() + load_alphaideabench_tasks()
+    raw_available = (
+        (AIIB_ROOT / "public").is_dir()
+        and LIT2TEST_DATA.is_file()
+        and (AIB_ROOT / "tasks/index.json").is_file()
+    )
+    if raw_available:
+        tasks = load_aiib_tasks() + load_lit2test_tasks() + load_alphaideabench_tasks()
+    elif FROZEN_MVP15_PATH.is_file():
+        data = json.loads(FROZEN_MVP15_PATH.read_text(encoding="utf-8"))
+        tasks = [TaskSpec.model_validate(item) for item in data]
+    else:
+        tasks = load_aiib_tasks() + load_lit2test_tasks() + load_alphaideabench_tasks()
     if cache_path:
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         cache_path.write_text(
@@ -397,24 +542,30 @@ def export_pilot3_external_inputs(
             encoding="utf-8",
         )
 
+    def _prof(name: str) -> str:
+        cand = DATA_ROOT / name
+        if not cand.is_file() and (PACKAGE_ROOT / "configs" / name).is_file():
+            cand = PACKAGE_ROOT / "configs" / name
+        return str(cand)
+
     edara_live_config = {
         "budget_microusd": 1_500_000,
-        "policy_model_config": "/workspace/edara/data/p1a-live-profile.json",
-        "topic_model_config": "/workspace/edara/data/p1a-live-profile.json",
-        "audit_model_config": "/workspace/edara/data/p1b-critic-profile.json",
-        "coverage_model_config": "/workspace/edara/data/p1b-critic-profile.json",
-        "p2_model_config": "/workspace/edara/data/p1b-idea-profile.json",
-        "p2_critic_model_config": "/workspace/edara/data/p1b-critic-profile.json",
-        "p3_editor_model_config": "/workspace/edara/data/p1b-idea-profile.json",
-        "p3_reviewer_model_config": "/workspace/edara/data/p1b-critic-profile.json",
-        "p4b_generator_model_config": "/workspace/edara/data/p2-deep-profile.json",
-        "p4b_judge_model_config": "/workspace/edara/data/p1b-critic-profile.json",
+        "policy_model_config": _prof("p1a-live-profile.json"),
+        "topic_model_config": _prof("p1a-live-profile.json"),
+        "audit_model_config": _prof("p1b-critic-profile.json"),
+        "coverage_model_config": _prof("p1b-critic-profile.json"),
+        "p2_model_config": _prof("p1b-idea-profile.json"),
+        "p2_critic_model_config": _prof("p1b-critic-profile.json"),
+        "p3_editor_model_config": _prof("p1b-idea-profile.json"),
+        "p3_reviewer_model_config": _prof("p1b-critic-profile.json"),
+        "p4b_generator_model_config": _prof("p2-deep-profile.json"),
+        "p4b_judge_model_config": _prof("p1b-critic-profile.json"),
         "review_model_configs": [
-            "/workspace/edara/data/p1b-critic-profile.json",
-            "/workspace/edara/data/p1b-critic-profile.json",
-            "/workspace/edara/data/p1b-critic-profile.json",
+            _prof("p1b-critic-profile.json"),
+            _prof("p1b-critic-profile.json"),
+            _prof("p1b-critic-profile.json"),
         ],
-        "review_arbiter_model_config": "/workspace/edara/data/p1b-critic-profile.json",
+        "review_arbiter_model_config": _prof("p1b-critic-profile.json"),
         "supplement_source": "openalex",
     }
     (edara_dir / "edara_live_config.json").write_text(

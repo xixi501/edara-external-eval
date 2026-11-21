@@ -739,4 +739,101 @@ def test_schema_none_tolerance_editor_json_retry_clarify_antishrink_and_post_sea
     assert "Multi-Hop" not in _title_anchor_tokens("Multi-Hop Question Answering in Unlearning")
 
 
+def test_step1_comma_key_consolidation_prereqs_benchmark50_and_public_plugin_api(tmp_path):
+    from edara_mvp_eval import govern_proposal
+    from edara_mvp_eval.host_adapter import to_alphaideabench_idea, to_lit2test_card
+    from edara_mvp_eval.paired_trial import apply_edits
+    from edara_mvp_eval.tasks_loader import load_benchmark50_tasks
+
+    # 1. Regression for ext15 008_graph_networks/direct: dynamic subkeys with commas/parens must not crash
+    orig_draft = {"title": "Adaptive Message Passing", "hypothesis": "H1", "minimal_test": "T1"}
+    comma_key = "resource_plan.allocation.random-depth, capacity-matched, and degree-matched ablations (GPU)"
+    rewritten, rw_log = apply_edits(
+        orig_draft,
+        {"draft": {"minimal_test": "T1 with degree-matched control", comma_key: "4 GPU-hours"}},
+        scope="full",
+    )
+    assert rewritten[comma_key] == "4 GPU-hours"
+    assert rw_log[0]["action"] == "rewrite"
+
+    # 2. Structural verification_prerequisites maps cleanly into limitations rather than polluting core test prose
+    structured = {
+        "title": "Clean Direct Draft",
+        "hypothesis": "Spectral gating improves recall.",
+        "method": "Apply spectral filter.",
+        "minimal_test": "Evaluate against matched-FLOP baseline on supplied benchmark.",
+        "decisive_metric": "AURC at 80% coverage.",
+        "falsifying_result": "Gain < 2.0 points.",
+        "verification_prerequisites": "External dataset X requires license confirmation prior to secondary transfer check.",
+    }
+    card = to_lit2test_card(structured)
+    aib = to_alphaideabench_idea("t-struct", structured)
+    assert "license confirmation" in card["limitations"]
+    assert "license confirmation" not in card["minimal_test"]
+    assert "license confirmation" in aib["limitations"]
+
+    # 3. Post-revision fragmented patch consolidation unlocks one final guided_revise when defects remain
+    rem_bundle = SimpleNamespace(
+        governance=IdeaGovernanceResult(action="retain_and_test", claims=[]),
+        tri_state=TriStateAuditResult(epistemic_overclaim_count=1),
+        gap_audit=GapAuditResult(any_falsified=False),
+        spec_audit=SpecAuditResult(blocking_count=1),
+        confound_audit=SimpleNamespace(priority="none"),
+        claimnov=ClaimNovAuditResult(veto=False),
+        factual_findings=[],
+        proposal=None,
+    )
+    st_frag = PolicyState(revised=True, patched=True, needs_final_consolidation=True)
+    acts_frag = eligible_actions(rem_bundle, st_frag, allow_guided_revise=True)
+    assert acts_frag[0] == ("guided_revise", "consolidate_fragmented_patches")
+
+    # Once consolidated=True or zero defects remain, consolidation does not loop infinitely
+    st_done = PolicyState(revised=True, patched=True, needs_final_consolidation=False, consolidated=True)
+    acts_done = eligible_actions(rem_bundle, st_done, allow_guided_revise=True)
+    assert acts_done[0][0] != "guided_revise"
+
+    clean_bundle = SimpleNamespace(
+        governance=IdeaGovernanceResult(action="retain_and_test", claims=[]),
+        tri_state=TriStateAuditResult(epistemic_overclaim_count=0),
+        gap_audit=GapAuditResult(any_falsified=False),
+        spec_audit=SpecAuditResult(blocking_count=0),
+        confound_audit=SimpleNamespace(priority="none"),
+        claimnov=ClaimNovAuditResult(veto=False),
+        factual_findings=[],
+        proposal=None,
+    )
+    assert eligible_actions(clean_bundle, st_frag, allow_guided_revise=True)[0] == ("retain_and_test", "no_eligible_defect")
+
+    # 4. Benchmark-50 loader verifies 50 unique tasks (25:25, 10 domains x 5, wave1=10, wave2=20, wave3=20, 0 fifth40 overlap)
+    all50 = load_benchmark50_tasks()
+    w1 = load_benchmark50_tasks(wave="wave1")
+    w2 = load_benchmark50_tasks(wave="wave2")
+    w3 = load_benchmark50_tasks(wave="wave3")
+    assert len(all50) == 50 and len({t.task_id for t in all50}) == 50
+    assert sum(t.source_track == "lit2test" for t in all50) == 25
+    assert sum(t.source_track == "alphaideabench" for t in all50) == 25
+    assert len(w1) == 10 and len(w2) == 20 and len(w3) == 20
+    assert sum(t.source_track == "lit2test" for t in w1) == 5
+
+    # 5. Public plug-and-play govern_proposal API works offline in dry_run=True mode
+    outcome = govern_proposal(
+        {
+            "title": "Draft",
+            "hypothesis": "H",
+            "method": "M",
+            "minimal_test": "Compare against baseline control.",
+            "decisive_metric": "AURC",
+            "supporting_result": "AURC improves >= 3%",
+            "falsifying_result": "AURC improves < 1%",
+        },
+        task_title="KV Eviction",
+        prior_work=[{"id": "P1", "title": "DynamicKV", "abstract": "DynamicKV uses 1.7% cache.", "year": "2023"}],
+        lookup_dir=tmp_path / "plugin_work",
+        dry_run=True,
+    )
+    assert outcome.status in {"changed", "retained"}
+    assert isinstance(outcome.draft, dict) and "minimal_test" in outcome.draft
+
+
+
 

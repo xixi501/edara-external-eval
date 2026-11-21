@@ -5,7 +5,6 @@ import json
 import statistics
 from typing import Any
 
-from alphaideabench.domain.dimensions import load_catalog
 from pydantic import ValidationError
 
 from .claimnov_adapter import analyze_compositional_remainder, run_claimnov_audit
@@ -326,6 +325,15 @@ def audit_gap_premises(
     )
 
 
+_FALLBACK_AIB_QUESTIONS = {
+    "motivation_method_consistency": "Does the proposed mechanism directly address the stated literature gap without logical leaps?",
+    "technical_feasibility": "Are architectural assumptions, training/inference steps, and component interfaces technically sound?",
+    "data_feasibility": "Are required datasets, splits, and preprocessing steps publicly accessible and realistic?",
+    "budget_feasibility": "Can the proposed minimal experiment run within the specified compute and resource envelope?",
+    "verification_feasibility": "Does the evaluation specify a decisive metric, controlled baseline, and clear falsifying outcome?",
+}
+
+
 def evaluate_alphaideabench_axes(
     proposal: NormalizedProposal,
     task: TaskSpec,
@@ -333,7 +341,6 @@ def evaluate_alphaideabench_axes(
     judge_runner: LLMRunner,
 ) -> dict[str, Any]:
     """Use AlphaIdeaBench rubric dimensions WITH pre-verified evidence injected (fixing AlphaIdeaBench's retrieval-blind flaw)."""
-    catalog = load_catalog()
     selected = (
         "motivation_method_consistency",
         "technical_feasibility",
@@ -342,9 +349,16 @@ def evaluate_alphaideabench_axes(
         "verification_feasibility",
     )
     rubric_lines = []
-    for dim_id in selected:
-        if dim_id in catalog.dimensions:
-            rubric_lines.append(f"- {dim_id}: {catalog.dimensions[dim_id].question}")
+    try:
+        from alphaideabench.domain.dimensions import load_catalog
+
+        catalog = load_catalog()
+        for dim_id in selected:
+            if dim_id in catalog.dimensions:
+                rubric_lines.append(f"- {dim_id}: {catalog.dimensions[dim_id].question}")
+    except ModuleNotFoundError:
+        for dim_id in selected:
+            rubric_lines.append(f"- {dim_id}: {_FALLBACK_AIB_QUESTIONS[dim_id]}")
 
     system = (
         "You score a normalized research proposal on grounded AlphaIdeaBench dimensions (1-5 integer/float) "

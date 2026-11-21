@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import contextvars
 import hashlib
+import json
 import os
 import re
 import sys
@@ -19,8 +20,15 @@ from .schemas import ClaimNovAuditResult, CompositionalRemainderResult, Normaliz
 CLAIMNOV_SRC = Path(
     os.environ.get("CLAIMNOV_SRC")
     or next(
-        (str(p) for p in (Path(__file__).resolve().parents[3] / "claimnov" / "src", Path("/workspace/edara/staging/04_external_eval_refs/claimnov/src")) if p.is_dir()),
-        "/workspace/edara/staging/04_external_eval_refs/claimnov/src",
+        (
+            str(p)
+            for p in (
+                Path(__file__).resolve().parents[3] / "claimnov" / "src",
+                Path(__file__).resolve().parents[2] / "claimnov" / "src",
+            )
+            if p.is_dir()
+        ),
+        str(Path(__file__).resolve().parents[3] / "claimnov" / "src"),
     )
 )
 # Install ContextVar-aware hooks once so --workers threads run ClaimNov concurrently without global lock blocking.
@@ -178,6 +186,123 @@ def _install_hooks():
     return config, entail, extract, gate, cn_llm, pipeline, retrieve
 
 
+_BUILTIN_EXTRACT_SYSTEM = (
+    "Extract typed atomic research claims from the paper title and abstract. "
+    "Return JSON: {\"claims\": [{\"claim\": str, \"dimension\": \"problem\"|\"methodology\"|\"evaluation\", "
+    "\"attribute\": str, \"value\": str, \"abstract_span\": str}]}"
+)
+
+
+def _run_builtin_claimnov_fallback(
+    target_doc: dict[str, Any],
+    prior_docs: list[dict[str, Any]],
+    judge_runner: LLMRunner,
+    retriever_mode: str,
+) -> ClaimNovAuditResult:
+    """Self-contained BM25 + LLM typed-claim novelty audit when external `claimnov` checkout is absent."""
+    def _extract_doc_claims(doc: dict[str, Any]) -> list[dict[str, Any]]:
+        user = f"Title: {doc.get('title', '')}\nAbstract:\n{doc.get('abstract', '')}"
+        try:
+            raw = judge_runner.chat_json(_BUILTIN_EXTRACT_SYSTEM, user, max_tokens=2048, tag="claimnov_extract")
+        except (ValueError, Exception) as exc:
+            if type(exc).__name__ == "JSONDecodeError" or isinstance(exc, ValueError):
+                return []
+            raise
+        items = raw.get("claims") if isinstance(raw, dict) else None
+        if not isinstance(items, list):
+            return []
+        return [c for c in items if isinstance(c, dict) and str(c.get("claim") or "").strip()]
+
+    target_claims = _extract_doc_claims(target_doc)
+    if not target_claims:
+        return ClaimNovAuditResult(retriever_mode=retriever_mode, novelty_score=0.0, veto=False)
+
+    live_memo = getattr(judge_runner, "dry_run", True) is False
+    pool: list[dict[str, Any]] = []
+    for paper in prior_docs:
+        ck = _paper_cache_key(paper)
+        p_claims = None
+        if live_memo:
+            with _MEMO_LOCK:
+                p_claims = _FACET_MEMO.get(ck)
+        if p_claims is None:
+            p_claims = _extract_doc_claims(paper)
+            if live_memo and p_claims:
+                with _MEMO_LOCK:
+                    _FACET_MEMO[ck] = p_claims
+        for c in p_claims:
+            pool.append({
+                **c,
+                "paper_id": paper.get("id") or paper.get("title", "?"),
+                "paper_title": paper.get("title", ""),
+                "paper_abstract": paper.get("abstract", ""),
+            })
+
+    scored_claims: list[dict[str, Any]] = []
+    nov_scores: list[float] = []
+    for tc in target_claims:
+        dim = str(tc.get("dimension") or "methodology")
+        cands = [f for f in pool if str(f.get("dimension") or "") == dim] or list(pool)
+        matches: list[dict[str, Any]] = []
+        if cands:
+            docs = [_tokenize(f"{f.get('attribute', '')} {f.get('value', '')} {f.get('claim', '')}") for f in cands]
+            q = _tokenize(f"{tc.get('attribute', '')} {tc.get('value', '')} {tc.get('claim', '')}")
+            scores = BM25Okapi(docs).get_scores(q) if (q and any(docs)) else np.zeros(len(cands), dtype=float)
+            best_per_paper: dict[str, dict[str, Any]] = {}
+            for f, sc in zip(cands, scores):
+                pid = str(f.get("paper_id") or "?")
+                f_copy = {**f, "_cos": float(sc)}
+                if pid not in best_per_paper or f_copy["_cos"] > best_per_paper[pid]["_cos"]:
+                    best_per_paper[pid] = f_copy
+            for cand in sorted(best_per_paper.values(), key=lambda x: -x["_cos"])[:3]:
+                prompt = (
+                    f"Target Claim [{dim}]: {tc.get('claim', '')}\n"
+                    f"Prior Paper ({cand.get('paper_title', '')}): {cand.get('claim', '')}\n"
+                    "Rate entailment from 1 (unrelated/novel) to 5 (already established)."
+                )
+                txt = judge_runner.chat_text("You output only one integer from 1 to 5.", prompt, max_tokens=8, tag="claimnov_entail")
+                m = re.search(r"[1-5]", str(txt))
+                lvl = int(m.group(0)) if m else 2
+                matches.append({**cand, "e": lvl})
+            matches.sort(key=lambda x: -x["e"])
+        max_lvl = matches[0]["e"] if matches else 1
+        c_nov = max(0.0, min(1.0, (5.0 - float(max_lvl)) / 4.0))
+        nov_scores.append(c_nov)
+        scored_claims.append({
+            **tc,
+            "max_entailment_level": max_lvl,
+            "novelty": round(c_nov, 4),
+            "top_matches": matches,
+        })
+
+    veto = False
+    veto_evidence = None
+    try:
+        veto_raw = judge_runner.chat_text(
+            "Return valid JSON only.",
+            f"Target: {target_doc.get('title', '')}\nClaims: {json.dumps(scored_claims, ensure_ascii=False)[:3000]}",
+            max_tokens=300,
+            tag="claimnov_veto",
+        )
+        v_obj = json.loads(veto_raw) if isinstance(veto_raw, str) else {}
+        if isinstance(v_obj, dict):
+            veto = bool(v_obj.get("veto")) or str(v_obj.get("decision") or "").lower() in {"established", "veto"}
+            ev = v_obj.get("evidence")
+            veto_evidence = ev if isinstance(ev, dict) else (v_obj if veto else None)
+    except Exception:
+        veto = False
+
+    agg_nov = round(sum(nov_scores) / len(nov_scores), 4) if nov_scores else 0.0
+    return ClaimNovAuditResult(
+        retriever_mode=retriever_mode,
+        novelty_score=agg_nov,
+        veto=veto,
+        veto_evidence=veto_evidence,
+        claims_count=len(scored_claims),
+        claims=scored_claims,
+    )
+
+
 def run_claimnov_audit(
     proposal: NormalizedProposal,
     prior_corpus: list[PriorWorkItem],
@@ -186,8 +311,6 @@ def run_claimnov_audit(
     enable_embeddings: bool = False,
 ) -> ClaimNovAuditResult:
     """Invoke ClaimNov typed claim extraction, same-dimension retrieval, entailment, and profile_veto."""
-    _, _, _, gate, cn_llm, pipeline, retrieve = _install_hooks()
-
     target_doc = {
         "id": proposal.task_id,
         "title": proposal.title,
@@ -209,6 +332,11 @@ def run_claimnov_audit(
     ]
     if not prior_docs:
         return ClaimNovAuditResult(retriever_mode="empty_corpus", novelty_score=0.0, veto=False)
+
+    try:
+        _, _, _, gate, cn_llm, pipeline, retrieve = _install_hooks()
+    except ModuleNotFoundError:
+        return _run_builtin_claimnov_fallback(target_doc, prior_docs, judge_runner, "bm25_fallback")
 
     ep = getattr(judge_runner, "endpoint", None)
     model_name = getattr(ep, "model", "offline-model")

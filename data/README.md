@@ -6,7 +6,10 @@
 | `inputs_pilot.json` | 3 个开发题、9 份原稿的试跑输入 | 同上 |
 | `inputs_extension.json` | 25 个题、25 份 Direct 原稿（本轮未跑） | 同上 |
 | `calibration_cases.json` | 54 个评委校准案例（每轴 12 实质 + 6 表达） | 由 `paired_calibration.py` 生成并冻结 |
-| `tasks_mvp15.json` | 15 题任务定义 | 历史任务集 |
+| `unified_calibration_cases.json` | Lit2Test 细微破坏与同义替换校准案例快照 | 由 `unified_eval.py` 冻结 |
+| `tasks_mvp15.json` | 15 题历史三轨 MVP 任务定义快照 | 历史任务集 |
+| `benchmark_50_topics.json` | 锁定 50 题分层主基准清单（10 领域 × 5 题，25 Lit2Test + 25 AlphaIdeaBench，含 wave1/2/3） | 2026-11-22 固化 |
+| `tasks_benchmark50.json` | 50 题完整 `TaskSpec` 离线复现快照（无外部原始库时自动回退读取） | 由 `load_benchmark50_tasks()` 导出 |
 
 ## 为什么只有这些
 

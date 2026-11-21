@@ -28,6 +28,8 @@ class PolicyState:
     revised: bool = False
     revision_blocked: bool = False
     needs_post_search_revision: bool = False
+    needs_final_consolidation: bool = False
+    consolidated: bool = False
 
 
 def _governance(bundle):
@@ -63,11 +65,7 @@ def _should_regenerate(bundle, state: PolicyState) -> bool:
     return bool((state.patched or state.revised) and getattr(gap, "any_falsified", False))
 
 
-def _needs_guided_revise(bundle, state: PolicyState) -> bool:
-    if state.revised:
-        return False
-    if state.needs_post_search_revision:
-        return True
+def _has_remaining_defect(bundle) -> bool:
     confound = getattr(bundle, "confound_audit", None)
     if getattr(confound, "priority", "none") in {"blocking", "recommended"}:
         return True
@@ -75,6 +73,14 @@ def _needs_guided_revise(bundle, state: PolicyState) -> bool:
         return True
     governance = _governance(bundle)
     return bool(governance and governance.action == "correct_attribution")
+
+
+def _needs_guided_revise(bundle, state: PolicyState) -> bool:
+    if state.revised:
+        return False
+    if state.needs_post_search_revision:
+        return True
+    return _has_remaining_defect(bundle)
 
 
 def eligible_actions(
@@ -97,6 +103,14 @@ def eligible_actions(
         if (not state.searched and governance and governance.action == "seek_evidence"
                 and getattr(governance, "defect", "none") != "localization"):
             actions.append(("seek_evidence", "novelty_evidence_missing"))
+        if (
+            state.revised
+            and (state.needs_final_consolidation or state.searched)
+            and not state.consolidated
+            and not state.revision_blocked
+            and _has_remaining_defect(bundle)
+        ):
+            actions.append(("guided_revise", "consolidate_fragmented_patches"))
         if not state.patched and (_has_overclaim(bundle)
                                   or (governance and governance.action == "correct_attribution")):
             actions.append(("local_patch", "remaining_grounded_defect"))

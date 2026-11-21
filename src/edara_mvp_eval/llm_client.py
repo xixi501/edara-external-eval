@@ -254,6 +254,21 @@ def _dry_run_response(*, tag: str, system: str, user: str) -> str:
     """Deterministic realistic responses exercising every gate, smoothing, gap-falsification, and pairwise branch."""
     low = (tag + " " + system + " " + user[:600]).lower()
 
+    if tag == "paired_edit":
+        try:
+            payload = json.loads(user)
+            cur = dict(payload.get("draft") or {})
+        except json.JSONDecodeError:
+            cur = {}
+        if 'return only {"draft"' in system.lower():
+            base_test = str(cur.get("minimal_test") or "Compare against matched baseline.")
+            return json.dumps({
+                "draft": {
+                    "minimal_test": base_test + " Include discriminating ablation control on held-out split.",
+                }
+            })
+        return json.dumps({"edits": []})
+
     if tag == "stage_b_verdict":
         return json.dumps({name: {"status": "unresolved", "reason": "offline fixture"}
                            for name in ("honesty", "credibility", "novelty")})

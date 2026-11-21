@@ -98,11 +98,12 @@ original valid core mechanism unless diagnosis explicitly requests regeneration.
 1) insert ONLY the single decisive discriminating control arm named in design_confounds concretely into the experimental test/metric field (do NOT expand into a multi-arm factorial grid);
 2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
 3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
-4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), remove/replace them with supplied-packet counterparts OR explicitly hedge them as unverified in the supplied packet / conditional on confirmed availability;
+4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), prefer replacing them directly with supplied-packet or task-prompt counterparts; if an external benchmark/tool must be retained, keep method, minimal_test, decisive_metric, and falsifying_result crisp, direct, and free of inline hedging clutter, and isolate any availability/verification caveats cleanly into limitations (or verification_prerequisites);
 5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact;
 6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding the discriminating arm, reallocate samples/seeds cleanly rather than silently overrunning stated budgets, and compute any complexity/calibration features strictly from pre-outcome decision-time observables (never label/diagnosis leakage);
-7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with dataset-verification conditions or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
-8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording."""
+7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with clean dataset-parameterized formulas or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
+8) replace any unperformed "pre-registered" baseline/correlate/split phrasing with prospective "pre-specified prior to evaluation" wording;
+9) keep prose compact, cohesive, and close in length to the input draft (do NOT pad with generic commentary or repetitive disclaimers; aim within ~1.12x of input word count while preserving all concrete controls, metrics, decision thresholds, and supplied citations)."""
 
 
 class BudgetExceeded(RuntimeError):
@@ -149,15 +150,34 @@ def public_task(task: TaskSpec) -> dict:
     return {"title": task.title, "context": context, "cutoff_date": task.cutoff_date, "budget": task.budget}
 
 
+def _normalize_new_key(key: str) -> str | None:
+    clean = key.strip()
+    if not clean or not re.match(r"^[A-Za-z]", clean):
+        return None
+    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_.\[\],/:()' -]{0,180}", clean):
+        return clean
+    sanitized = re.sub(r"[^A-Za-z0-9_.\[\],/:()' -]+", "_", clean)[:180].strip()
+    return sanitized if sanitized and re.match(r"^[A-Za-z]", sanitized) else None
+
+
 def apply_edits(draft: Draft, proposed: dict, *, scope: str, max_edits: int = 4) -> tuple[Draft, list[dict]]:
     """Apply exact edits against the input version; reject overlaps and excess edits."""
     if scope == "full" and "draft" in proposed:
-        result = proposed["draft"]
-        if (not isinstance(result, dict) or not all(isinstance(text, str) for text in result.values())
-                or any(key not in draft and not re.fullmatch(r"[A-Za-z][A-Za-z0-9_.\[\] -]{0,127}", key)
-                       for key in result)):
+        raw_result = proposed["draft"]
+        if not isinstance(raw_result, dict) or not all(isinstance(text, str) for text in raw_result.values()):
             raise ValueError("invalid_rewrite")
-        result = draft | result
+        normalized: dict[str, str] = {}
+        for key, text in raw_result.items():
+            if not isinstance(key, str):
+                raise ValueError("invalid_rewrite")
+            if key in draft:
+                normalized[key] = text
+            else:
+                norm_key = _normalize_new_key(key)
+                if norm_key is None:
+                    raise ValueError("invalid_rewrite")
+                normalized[norm_key] = text
+        result = draft | normalized
         if not any(text.strip() for text in result.values()):
             raise ValueError("empty_rewrite")
         return result, [{"action": "rewrite", "changed_fields": [k for k in result if draft.get(k) != result[k]]}]
@@ -254,8 +274,9 @@ def editor_call(
         ent_list = ", ".join(f"{e.get('entity')} ({e.get('field')})" for e in unverified_entities[:6])
         instruction += (
             f" Unverified external entities absent from supplied papers and task prompt: [{ent_list}]. "
-            "Never assert these as established prior results or confirmed datasets; replace with supplied-packet "
-            "equivalents or explicitly mark them unverified / conditional on confirmed availability."
+            "Never assert these as established prior results or confirmed datasets; prefer replacing with "
+            "supplied-packet/task-prompt equivalents, or keep core experimental steps direct and isolate any "
+            "availability/verification caveats into limitations (or verification_prerequisites)."
         )
     if scope != "full" and defects:
         anchored = [row for row in defects if row.get("evidence") or row.get("basis")]
@@ -396,7 +417,12 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
         round_idx = 0
         post_search_bonus_used = False
         while round_idx < limit["rounds"] or (
-            arm == "E" and state.needs_post_search_revision and not post_search_bonus_used
+            arm == "E"
+            and (
+                state.needs_post_search_revision
+                or (state.needs_final_consolidation and not state.consolidated and not state.revision_blocked)
+            )
+            and not post_search_bonus_used
         ):
             if round_idx >= limit["rounds"]:
                 post_search_bonus_used = True
@@ -554,16 +580,24 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         record["design_regression_blocked"] = regressions
                         revised = current
             if action == "guided_revise":
+                was_consolidating = state.needs_final_consolidation or (state.revised and state.searched)
                 if record.get("design_regression_blocked") and revised == current:
                     state.revision_blocked = True
                 else:
                     state.revised = True
                     state.revision_blocked = False
+                    if was_consolidating:
+                        state.consolidated = True
+                        state.needs_final_consolidation = False
                 state.needs_post_search_revision = False
             if action == "clarify":
                 state.clarified = True
+                if arm == "E" and state.revised and not state.consolidated and revised != current:
+                    state.needs_final_consolidation = True
             if action == "local_patch":
                 state.patched = True
+                if arm == "E" and state.revised and not state.consolidated and revised != current:
+                    state.needs_final_consolidation = True
             record["changed"] = revised != current
             current = revised
     except RECOVERABLE as exc:

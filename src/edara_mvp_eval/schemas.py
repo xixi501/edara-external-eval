@@ -25,7 +25,7 @@ class PriorWorkItem(BaseModel):
 
 class TaskSpec(BaseModel):
     task_id: str
-    source_track: Literal["aiib", "lit2test", "alphaideabench"]
+    source_track: Literal["aiib", "lit2test", "alphaideabench", "custom"] = "custom"
     field: str
     title: str
     prompt_context: str

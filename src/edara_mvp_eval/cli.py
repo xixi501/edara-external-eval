@@ -30,7 +30,7 @@ from .tasks_loader import (
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 console = Console()
 
-DEFAULT_OUT_ROOT = Path("/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs")
+DEFAULT_OUT_ROOT = Path(__file__).resolve().parents[2] / "outputs"
 
 _GENERATE_SYSTEM = """You are generating a concrete, budget-feasible, falsifiable research proposal prior to code execution.
 Respect the supplied Cutoff Date and Budget Envelope strictly. Never invent fake prior citations.
@@ -476,4 +476,48 @@ def generate_direct_only(
     console.print(
         f"Generated {len(rows)} Direct proposals (model={gen_ep.model}, dry_run={dry_run}, "
         f"cost=${gen_runner.usage.cost_usd:.6f}) -> {out_path}"
+    )
+
+
+@app.command("govern")
+def govern_single_draft(
+    draft_path: Path = typer.Option(..., "--draft", help="Path to raw proposal / experiment plan JSON."),
+    out_path: Path = typer.Option(..., "--out", help="Output path for governed JSON."),
+    refs_path: Path | None = typer.Option(None, "--refs", help="Optional JSON/JSONL of prior-work papers."),
+    title: str = typer.Option("Research Proposal", "--title", help="Task title."),
+    context: str = typer.Option("", "--context", help="Task prompt / background context."),
+    cutoff_date: str = typer.Option("2025-12-31", "--cutoff-date", help="Pre-cutoff date YYYY-MM-DD."),
+    editor_profile: Path | None = typer.Option(None, "--editor-profile", help="Editor model profile JSON."),
+    audit_profile: Path | None = typer.Option(None, "--audit-profile", help="Auditor model profile JSON."),
+    mode: str = typer.Option("full", "--mode", help="Governance mode: 'full' (multi-round) or 'local' (single-round)."),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Run offline with deterministic mock responses."),
+) -> None:
+    """Plug-and-play CLI: govern one research proposal JSON and write back host-compatible JSON."""
+    from .plugin import govern_proposal
+
+    raw_draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    refs: list[dict[str, Any]] = []
+    if refs_path and refs_path.is_file():
+        txt = refs_path.read_text(encoding="utf-8").strip()
+        if refs_path.suffix == ".jsonl":
+            refs = [json.loads(line) for line in txt.splitlines() if line.strip()]
+        else:
+            parsed = json.loads(txt)
+            refs = parsed if isinstance(parsed, list) else list(parsed.get("papers") or parsed.get("references") or [])
+    outcome = govern_proposal(
+        raw_draft,
+        task_title=title,
+        task_context=context,
+        prior_work=refs,
+        cutoff_date=cutoff_date,
+        editor_profile=editor_profile,
+        audit_profile=audit_profile,
+        mode=mode,
+        dry_run=dry_run,
+    )
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(outcome.draft, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    console.print(
+        f"[govern] status={outcome.status} changed={outcome.changed} rounds={outcome.rounds} "
+        f"retrieved={len(outcome.retrieved_papers)} cost=${outcome.cost_usd:.4f} -> {out_path}"
     )

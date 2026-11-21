@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import re
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 _INDEX_RE = re.compile(r"\[\d+\]")
@@ -83,7 +83,14 @@ _ROLE_BASES: dict[str, tuple[str, ...]] = {
         "related_work.relation",
         "related_work.use",
     ),
-    "limitations": ("limitations", "risks", "unknowns", "unknown_dependencies", "alternative_explanations"),
+    "limitations": (
+        "limitations",
+        "verification_prerequisites",
+        "risks",
+        "unknowns",
+        "unknown_dependencies",
+        "alternative_explanations",
+    ),
 }
 
 _STOPWORDS = frozenset({
