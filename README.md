@@ -1,26 +1,42 @@
-# E-DARA 外部治理与统一评测外挂（edara-external-eval）
+# E-DARA Trustworthy & Novelty Middleware (`edara-external-eval`)
 
-本仓库是 E-DARA 研究生成治理思想的独立外挂实现与统一对比评测框架（Trustworthy-Novelty Middleware + Unified Evaluation Harness），可独立作用于 `direct`、`AI-Scientist-v2` 与 `E-DARA` 冻结原稿（含 `proposal` 与 `experiment_plan`），并以 **Lit2Test（五维位置去偏盲评）+ AlphaIdeaBench（结构维度）+ ClaimNov（组合新颖度）** 评测修订收益。
+<p align="left">
+  <img src="https://img.shields.io/badge/python-3.10%2B-245fce?style=flat-square" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/middleware-Host--Agnostic%20Plugin-257452?style=flat-square" alt="Host-Agnostic Plugin">
+  <img src="https://img.shields.io/badge/benchmark-50%20Topics%20%C3%97%2010%20Domains-1d4aa4?style=flat-square" alt="Benchmark-50">
+  <img src="https://img.shields.io/badge/tests-130%20passed-2da44e?style=flat-square" alt="130 Tests Passed">
+</p>
 
-E-DARA 主体框架代码位于 [`xixi501/edara`](https://github.com/xixi501/edara)（`codex/trusted-idea-frontier-20261110`）。
+**`edara-external-eval`** 是从主框架 [`xixi501/edara`](https://github.com/xixi501/edara) 提炼出的**零侵入、跨宿主通用的科研提案认知治理外挂与统一盲评基准（Trustworthy & Compositional Novelty Middleware）**。
 
----
-
-## 核心组件
-
-- `src/edara_mvp_eval/plugin.py` & `cli.py`：宿主无关即插即用公共接口（`govern_proposal()` Python API 与 `edara-mvp govern` CLI），零侵入包裹任意 Agent / LLM 产出的 JSON 提案或实验计划。
-- `src/edara_mvp_eval/host_adapter.py`：多宿主字段适配（`filter_proposal_fields`、`_ROLE_BASES`、`to_lit2test_card`、`to_alphaideabench_idea`、`confound_addressed` 与 `collect_design_text` 同源对齐，以及 `_title_anchor_tokens` / `preserves_related_work_anchors` 防误删已入库文献护栏）。
-- `src/edara_mvp_eval/confound_audit.py`：假设特异性替代解释 / 混淆因子与鉴别对照臂审计。
-- `src/edara_mvp_eval/factual_audit.py`：Claim 级事实审计、未入库外部命名实体扫描（`audit_unverified_entities`）、跨字段定量阈值与证伪一致检查（`audit_draft_consistency`）、残余未执行 `pre-registered` 断言拦截，以及高信息优先证据切片（`_prioritize_passages`）。
-- `src/edara_mvp_eval/epistemic_audit.py` & `spec_locator.py` & `governance.py`：前瞻边界区分、证据边界准入及由 `factual_audit` 派生零冗余 `_tri_state_from_factual`（内置离线回退，无需额外安装非 PyPI 本地包即可独立运行）。
-- `src/edara_mvp_eval/feedback.py` & `middleware.py` & `paired_trial.py`：五动作状态路由（含 `guided_revise` 多字段协同修订、碎片补丁后的终局协同收口 `needs_final_consolidation`、`verification_prerequisites` 边界隔离、预算守恒与结构/文献锚点保留护栏）。
-- `src/edara_mvp_eval/unified_eval.py` & `claimnov_adapter.py` & `tasks_loader.py`：`Lit2Test` 正反互换去偏五维评判（含未背书虚假流程包装词惩罚）、`AlphaIdeaBench` 批量五维打分、内置 BM25 回退并发 `ClaimNov` 以及 50 题分层主基准加载器（`load_benchmark50_tasks()`，详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)）。
+它无需修改上游科研生成 Agent 的内部状态，即可直接挂载在 **`Direct LLM`、`AI-Scientist-v2`、`EvoScientist`、`E-DARA`** 或任意自定义 JSON 提案生成器之后：自动拦截未核验外部幻觉实体与虚假流程包装词、补齐排除替代解释的同源判别对照臂、在不破坏原宿主 Schema 的前提下完成多字段协同修订，并提供 **Lit2Test（五维双向位置去偏盲评）+ AlphaIdeaBench + ClaimNov（组合新颖性）** 三轴统一评测。
 
 ---
 
-## 快速上手（作为独立治理外挂）
+## 工作流概览
 
-### 1. Python 一行接入
+```mermaid
+flowchart LR
+    H["任意上游宿主原稿 (Arm A)<br/>Direct / AI-Scientist / EvoScientist / E-DARA"] --> A["多维认知与新颖性审计<br/>事实溯源 · 未核验实体 · 混杂对照 · ClaimNov"]
+    A --> R["有界状态路由 (feedback.py)<br/>guided_revise / seek_evidence / local_patch / clarify / regenerate"]
+    R --> G["结构与锚点保护护栏 (host_adapter.py)<br/>100% 原生键保留 · 核心机制与引文防误删"]
+    G --> E["可信增强提案 (Arm E)<br/>即插即用原格式返回"]
+```
+
+---
+
+## 30 秒即插即用（Standalone Quickstart）
+
+本包内置零外部仓库依赖离线回退，克隆后无需安装非 PyPI 私有包即可直接运行治理 API、CLI 与全套 130 项单元测试：
+
+```bash
+git clone https://github.com/xixi501/edara-external-eval.git
+cd edara-external-eval
+pip install -e .
+pytest -q   # 130 passed
+```
+
+### 1. Python 一行挂载 (`govern_proposal`)
 
 ```python
 from edara_mvp_eval import govern_proposal
@@ -39,16 +55,16 @@ outcome = govern_proposal(
     editor_profile="configs/dashscope-deepseek-profile.json",
     audit_profile="configs/p1b-critic-profile.json",
 )
-print(outcome.status, outcome.rounds, outcome.draft.keys())
+print(outcome.status, outcome.rounds, list(outcome.draft.keys()))
 ```
 
-### 2. CLI 命令行治理单份提案
+### 2. CLI 命令行治理单份提案 (`edara-mvp govern`)
 
 ```bash
-# 离线冒烟验证（无需 API Key）
+# 离线冒烟验证（无需任何 API Key）
 PYTHONPATH=src python -m edara_mvp_eval.cli govern --input proposal.json --output governed.json --dry-run
 
-# 真实模型治理
+# 真实模型闭环治理
 PYTHONPATH=src python -m edara_mvp_eval.cli govern \
   --input proposal.json \
   --output governed.json \
@@ -58,43 +74,43 @@ PYTHONPATH=src python -m edara_mvp_eval.cli govern \
 
 ---
 
-## 最新实证结果（2026-11-20：`N=68` 三裁判汇总 & `ext15` 扩样本 & `Unified v4`）
+## 核心模块说明
 
-- **全量 30 题合并总表（`N=68` = `v4` 38 + `ext15` 30，0 题重叠，0 未决）**（[`results/extension_15_20261120_qwen3/crossjudge_3way_ext15_and_combined68.md`](results/extension_15_20261120_qwen3/crossjudge_3way_ext15_and_combined68.md)）：
-  - **三裁判多数决（`E_vs_D`）**：`38/17/13`，题目加权净胜率 **`+0.283`**（`95% CI [+0.067, +0.483]`），五维总分差 **`+0.938`**（`95% CI [+0.157, +1.636]`）；分裁判净胜率分别为 GLM-5.3-flash `+0.294`（`39/18/11`）、DeepSeek-v4.1-flash `+0.244`（`37/19/12`）、Qwen3.8-flash `+0.322`（`38/15/15`）。
-  - **客观机制台账（`N=68`）**（[`results/extension_15_20261120_qwen3/mechanism_audit_stats_combined68.json`](results/extension_15_20261120_qwen3/mechanism_audit_stats_combined68.json)）：虚假流程包装词残留 `D: 17 稿 32 处` → `E: 0/0`；未核验外部实体 `D: 367` → `E: 169`（`-54.0%`）；核心三要素齐备率 `E: 68/68 (100%)`；混杂控制臂落入设计字段 `E: 36/38 (94.7%)`；原宿主字段结构保留 `68/68 (100%)`。
-- **独立 15 题扩样本 `ext15`（`N=30`）**（[`results/extension_15_20261120_qwen3/extension_summary.md`](results/extension_15_20261120_qwen3/extension_summary.md) | [`mechanism_audit_stats_ext15.json`](results/extension_15_20261120_qwen3/mechanism_audit_stats_ext15.json)）：Qwen3.8-flash（`16/16` 满分校准，[`calibration.json`](results/extension_15_20261120_qwen3/calibration.json)）主评 `E_vs_D` `16/9/5/0`（净胜 `+0.233`，总分差 `+0.867`）；三裁判多数决 `15/10/5`（净胜 `+0.167`）。
-- **Unified `v4` 主队列（`N=38`）及三裁判复核**：
-  - **统一校准**：`10/12`（substantive）+ `4/4`（sham ties），`qualified = True`（[`results/unified_pilot_20261119_v4/calibration.json`](results/unified_pilot_20261119_v4/calibration.json)）；三裁判多数决 `23/7/8`，净胜率 **`+0.400`**（[`results/unified_pilot_20261119_v4_qwen_judge/crossjudge_3way_full38.md`](results/unified_pilot_20261119_v4_qwen_judge/crossjudge_3way_full38.md)）；机制审计台账见 [`results/unified_pilot_20261119_v4/mechanism_audit_stats_v4.md`](results/unified_pilot_20261119_v4/mechanism_audit_stats_v4.md)。
-  - **全量 `core` 队列（15 个 topic / 38 份冻结原稿，0 未决）**（[`results/unified_pilot_20261119_v4/core_summary.md`](results/unified_pilot_20261119_v4/core_summary.md)）：
-    - **`E_vs_D`**：Lit2Test 胜/负/平/未决 **`25/7/6/0`**，净胜率 **`+0.489`**（`95% CI [+0.200, +0.744]`），五维总分差 **`+1.383`**（`95% CI [+0.350, +2.228]`），`ClaimNov +0.005`。五个分维度全部为正（`falsifiability +0.594`、`decisive_metric +0.444`、`minimality_feasibility +0.289`、`grounding +0.050`、`hypothesis_specificity +0.006`）。
-    - **纯 held-out 29 份（剔除 3 题 pilot）**：`E_vs_D` **`20/7/2/0`**，净胜率 **`+0.472`**（`95% CI [+0.125, +0.778]`），总分差 **`+1.299`**。
-    - **分宿主（`E_vs_D`）**：`ai_scientist` **`13/1/0/0`**（净胜 **`+0.857`**，总分差 **`+2.786`**）；`edara` **`7/1/1/0`**（净胜 **`+0.667`**，总分差 **`+1.389`**，其中 `experiment_plan` **`4/0/1/0`** `+1.800`）；`direct` `5/5/5/0`。
-    - **`C_vs_B`（≤4 处局部补丁消融对照）**：`6/14/18/0`（净胜 `-0.244`，总分差 `-0.617`），与 `E_vs_D` 拉开 `+0.733` 净胜率差距。
-  - **`pilot` 子集（9 份 / 3 题）**（[`results/unified_pilot_20261119_v4/pilot_summary.md`](results/unified_pilot_20261119_v4/pilot_summary.md)）：`E_vs_D` **`5/0/4/0`**（净胜 **`+0.556`**，总分差 **`+1.722`**）。
+| 模块 | 职责 |
+| :--- | :--- |
+| `plugin.py` & `cli.py` | 宿主无关公共入口（`govern_proposal()` 与 `edara-mvp govern`），原样保留宿主字段命名与嵌套结构 |
+| `host_adapter.py` | 跨宿主语义角色映射（兼容 `Direct`、`AI-Scientist-v2`、`EvoScientist`、`E-DARA`）、文献锚点与对照元素保留护栏 |
+| `factual_audit.py` & `confound_audit.py` | 句子级事实归因核查、外部未入库命名实体扫描、跨字段阈值一致性校验与假设特异同源混杂对照臂诊断 |
+| `feedback.py` & `paired_trial.py` | 五动作有界治理循环（`guided_revise`、`seek_evidence`、`local_patch`、`clarify`、`regenerate`）及同稿五臂对照试验引擎（`A/B/C/D/E`） |
+| `unified_eval.py` & `claimnov_adapter.py` | `Lit2Test` 正反序折叠五维盲评、`AlphaIdeaBench` 结构评分与 `ClaimNov` 组合新颖度评估 |
+| `tasks_loader.py` & `pilots/` | 跨 10 领域对称 **Benchmark-50**（`25 Lit2Test + 25 AlphaIdeaBench`）加载器与多宿主分波次运行脚本（`run_benchmark50_wave.py`、`run_evoscientist_wave.py`） |
 
 ---
 
-## 目录结构
+## 已归档实证评测结果摘要（同预算强基线 `E_vs_D` 三评委交叉盲评）
+
+> 注：`Arm D` 为**相同检索上限与相同多轮重写预算**的通用 LLM 自审自修强基线，`E_vs_D` 严格隔离“单纯多花 Token 重写”带来的表面收益。
+
+- **30 题 `N=68` 跨评委汇总**（[`results/extension_15_20261120_qwen3/crossjudge_3way_ext15_and_combined68.md`](results/extension_15_20261120_qwen3/crossjudge_3way_ext15_and_combined68.md)）：
+  - **三独立裁判多数决（`Qwen3.8-flash` / `DeepSeek-v4.1-flash` / `GLM-5.3-flash`）**：**`38 胜 / 17 负 / 13 平`**，题目加权净胜率 **`+0.283`**（`95% CI [+0.067, +0.483]`），五维总分差 **`+0.938`**（`95% CI [+0.157, +1.636]`）；三个独立评委各自全部显著为正（Qwen `+0.322`、GLM `+0.294`、DeepSeek `+0.244`）。
+  - **客观确定性机制台账（`N=68`）**（[`results/extension_15_20261120_qwen3/mechanism_audit_stats_combined68.json`](results/extension_15_20261120_qwen3/mechanism_audit_stats_combined68.json)）：
+    - 虚假流程包装词（如无据宣称 `pre-registered` / `already validated`）：从 `D: 17 稿 32 处` 压降至 **`E: 0 稿 0 处`（`-100%`）**；
+    - 未核验外部幻觉实体：从 `D: 367 处` 压降至 **`E: 169 处`（`-54.0%`）**；
+    - 原宿主 JSON 字段保留率：**`68 / 68`（`100%`）**，混杂判别臂准确落入实验设计字段率 **`94.7%`**。
+- **Unified `v4` 核心队列（`N=38`）**（[`results/unified_pilot_20261119_v4/core_summary.md`](results/unified_pilot_20261119_v4/core_summary.md)）：`E_vs_D` **`25 胜 / 7 负 / 6 平`**（净胜率 **`+0.489`**，总分差 **`+1.383`**）；其中 `AI-Scientist` 宿主 **`13 胜 / 1 负 / 0 平`（`+0.857`）**，`E-DARA` 宿主 **`7 胜 / 1 负 / 1 平`（`+0.667`）**。
+- **固定 50 题跨 10 领域主基准规范**：详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)（正在分波次扩展 `EvoScientist` 等多范式宿主对照）。
+
+---
+
+## 仓库目录结构
 
 ```text
-src/edara_mvp_eval/      # 外挂治理引擎、多宿主适配、公共 API 与统一评测器
-tests/                   # 离线单元测试套件（130 项，零外部仓库依赖即可全绿运行）
-pilots/                  # 运行入口（run_unified_eval.py, run_paired_isolated.py, verify_paired_trial.py 等）
-configs/                 # 模型端点 profile（不含任何 API key，凭据通过环境变量注入）
-data/                    # 冻结 50 题主基准（benchmark_50_topics.json / tasks_benchmark50.json）、输入快照与校准用例
-docs/                    # 50 题分层说明（BENCHMARK_50_TOPICS.md）、评审协议与证据映射文档
-results/                 # unified v4、ext15 (N=30)、N=68 三裁判汇总、校准与客观机制台账产物
-```
-
----
-
-## 测试与复现
-
-```bash
-# 运行离线单测
-PYTHONPATH=src pytest -q
-
-# 运行统一评测校准与对照（需设置模型凭据环境变量及依赖包 alphaideabench / claimnov）
-python pilots/run_unified_eval.py --phase all --out outputs/unified_run
+edara-external-eval/
+├── src/edara_mvp_eval/  # 治理外挂核心引擎、跨宿主适配器、CLI 与三轴评测器
+├── pilots/              # Benchmark-50 分波次运行器、EvoScientist 多智能体宿主运行器与验证脚本
+├── configs/             # 模型端点配置模板（仅声明环境变量名，零明文密钥）
+├── data/                # 冻结 Benchmark-50 题目规范、种子文献快照与裁判校准集
+├── docs/                # 50 题分层设计文档、评测协议规范 (v1.2) 与证据映射说明
+├── results/             # 历次多裁判盲评总表、校准记录与确定性机制审计台账
+└── tests/               # 130 项零外部依赖离线单元测试
 ```
