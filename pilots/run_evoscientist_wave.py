@@ -36,6 +36,7 @@ from edara_mvp_eval.paired_trial import (
     TrialRunner,
     WORKSPACE,
     cached,
+    confound_targets,
     digest,
     load,
     path_hash,
@@ -681,6 +682,7 @@ def main() -> int:
         "orig_keys_kept_all": 0,
         "process_hype": {a: {"manuscripts": 0, "occurrences": 0} for a in ("A", "B", "C", "D", "E")},
         "unverified_entities": {a: {"manuscripts": 0, "total": 0} for a in ("A", "B", "C", "D", "E")},
+        "E3_confounds": {"targets_required_n": 0, "A_addressed": 0, "D_addressed": 0, "E_addressed": 0},
     }
     per_ms = []
     unified_for_summary = []
@@ -700,7 +702,18 @@ def main() -> int:
                     seen_ids.add(p.id)
 
         a_draft = r["a_record"]["draft"]
+        d_draft = r["versions"]["D"]["draft"]
         e_draft = r["versions"]["E"]["draft"]
+        e_hist = r["versions"]["E"].get("history") or []
+        c_targets = confound_targets(e_hist[0]["diagnosis"]) if (e_hist and "diagnosis" in e_hist[0]) else []
+        if c_targets:
+            mech["E3_confounds"]["targets_required_n"] += 1
+            if confound_addressed(a_draft, c_targets):
+                mech["E3_confounds"]["A_addressed"] += 1
+            if confound_addressed(d_draft, c_targets, baseline_draft=a_draft) or confound_addressed(d_draft, c_targets):
+                mech["E3_confounds"]["D_addressed"] += 1
+            if confound_addressed(e_draft, c_targets, baseline_draft=a_draft) or confound_addressed(e_draft, c_targets):
+                mech["E3_confounds"]["E_addressed"] += 1
         if set(a_draft.keys()).issubset(set(e_draft.keys())):
             mech["orig_keys_kept_all"] += 1
         for ak in ("A", "B", "C", "D", "E"):

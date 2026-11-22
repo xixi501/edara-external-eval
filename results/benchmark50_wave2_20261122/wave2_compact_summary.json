@@ -87,10 +87,10 @@
       }
     },
     "E3_confounds": {
-      "targets_required_n": 0,
-      "A_addressed": 0,
-      "D_addressed": 0,
-      "E_addressed": 0
+      "targets_required_n": 23,
+      "A_addressed": 7,
+      "D_addressed": 11,
+      "E_addressed": 22
     },
     "E7_trajectory": {
       "E_changed_n": 42,

@@ -58,6 +58,31 @@ def _compact_manuscript_entry(m: dict[str, Any], wave: str) -> dict[str, Any]:
     }
 
 
+def _recompute_confounds_from_versions(run_dir: Path) -> dict[str, int] | None:
+    from .host_adapter import confound_addressed
+    from .paired_trial import confound_targets
+
+    vroot = run_dir / "versions"
+    if not vroot.is_dir():
+        return None
+    req_n = a_ok = d_ok = e_ok = 0
+    for vh in sorted(vroot.glob("*/*")):
+        if not ((vh / "A.json").is_file() and (vh / "D.json").is_file() and (vh / "E.json").is_file()):
+            continue
+        a_dr = _load_json(vh / "A.json")["draft"]
+        d_dr = _load_json(vh / "D.json")["draft"]
+        e_row = _load_json(vh / "E.json")
+        e_dr = e_row["draft"]
+        hist = e_row.get("history") or []
+        targets = confound_targets(hist[0]["diagnosis"]) if (hist and "diagnosis" in hist[0]) else []
+        if targets:
+            req_n += 1
+            a_ok += int(confound_addressed(a_dr, targets))
+            d_ok += int(confound_addressed(d_dr, targets, baseline_draft=a_dr) or confound_addressed(d_dr, targets))
+            e_ok += int(confound_addressed(e_dr, targets, baseline_draft=a_dr) or confound_addressed(e_dr, targets))
+    return {"targets_required_n": req_n, "A_addressed": a_ok, "D_addressed": d_ok, "E_addressed": e_ok}
+
+
 def sync_compact_wave_bundles(outputs_dir: Path, results_dir: Path) -> list[Path]:
     """Export lightweight, prose-free compact JSON summaries from staging outputs/ into results/."""
     synced: list[Path] = []
@@ -71,6 +96,10 @@ def sync_compact_wave_bundles(outputs_dir: Path, results_dir: Path) -> list[Path
         if cand_dirs:
             chosen = cand_dirs[-1]
             raw = _load_json(chosen / f"{wave}_crossjudge_3way.json")
+            mech_mh = dict(raw.get("mechanism_stats") or {})
+            recomp = _recompute_confounds_from_versions(chosen)
+            if recomp is not None:
+                mech_mh["E3_confounds"] = recomp
             compact = {
                 "schema_version": "edara.wave-compact-summary/v1",
                 "source_dir": chosen.name,
@@ -79,7 +108,7 @@ def sync_compact_wave_bundles(outputs_dir: Path, results_dir: Path) -> list[Path
                 "n_topics": raw.get("n_topics", 0),
                 "n_manuscripts": raw.get("n_manuscripts", 0),
                 "qwen_unified_summary": raw.get("qwen_unified_summary") or {},
-                "mechanism_stats": raw.get("mechanism_stats") or {},
+                "mechanism_stats": mech_mh,
                 "usage": raw.get("usage") or {},
                 "manuscripts": [_compact_manuscript_entry(m, wave) for m in (raw.get("manuscripts") or [])],
             }
@@ -97,11 +126,13 @@ def sync_compact_wave_bundles(outputs_dir: Path, results_dir: Path) -> list[Path
             chosen_evo = evo_dirs[-1]
             raw_evo = _load_json(chosen_evo / f"{wave}_evoscientist_summary.json")
             mech_e = raw_evo.get("mechanism_stats") or {}
+            recomp_evo = _recompute_confounds_from_versions(chosen_evo)
             norm_mech = {
                 "n_manuscripts": mech_e.get("n_manuscripts", 0),
                 "E1_orig_keys_kept_all": mech_e.get("orig_keys_kept_all", 0),
                 "E2_process_hype": mech_e.get("process_hype") or {},
                 "E2_unverified_entities": mech_e.get("unverified_entities") or {},
+                "E3_confounds": recomp_evo or mech_e.get("E3_confounds") or {},
             }
             compact_evo = {
                 "schema_version": "edara.wave-compact-summary/v1",
@@ -188,6 +219,7 @@ def _aggregate_mechanisms(bundles: list[dict[str, Any]]) -> dict[str, Any]:
     hype = {a: 0 for a in ("A", "B", "C", "D", "E")}
     unver = {a: 0 for a in ("A", "B", "C", "D", "E")}
     conf_req = 0
+    conf_a = 0
     conf_d = 0
     conf_e = 0
     total_cost = 0.0
@@ -201,6 +233,7 @@ def _aggregate_mechanisms(bundles: list[dict[str, Any]]) -> dict[str, Any]:
             unver[a] += int(((ms.get("E2_unverified_entities") or {}).get(a) or {}).get("total") or 0)
         c3 = ms.get("E3_confounds") or {}
         conf_req += int(c3.get("targets_required_n") or 0)
+        conf_a += int(c3.get("A_addressed") or 0)
         conf_d += int(c3.get("D_addressed") or 0)
         conf_e += int(c3.get("E_addressed") or 0)
         for k, u in (b.get("usage") or {}).items():
@@ -216,6 +249,7 @@ def _aggregate_mechanisms(bundles: list[dict[str, Any]]) -> dict[str, Any]:
         "process_hype_occurrences": hype,
         "unverified_entities_total": unver,
         "confounds_required": conf_req,
+        "confounds_A_addressed": conf_a,
         "confounds_D_addressed": conf_d,
         "confounds_E_addressed": conf_e,
         "total_cost_usd": round(total_cost, 4),
@@ -356,8 +390,11 @@ def _render_mechanism_tables(mech: dict[str, Any]) -> tuple[str, str]:
         f"| Unverified External Hallucinated Entities | `{u['A']}` | `{u['D']}` | **`{u['E']}`** | **`{u_red:+.1f}%`** |",
     ]
     if mech["confounds_required"] > 0:
+        req_c = mech["confounds_required"]
+        e_pct = round(100.0 * mech["confounds_E_addressed"] / req_c, 1)
+        d_pct = round(100.0 * mech["confounds_D_addressed"] / req_c, 1)
         md_rows.append(
-            f"| Blocking Design Confounds Addressed | — | `{mech['confounds_D_addressed']}/{mech['confounds_required']}` | **`{mech['confounds_E_addressed']}/{mech['confounds_required']}`** | Discriminating Control Injected |"
+            f"| Blocking Design Confounds Addressed | `{mech['confounds_A_addressed']}/{req_c}` | `{mech['confounds_D_addressed']}/{req_c}` (`{d_pct:.1f}%`) | **`{mech['confounds_E_addressed']}/{req_c}` (`{e_pct:.1f}%`)** | **`{e_pct - d_pct:+.1f}` pp** |"
         )
     md_rows.append(
         f"| Mean Full-Pipeline Cost (incl. 3-Judge Eval) | — | — | **`${mech['total_cost_usd']/n:.3f}` / manuscript** | Total `${mech['total_cost_usd']:.2f}` (`N={mech['n_manuscripts']}`) |"
@@ -380,8 +417,11 @@ def _render_mechanism_tables(mech: dict[str, Any]) -> tuple[str, str]:
         f"Unverified External Entities & {u['A']} & {u['D']} & \\textbf{{{u['E']}}} & \\textbf{{{u_red:+.1f}\\%}} \\\\",
     ]
     if mech["confounds_required"] > 0:
+        req_c = mech["confounds_required"]
+        e_pct = round(100.0 * mech["confounds_E_addressed"] / req_c, 1)
+        d_pct = round(100.0 * mech["confounds_D_addressed"] / req_c, 1)
         tex_rows.append(
-            f"Blocking Confounds Addressed & --- & {mech['confounds_D_addressed']}/{mech['confounds_required']} & \\textbf{{{mech['confounds_E_addressed']}/{mech['confounds_required']}}} & Control arm injected \\\\"
+            f"Blocking Confounds Addressed & {mech['confounds_A_addressed']}/{req_c} & {mech['confounds_D_addressed']}/{req_c} ({d_pct:.1f}\\%) & \\textbf{{{mech['confounds_E_addressed']}/{req_c} ({e_pct:.1f}\\%)}} & \\textbf{{{e_pct - d_pct:+.1f}\\,pp}} \\\\"
         )
     tex_rows.extend(["\\bottomrule", "\\end{tabular}", "\\end{table}"])
     tex = "\n".join(tex_rows) + "\n"

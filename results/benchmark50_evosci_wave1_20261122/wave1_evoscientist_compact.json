@@ -64,6 +64,12 @@
         "manuscripts": 6,
         "total": 15
       }
+    },
+    "E3_confounds": {
+      "targets_required_n": 5,
+      "A_addressed": 2,
+      "D_addressed": 3,
+      "E_addressed": 5
     }
   },
   "usage": {

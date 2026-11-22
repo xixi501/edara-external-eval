@@ -835,5 +835,42 @@ def test_step1_comma_key_consolidation_prereqs_benchmark50_and_public_plugin_api
     assert isinstance(outcome.draft, dict) and "minimal_test" in outcome.draft
 
 
+def test_v02_prereq_disclosure_exemption_and_post_search_consolidation():
+    from edara_mvp_eval.factual_audit import audit_unverified_entities
+
+    # 1. Disclosed external testbeds in verification_prerequisites / hedged limitations
+    #    do NOT re-trigger unverified_entities in minimal_test/method, while unhedged
+    #    prior-fact claims in related_work STILL trigger!
+    draft_disclosed = {
+        "title": "RotPrune: Orthogonal Pruning",
+        "related_work": "Unlike GhostPrune, DynamicKV operates at a 1.7% cache budget.",
+        "minimal_test": "Evaluate on WikiText-2 and HellaSwag splits across 5 seeds.",
+        "verification_prerequisites": "External public datasets WikiText-2 and HellaSwag are outside the supplied packet and verified prior to execution.",
+    }
+    unv = audit_unverified_entities(draft_disclosed, _task())
+    names = {u["entity"] for u in unv}
+    assert "GhostPrune" in names
+    assert "WikiText-2" not in names and "HellaSwag" not in names
+
+    # 2. In allow_guided_revise=True (Arm E), after guided_revise + seek_evidence (even with 0 new papers),
+    #    residual defects route to consolidate_fragmented_patches rather than blind local_patch/clarify,
+    #    and gap_audit.any_falsified does NOT nuke the core via regenerate once state.revised=True.
+    b_gap = SimpleNamespace(
+        governance=IdeaGovernanceResult(action="retain_and_test", claims=[]),
+        tri_state=TriStateAuditResult(epistemic_overclaim_count=1),
+        gap_audit=GapAuditResult(any_falsified=True),
+        spec_audit=SpecAuditResult(blocking_count=1),
+        confound_audit=SimpleNamespace(priority="none"),
+        claimnov=ClaimNovAuditResult(veto=False),
+        factual_findings=[],
+        proposal=None,
+    )
+    st_after_search = PolicyState(revised=True, searched=True)
+    acts = eligible_actions(b_gap, st_after_search, allow_guided_revise=True)
+    assert acts[0] == ("guided_revise", "consolidate_fragmented_patches")
+    assert all(a != "regenerate" for a, _ in acts)
+
+
+
 
 

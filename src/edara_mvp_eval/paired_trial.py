@@ -97,9 +97,9 @@ original valid core mechanism unless diagnosis explicitly requests regeneration.
 {"draft": {...}} updating ONLY the fields needed to:
 0) strictly preserve the input draft's core algorithmic/mathematical mechanism (e.g., query-dependent vs static formulation, specific operator/circuit structure, or label-preserving/OOD evaluation protocol) and decisive metric precision — never simplify a concrete technical mechanism into a weaker generic approximation;
 1) insert ONLY the single decisive discriminating control arm named in design_confounds concretely into the experimental test/metric field (do NOT expand into a multi-arm factorial grid);
-2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result);
+2) resolve any internal consistency defects (matching quantitative thresholds across hypothesis, decisive_metric, supporting_result, and falsifying_result, and ensuring falsifying_result clearly contrasts with supporting_result), and never invent unvalidated cross-task theoretical bounds, analytical proxy mappings, or extra multi-split training stages absent from the supplied papers that bloat minimal_test;
 3) fix every defect in factual_findings (misattribution, numeric mismatch, coverage contradiction, or prediction_as_observed) strictly grounded in supplied papers, and attribute any second-hand method (e.g. a baseline mentioned only inside another paper) strictly to that citing supplied paper rather than direct evidence;
-4) for any external papers, systems, or datasets in unverified_external_entities (absent from supplied papers), prefer replacing them directly with supplied-packet or task-prompt counterparts; if an external benchmark/tool must be retained, keep method, minimal_test, decisive_metric, and falsifying_result crisp, direct, and free of inline hedging clutter, and isolate any availability/verification caveats cleanly into limitations (or verification_prerequisites);
+4) for unverified_external_entities (absent from supplied papers): in prior-work/literature claims (literature_gap, related_work), remove or explicitly mark unverified external claims rather than stating them as established fact; in prospective experimental fields (method, minimal_test, validation), use a supplied-packet dataset/model ONLY when a budget-feasible counterpart is explicitly named in the packet—NEVER erase concrete named candidate evaluation datasets, task suites, or open-weight backbones into vague generic placeholders (such as "a public calibration corpus" or "a fixed public task suite"); instead, retain the concrete candidate names crisply in minimal_test/method without inline hedging clutter, and disclose external availability/licensing confirmation cleanly in limitations (or verification_prerequisites);
 5) ensure the primary decisive metric and quantitative operational falsification criteria are explicit and unambiguous while keeping all existing controls and design elements intact, and calibrate statistical tests and equivalence/superiority margins to match the statistical power of the permitted sample/seed budget (e.g., never claim tight sub-1% TOST equivalence or high-power nonparametric significance when restricted to 3-5 seeds);
 6) conserve the original resource, compute (GPU-days/calls), and human-annotation budget ceilings: when adding the discriminating arm, reallocate samples/seeds cleanly rather than silently overrunning stated budgets, and compute any complexity/calibration features strictly from pre-outcome decision-time observables (never label/diagnosis leakage);
 7) keep all supplied packet paper citations and grounded related_work entries intact (never wipe a packet-supported citation while cleaning unverified references); replace any unverified hardcoded dataset class lists/counts or numeric_mismatch figures with clean dataset-parameterized formulas or qualitative bounds if unconfirmed verbatim in supplied passages, and phrase unverified mechanistic failure diagnoses as hypotheses ("we hypothesize...");
@@ -580,13 +580,13 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         record["design_regression_blocked"] = regressions
                         revised = current
             if action == "guided_revise":
-                was_consolidating = state.needs_final_consolidation
+                was_second_pass = state.revised or state.needs_final_consolidation
                 if record.get("design_regression_blocked") and revised == current:
                     state.revision_blocked = True
                 else:
                     state.revised = True
                     state.revision_blocked = False
-                    if was_consolidating:
+                    if was_second_pass:
                         state.consolidated = True
                         state.needs_final_consolidation = False
                 state.needs_post_search_revision = False

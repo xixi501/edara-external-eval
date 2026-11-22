@@ -213,10 +213,33 @@ def audit_unverified_entities(
         for m in _PAREN_ACRONYM_RE.finditer(text):
             own_names.add(m.group(1).lower())
 
+    # Exempt entities already explicitly disclosed as external prerequisites in verification_prerequisites
+    # or hedged caveat sentences in limitations, when referenced crisply in prospective experimental fields.
+    disclosed_prereqs: set[str] = set()
+    for k, text in fields.items():
+        k_low = k.lower()
+        is_prereq_field = "prerequisite" in k_low or "unknown_dependenc" in k_low
+        is_lim_field = "limitation" in k_low or "risk" in k_low
+        if not (is_prereq_field or is_lim_field):
+            continue
+        for sent in re.split(r"(?<=[.!?;])\s+|\n+", text):
+            s = sent.strip()
+            if not s:
+                continue
+            if is_prereq_field or _HEDGE_RE.search(s):
+                for ent in list(_CAMEL_ENTITY_RE.findall(s)) + list(_ACRONYM_CITE_RE.findall(s)):
+                    mod = _HYPHEN_MODIFIER_RE.match(ent)
+                    if mod:
+                        ent = mod.group(1)
+                    disclosed_prereqs.add(ent.lower().strip("-"))
+
+    prior_fact_fields = {"literature_gap", "related_work", "background"}
     found: dict[str, dict[str, str]] = {}
     for field, text in fields.items():
-        if field == "title" or field.startswith(("resource_plan", "resource_requirements")):
+        if field == "title" or field.startswith(("resource_plan", "resource_requirements", "verification_prerequisites")):
             continue
+        base_field = field.split("[", 1)[0].split(".", 1)[0].lower()
+        is_prior_fact_field = base_field in prior_fact_fields
         for sent in re.split(r"(?<=[.!?;])\s+|\n+", text):
             s = sent.strip()
             if not s or _HEDGE_RE.search(s):
@@ -232,6 +255,8 @@ def audit_unverified_entities(
                         ent = prefix
                 low = ent.lower().strip("-")
                 if len(low) < 3 or low in _COMMON_TECH_TOKENS or low in own_names:
+                    continue
+                if not is_prior_fact_field and low in disclosed_prereqs:
                     continue
                 if re.fullmatch(r"[A-Z]?\d+[A-Za-z0-9-]*", ent):
                     continue

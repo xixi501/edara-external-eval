@@ -144,9 +144,10 @@
       "D": 476,
       "E": 144
     },
-    "confounds_required": 0,
-    "confounds_D_addressed": 0,
-    "confounds_E_addressed": 0,
+    "confounds_required": 51,
+    "confounds_A_addressed": 21,
+    "confounds_D_addressed": 27,
+    "confounds_E_addressed": 48,
     "total_cost_usd": 16.826
   }
 }

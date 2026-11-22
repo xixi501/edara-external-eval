@@ -52,7 +52,7 @@ def _blocking_defects(bundle) -> int:
     return int(getattr(spec, "blocking_count", 0) or 0)
 
 
-def _should_regenerate(bundle, state: PolicyState) -> bool:
+def _should_regenerate(bundle, state: PolicyState, *, allow_guided_revise: bool = False) -> bool:
     governance = _governance(bundle)
     if governance and governance.action == "regenerate":
         return True
@@ -61,6 +61,8 @@ def _should_regenerate(bundle, state: PolicyState) -> bool:
         claims = getattr(governance, "claims", ()) if governance else ()
         if not any(getattr(c, "status", "") == "distinct_hypothesis" for c in claims):
             return not (governance and governance.action == "correct_attribution")
+    if allow_guided_revise and state.revised:
+        return False
     gap = getattr(bundle, "gap_audit", None)
     return bool((state.patched or state.revised) and getattr(gap, "any_falsified", False))
 
@@ -96,7 +98,7 @@ def eligible_actions(
     if allow_guided_revise:
         if state.needs_post_search_revision:
             actions.append(("guided_revise", "incorporate_retrieved_evidence"))
-        if not state.regenerated and _should_regenerate(bundle, state):
+        if not state.regenerated and _should_regenerate(bundle, state, allow_guided_revise=True):
             actions.append(("regenerate", "core_covered_by_prior_work"))
         if not state.revised and not state.revision_blocked and _needs_guided_revise(bundle, state):
             actions.append(("guided_revise", "governed_multifield_revision"))
@@ -105,7 +107,7 @@ def eligible_actions(
             actions.append(("seek_evidence", "novelty_evidence_missing"))
         if (
             state.revised
-            and state.needs_final_consolidation
+            and (state.needs_final_consolidation or state.searched)
             and not state.consolidated
             and not state.revision_blocked
             and _has_remaining_defect(bundle)

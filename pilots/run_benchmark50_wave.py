@@ -46,6 +46,7 @@ from edara_mvp_eval.paired_trial import (
     TrialRunner,
     WORKSPACE,
     cached,
+    confound_targets,
     digest,
     load,
     path_hash,
@@ -765,11 +766,11 @@ def _compute_mechanism_stats(jobs: list[tuple[str, str, dict, dict, str]], out_d
         if sa_path.is_file():
             bundle = FullAuditBundle.model_validate(load(sa_path)["bundle"])
             diag = TrustworthyNoveltyMiddleware()._build_diag(bundle)
-            targets = [c["discriminating_control"] for c in (diag.get("confounds") or []) if c.get("severity") == "blocking" and c.get("discriminating_control")]
+            targets = confound_targets(diag)
         if targets:
             stats["E3_confounds"]["targets_required_n"] += 1
             for arm_k, field_k in (("A", "A_addressed"), ("D", "D_addressed"), ("E", "E_addressed")):
-                if confound_addressed(arm_drafts[arm_k], targets):
+                if confound_addressed(arm_drafts[arm_k], targets, baseline_draft=a_draft if arm_k != "A" else None) or confound_addressed(arm_drafts[arm_k], targets):
                     stats["E3_confounds"][field_k] += 1
 
         full_packet, full_drafts = shared_full_pool(task, seed["evidence"], versions)
