@@ -63,15 +63,59 @@ from edara_mvp_eval.unified_eval import (
     summarize_unified_rows,
 )
 
-_DASHSCOPE_RUNNER_SHIM = '''"""Run AI-Scientist-v2 ideation routing deepseek-flash calls to DashScope deepseek-v4.1-flash-1017."""
+_DASHSCOPE_RUNNER_SHIM = r'''"""Run AI-Scientist-v2 ideation routing deepseek-flash calls to DashScope deepseek-v4.1-flash-1017."""
 from __future__ import annotations
 
+import json
 import os
+import re
 import runpy
 import sys
 from types import SimpleNamespace
 import openai
 import ai_scientist.llm as ai_llm
+
+
+def _convert_dsml_to_action_blocks(text: str) -> str:
+    """Translate DeepSeek-v4 native <|DSML|> tool-call blocks into AI-Scientist ACTION/ARGUMENTS syntax."""
+    if not text or ("DSML" not in text) or ("ACTION:" in text):
+        return text
+    inv_pat = re.compile(
+        r'<[｜|]DSML[｜|]\s*invoke\s+name="([^"]+)"\s*>(.*?)</[｜|]DSML[｜|]\s*invoke\s*>',
+        re.DOTALL,
+    )
+    param_pat = re.compile(
+        r'<[｜|]DSML[｜|]\s*parameter\s+name="([^"]+)"(?:\s+string="([^"]+)")?\s*>(.*?)</[｜|]DSML[｜|]\s*parameter\s*>',
+        re.DOTALL,
+    )
+    matches = list(inv_pat.finditer(text))
+    if not matches:
+        return text
+    prefix = re.split(r'<[｜|]DSML[｜|]\s*calls\s*>', text, maxsplit=1)[0].strip()
+    rendered_blocks = []
+    for m in matches:
+        tool_name = m.group(1).strip()
+        body = m.group(2)
+        params = {}
+        for pm in param_pat.finditer(body):
+            p_name = pm.group(1).strip()
+            is_str = (pm.group(2) or "true").lower() == "true"
+            raw_val = pm.group(3).strip()
+            if not is_str or raw_val.startswith("{") or raw_val.startswith("["):
+                try:
+                    params[p_name] = json.loads(raw_val)
+                    continue
+                except Exception:
+                    pass
+            params[p_name] = raw_val
+        if "arguments" in params and isinstance(params["arguments"], dict) and len(params) == 1:
+            args_dict = params["arguments"]
+        elif tool_name == "FinalizeIdea" and "idea" not in params:
+            args_dict = {"idea": params}
+        else:
+            args_dict = params
+        rendered_blocks.append(f"ACTION:\n{tool_name}\n\nARGUMENTS:\n{json.dumps(args_dict, ensure_ascii=False)}")
+    return (prefix + "\n\n" if prefix else "") + "\n\n".join(rendered_blocks)
 
 
 class _CompletionsProxy:
@@ -85,6 +129,13 @@ class _CompletionsProxy:
             extra.setdefault("thinking", {"type": "disabled"})
             kwargs["extra_body"] = extra
         resp = self._inner.create(*args, **kwargs)
+        try:
+            if getattr(resp, "choices", None):
+                msg = resp.choices[0].message
+                if getattr(msg, "content", None):
+                    msg.content = _convert_dsml_to_action_blocks(msg.content)
+        except Exception:
+            pass
         usage_obj = getattr(resp, "usage", None)
         if usage_obj is not None:
             cd = getattr(usage_obj, "completion_tokens_details", None)
@@ -335,12 +386,8 @@ def _make_runner(endpoint: ModelEndpoint, log_dir: Path, job: str, arm: str, sta
 def _ensure_ai_scientist_shim(out_dir: Path) -> Path:
     shim_dir = out_dir / "_ai_scientist_shim"
     shim_dir.mkdir(parents=True, exist_ok=True)
-    nc = shim_dir / "native_common.py"
-    rd = shim_dir / "run_ideation_dashscope.py"
-    if not nc.is_file():
-        nc.write_text(_NATIVE_COMMON_SHIM, encoding="utf-8")
-    if not rd.is_file():
-        rd.write_text(_DASHSCOPE_RUNNER_SHIM, encoding="utf-8")
+    (shim_dir / "native_common.py").write_text(_NATIVE_COMMON_SHIM, encoding="utf-8")
+    (shim_dir / "run_ideation_dashscope.py").write_text(_DASHSCOPE_RUNNER_SHIM, encoding="utf-8")
     return shim_dir
 
 
@@ -398,7 +445,8 @@ def _run_ai_scientist_one(task: TaskSpec, out_dir: Path, *, dry_run: bool) -> tu
 
         produced_ok = False
         last_err = ""
-        for attempt, reflections in ((1, 3), (2, 1)):
+        for attempt, reflections in ((1, 3), (2, 4), (3, 5)):
+            out_json.unlink(missing_ok=True)
             env = os.environ.copy()
             env["PYTHONPATH"] = f"{shim_dir}:{native_root / 'common'}:{source_dir}"
             env["PYTHONDONTWRITEBYTECODE"] = "1"
