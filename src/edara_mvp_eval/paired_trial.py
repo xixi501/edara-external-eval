@@ -111,9 +111,10 @@ class BudgetExceeded(RuntimeError):
 
 
 class TrialRunner(RecordedRunner):
-    def __init__(self, *args, limit: int, **kwargs):
+    def __init__(self, *args, limit: int, output_tokens: int = OUTPUT_TOKENS, **kwargs):
         super().__init__(*args, **kwargs)
         self.limit = limit
+        self.output_tokens = output_tokens
         self.stage = self.owner.get("stage")
         self.reused = 0
         self.no_retry_client = None
@@ -128,7 +129,7 @@ class TrialRunner(RecordedRunner):
         # Budget counts executed calls only; a cached audit owned by another arm is free.
         if self.index >= self.limit:
             raise BudgetExceeded("model_call_limit")
-        cap = JUDGE_OUTPUT_TOKENS if self.stage in JUDGE_STAGES else OUTPUT_TOKENS
+        cap = JUDGE_OUTPUT_TOKENS if self.stage in JUDGE_STAGES else self.output_tokens
         kwargs["max_tokens"] = min(kwargs.get("max_tokens", cap), cap)
         return super().chat_text(system, user, **kwargs)
 
@@ -261,6 +262,7 @@ def editor_call(
     extra: str = "",
     *,
     max_edits: int = 4,
+    output_tokens: int = OUTPUT_TOKENS,
 ):
     instruction = _FULL_EDIT if scope == "full" else _LOCAL_EDIT
     if scope != "full" and max_edits != 4:
@@ -307,7 +309,7 @@ def editor_call(
         try:
             response = runner.chat_json(_EDIT + "\n" + instruction + prompt_suffix,
                                         base_payload,
-                                        max_tokens=OUTPUT_TOKENS, tag="paired_edit")
+                                        max_tokens=output_tokens, tag="paired_edit")
             return apply_edits(draft, response, scope=scope, max_edits=max_edits)
         except (json.JSONDecodeError, ValueError):
             if attempt == 1:
@@ -382,7 +384,7 @@ def edit_volume(original: Draft, final: Draft) -> dict:
 def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, editor,
             lookup: Path, *, audit_cache: Path | None = None, editor_confound=None,
             claims: list[dict] | None = None, claim_audit: bool = False,
-            enforce_guards: bool = True) -> dict:
+            enforce_guards: bool = True, output_tokens: int = OUTPUT_TOKENS) -> dict:
     evidence = Evidence.restore(task, snapshot)
     shared = public_task(task)
     initial_evidence_hash = digest(evidence.packet())
@@ -481,7 +483,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
             else:
                 guidance = diag
                 extra_inst = ""
-            revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope, extra=extra_inst, max_edits=max_edits)
+            revised, edit_log = editor_call(editor, current, guidance, evidence, shared, scope, extra=extra_inst, max_edits=max_edits, output_tokens=output_tokens)
             targets = confound_targets(diag) if (arm in ("C", "E") and enforce_guards) else []
             if targets and not confound_addressed(revised, targets, baseline_draft=current):
                 target_field = design_field(current)
@@ -496,7 +498,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                 enforcement = {"required": targets, "retried": True, "addressed": False}
                 try:
                     retried, retry_log = editor_call(editor_confound or editor, revised, guidance, evidence,
-                                                     shared, scope, extra=extra, max_edits=max_edits)
+                                                     shared, scope, extra=extra, max_edits=max_edits, output_tokens=output_tokens)
                 except RECOVERABLE as exc:
                     enforcement["error"] = type(exc).__name__
                 else:
@@ -558,6 +560,7 @@ def run_arm(arm: str, original: Draft, task: TaskSpec, snapshot: dict, auditor, 
                         retried, retry_log = editor_call(
                             editor, current, guidance, evidence, shared, scope,
                             extra=((extra_inst + "\n" + retry_hint).strip()), max_edits=max_edits,
+                            output_tokens=output_tokens,
                         )
                     except RECOVERABLE:
                         retried = None

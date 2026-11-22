@@ -149,5 +149,114 @@
     "confounds_D_addressed": 27,
     "confounds_E_addressed": 48,
     "total_cost_usd": 16.826
+  },
+  "action_a_cross_backbone": {
+    "n_manuscripts": 30,
+    "independent_2judge": {
+      "counts": {
+        "loss": 10,
+        "tie": 4,
+        "win": 16
+      },
+      "order_sensitive": 0,
+      "topic_net_wins": 0.2,
+      "topic_net_wins_ci95": [
+        -0.2333,
+        0.6
+      ],
+      "score_sum_delta": -0.2667,
+      "score_sum_delta_ci95": [
+        -1.525,
+        0.9583
+      ],
+      "dimension_deltas": {
+        "grounding": 0.0,
+        "hypothesis_specificity": 0.0,
+        "minimality_feasibility": 0.0,
+        "decisive_metric": 0.0,
+        "falsifiability": 0.0
+      }
+    },
+    "majority_3way": {
+      "counts": {
+        "tie": 8,
+        "loss": 8,
+        "win": 14
+      },
+      "order_sensitive": 0,
+      "topic_net_wins": 0.2,
+      "topic_net_wins_ci95": [
+        -0.1667,
+        0.5333
+      ],
+      "score_sum_delta": -0.0612,
+      "score_sum_delta_ci95": [
+        -1.3946,
+        1.1944
+      ],
+      "dimension_deltas": {
+        "grounding": -0.189,
+        "hypothesis_specificity": -0.0833,
+        "minimality_feasibility": 0.1167,
+        "decisive_metric": -0.0555,
+        "falsifiability": 0.1499
+      }
+    },
+    "total_cost_usd": 3.3072
+  },
+  "action_b_thinking_ablation": {
+    "n_manuscripts": 30,
+    "output_tokens": 8192,
+    "qwen_primary": {
+      "counts": {
+        "loss": 7,
+        "tie": 10,
+        "win": 13
+      },
+      "order_sensitive": 10,
+      "topic_net_wins": 0.2,
+      "topic_net_wins_ci95": [
+        0.0,
+        0.4
+      ],
+      "score_sum_delta": 1.0667,
+      "score_sum_delta_ci95": [
+        0.4167,
+        1.8167
+      ],
+      "dimension_deltas": {
+        "grounding": 0.0667,
+        "hypothesis_specificity": 0.1,
+        "minimality_feasibility": 0.15,
+        "decisive_metric": 0.3,
+        "falsifiability": 0.45
+      }
+    },
+    "majority_3way": {
+      "counts": {
+        "tie": 14,
+        "win": 13,
+        "loss": 3
+      },
+      "order_sensitive": 0,
+      "topic_net_wins": 0.3333,
+      "topic_net_wins_ci95": [
+        0.2,
+        0.4667
+      ],
+      "score_sum_delta": 1.2333,
+      "score_sum_delta_ci95": [
+        0.8499,
+        1.6388
+      ],
+      "dimension_deltas": {
+        "grounding": 0.0055,
+        "hypothesis_specificity": 0.1277,
+        "minimality_feasibility": 0.1778,
+        "decisive_metric": 0.3778,
+        "falsifiability": 0.5444
+      }
+    },
+    "total_cost_usd": 4.5238
   }
 }

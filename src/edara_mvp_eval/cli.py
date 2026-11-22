@@ -38,10 +38,10 @@ Return valid JSON with keys:
 title, literature_gap, hypothesis, method, minimal_test, decisive_metric, supporting_result, falsifying_result, related_work, limitations, resource_plan."""
 
 
-def _generate_direct(task: TaskSpec, runner: LLMRunner) -> tuple[dict[str, Any], float]:
+def _generate_direct(task: TaskSpec, runner: LLMRunner, *, max_tokens: int = 4096) -> tuple[dict[str, Any], float]:
     before = runner.usage.cost_usd
     user = f"Task ID: {task.task_id}\n\n{task.prompt_context}"
-    draft = runner.chat_json(_GENERATE_SYSTEM, user, temperature=0.3, max_tokens=4096, tag="generate_direct")
+    draft = runner.chat_json(_GENERATE_SYSTEM, user, temperature=0.3, max_tokens=max_tokens, tag="generate_direct")
     return draft, round(runner.usage.cost_usd - before, 6)
 
 

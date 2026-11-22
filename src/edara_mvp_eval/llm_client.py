@@ -60,7 +60,7 @@ class ModelEndpoint:
 
 
 def extract_json_dict(text: str) -> dict[str, Any]:
-    cleaned = (text or "").strip()
+    cleaned = re.sub(r"^\s*<think>.*?</think>\s*", "", (text or ""), flags=re.DOTALL).strip()
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
         cleaned = re.sub(r"\s*```$", "", cleaned)
@@ -105,6 +105,7 @@ class MeteredUsage:
     calls: int = 0
     prompt_tokens: int = 0
     completion_tokens: int = 0
+    reasoning_tokens: int = 0
     cost_usd: float = 0.0
 
 
@@ -178,7 +179,10 @@ class LLMRunner:
         if "glm" in self.endpoint.model.lower() and tag in _FAST_STRUCTURED_TAGS:
             effective_extra_body["thinking"] = {"type": "disabled"}
         thinking_cfg = effective_extra_body.get("thinking")
-        thinking_disabled = isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled"
+        thinking_disabled = (
+            (isinstance(thinking_cfg, dict) and thinking_cfg.get("type") == "disabled")
+            or (effective_extra_body.get("enable_thinking") is False)
+        )
         if (
             thinking_disabled
             and "glm" in self.endpoint.model.lower()
@@ -187,7 +191,7 @@ class LLMRunner:
             # AutoDL's OpenAI-compatible GLM endpoint ignores thinking.type=disabled unless reasoning_effort=none.
             effective_extra_body["reasoning_effort"] = "none"
         has_thinking = (not thinking_disabled) and (bool(effective_extra_body) or "glm" in self.endpoint.model.lower())
-        effective_max_tokens = max(max_tokens + 2048, 4096) if has_thinking else max_tokens
+        effective_max_tokens = min(32768, max(max_tokens * 2, max_tokens + 2048, 4096)) if has_thinking else max_tokens
         create_kwargs: dict[str, Any] = {
             "model": self.endpoint.model,
             "messages": [
@@ -214,10 +218,13 @@ class LLMRunner:
         u = getattr(resp, "usage", None)
         pt = int(getattr(u, "prompt_tokens", 0) or 0)
         ct = int(getattr(u, "completion_tokens", 0) or 0)
+        details = getattr(u, "completion_tokens_details", None)
+        rt = int(getattr(details, "reasoning_tokens", 0) or 0)
         with self._lock:
             self.usage.calls += 1
             self.usage.prompt_tokens += pt
             self.usage.completion_tokens += ct
+            self.usage.reasoning_tokens += rt
             self.usage.cost_usd += (
                 (pt / 1_000_000.0) * self.endpoint.input_usd_per_m
                 + (ct / 1_000_000.0) * self.endpoint.output_usd_per_m

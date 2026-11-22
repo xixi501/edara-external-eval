@@ -273,38 +273,66 @@ def generate_evoscientist_proposal(
     write_json(work_dir / "step2_literature_tree.json", {"queries": queries, "added_markers": added_markers, "tree": tree_state})
 
     # Step 3: 3 Directions x Innovator
+    step3_payload = json.dumps({"task": shared, "literature_tree": tree_state, "papers": ev.packet()}, ensure_ascii=False)
     step3 = runner.chat_json(
         _EVO_STEP3_DIRS_SYS,
-        json.dumps({"task": shared, "literature_tree": tree_state, "papers": ev.packet()}, ensure_ascii=False),
+        step3_payload,
         max_tokens=3000,
         tag="evo_step3_ideas",
     )
+    if len(step3.get("ideas") or []) < 3:
+        step3 = runner.chat_json(
+            _EVO_STEP3_DIRS_SYS,
+            step3_payload + '\n\nCRITICAL: Return strictly {"ideas": [{"track": 1, ...}, {"track": 2, ...}, {"track": 3, ...}]} with all 3 tracks; never wrap in a "text" key.',
+            max_tokens=3400,
+            tag="evo_step3_ideas_retry",
+        )
     write_json(work_dir / "step3_initial_ideas.json", step3)
 
-    # Step 4: 3-Persona Evolutionary Refinement (2 iterative passes)
+    # Step 4: 3-Persona Evolutionary Refinement (2 iterative passes with bounded schema retry)
     refined = step3
     for it in (1, 2):
-        refined = runner.chat_json(
+        step4_payload = json.dumps(
+            {"iteration": it, "task": shared, "literature_tree": tree_state, "current_tracks": refined, "papers": ev.packet()},
+            ensure_ascii=False,
+        )
+        cand = runner.chat_json(
             _EVO_STEP4_REFINE_SYS,
-            json.dumps(
-                {"iteration": it, "task": shared, "literature_tree": tree_state, "current_tracks": refined, "papers": ev.packet()},
-                ensure_ascii=False,
-            ),
+            step4_payload,
             max_tokens=3600,
             tag=f"evo_step4_refine_{it}",
         )
+        for retry_idx in (1, 2):
+            if isinstance(cand, dict) and len(cand.get("champions") or []) >= 3:
+                break
+            cand = runner.chat_json(
+                _EVO_STEP4_REFINE_SYS,
+                step4_payload
+                + '\n\nCRITICAL SCHEMA REQUIREMENT: Return ONLY a JSON object with top-level key "champions" containing a list of all 3 track objects (tracks 1, 2, 3). Do NOT return {"text": ...} or prose.',
+                max_tokens=4096,
+                tag=f"evo_step4_refine_{it}_retry_{retry_idx}",
+            )
+        refined = cand
     champions = refined.get("champions") or []
     if len(champions) < 3:
         raise RuntimeError(f"EvoScientist Step 4 returned fewer than 3 champions for {task.task_id}")
     write_json(work_dir / "step4_champions.json", refined)
 
     # Step 5: Pairwise ELO Round-Robin Tournament
+    step5_payload = json.dumps({"task": shared, "champions": champions[:3]}, ensure_ascii=False)
     tour = runner.chat_json(
         _EVO_STEP5_ELO_SYS,
-        json.dumps({"task": shared, "champions": champions}, ensure_ascii=False),
+        step5_payload,
         max_tokens=2200,
         tag="evo_step5_elo",
     )
+    if len(tour.get("matches") or []) < 3:
+        tour = runner.chat_json(
+            _EVO_STEP5_ELO_SYS,
+            step5_payload + '\n\nCRITICAL: Return strictly {"matches": [...]} with all 3 pairwise matches (1v2, 1v3, 2v3); never wrap in a "text" key.',
+            max_tokens=2600,
+            tag="evo_step5_elo_retry",
+        )
     ranked, winner_track = _compute_elo_rankings(champions[:3], tour.get("matches") or [])
     winner = ranked[0]
     ranked_artifact = {
@@ -321,20 +349,29 @@ def generate_evoscientist_proposal(
     write_json(work_dir / "ranked-ideas.json", ranked_artifact)
 
     # Step 7: Expand Rank-1 Champion into 6-Section Proposal
+    step7_payload = json.dumps(
+        {
+            "task": shared,
+            "winning_champion": winner,
+            "literature_tree": tree_state,
+            "papers": ev.packet(),
+        },
+        ensure_ascii=False,
+    )
     raw_prop = runner.chat_json(
         _EVO_STEP7_PROPOSAL_SYS,
-        json.dumps(
-            {
-                "task": shared,
-                "winning_champion": winner,
-                "literature_tree": tree_state,
-                "papers": ev.packet(),
-            },
-            ensure_ascii=False,
-        ),
+        step7_payload,
         max_tokens=OUTPUT_TOKENS,
         tag="evo_step7_proposal",
     )
+    if not isinstance(raw_prop, dict) or not (raw_prop.get("Proposed Method") or raw_prop.get("method")):
+        raw_prop = runner.chat_json(
+            _EVO_STEP7_PROPOSAL_SYS,
+            step7_payload
+            + '\n\nCRITICAL: Return strictly valid JSON with exact top-level keys "Title", "Short Hypothesis", "Background", "Related Work", "Proposed Method", "Experimental Plan", "Expected Results", "Risks and Mitigations". Never wrap in a "text" key.',
+            max_tokens=OUTPUT_TOKENS,
+            tag="evo_step7_proposal_retry",
+        )
     write_json(work_dir / "raw_proposal.json", raw_prop)
 
     draft: dict[str, str] = {}
