@@ -441,6 +441,7 @@ def main() -> int:
 
     manifest_path = ROOT / "data/benchmark_50_topics.json"
     bench_spec = load(manifest_path)
+    b50_tasks_map = {t["task_id"]: TaskSpec.model_validate(t) for t in load(ROOT / "data/tasks_benchmark50.json")}
     selected_entries = [t for t in bench_spec["topics"] if t["wave"] == args.wave]
 
     v4_inputs = load(args.v4_dir / "inputs_core.json") if (args.v4_dir / "inputs_core.json").is_file() else {}
@@ -464,7 +465,7 @@ def main() -> int:
         },
     )
 
-    # Seed lookup caches from existing v4/ext15 runs where available so pre-cutoff OpenAlex queries hit cache first
+    # Seed lookup caches from existing v4/ext15 runs where available, or prepare dated pre-cutoff seed evidence for new25 topics
     topic_seeds: list[tuple[str, dict[str, Any], str]] = []
     for entry in selected_entries:
         tid = entry["task_id"]
@@ -473,9 +474,30 @@ def main() -> int:
         elif tid in ext_inputs:
             seed, src_dir, src_name = ext_inputs[tid], args.ext15_dir, "ext15"
         else:
-            raise RuntimeError(f"Topic {tid} missing from v4/ext15 frozen task inputs")
+            src_dir, src_name = None, "new25"
+            raw_task = b50_tasks_map[tid].model_copy(update={"strict_evidence": True})
+            prep_dir = out / "prepared_tasks" / tid
+            prep_dir.mkdir(parents=True, exist_ok=True)
+            exp_task_dir = ROOT / "outputs/repair_v3/expansion/tasks" / tid
+            if (exp_task_dir / "lookup").is_dir() and not (prep_dir / "lookup").exists():
+                shutil.copytree(exp_task_dir / "lookup", prep_dir / "lookup")
+            if (exp_task_dir / "prepared.json").is_file():
+                prepared_task = TaskSpec.model_validate(load(exp_task_dir / "prepared.json")["task"])
+            elif (prep_dir / "prepared.json").is_file():
+                prepared_task = TaskSpec.model_validate(load(prep_dir / "prepared.json")["task"])
+            else:
+                store_init = EvidenceStore(prep_dir, raw_task, offline=args.dry_run)
+                prepared_task = store_init.prepare()
+                if not args.dry_run:
+                    write_json(prep_dir / "prepared.json", {"task": prepared_task.model_dump(), "evidence_events": store_init.events})
+            ev_init = Evidence(raw_task)
+            for p in raw_task.prior_work:
+                ev_init.add(p)
+            for p in prepared_task.prior_work:
+                ev_init.add(p)
+            seed = {"task": raw_task.model_dump(), "development": False, "evidence": ev_init.snapshot()}
         dst_lookup = out / "lookup" / tid / "evoscientist"
-        if not dst_lookup.exists():
+        if src_dir is not None and not dst_lookup.exists():
             for cand_host in ("ai_scientist", "direct"):
                 src_lk = src_dir / "lookup" / tid / cand_host
                 if src_lk.is_dir():
@@ -717,8 +739,8 @@ def main() -> int:
             "task_id": tid,
             "host": "evoscientist",
             "unified_comparisons": {
-                "C_vs_B": {"unified": r["c_vs_b_qwen"]},
-                "E_vs_D": {"unified": r["e_vs_d_qwen"]},
+                "C_vs_B": r["c_vs_b_qwen"],
+                "E_vs_D": r["e_vs_d_qwen"],
             },
         })
 
@@ -769,9 +791,9 @@ def main() -> int:
     aib_d = ed_u.get("alphaideabench_dimension_deltas") or {}
     lines.extend([
         "",
-        f"- **Single-Pass Ablation (`C_vs_B`, Qwen)**: `{cb_c.get('win',0)}W / {cb_c.get('loss',0)}L / {cb_c.get('tie',0)}T` (`net_wins={cb.get('topic_net_wins') or 0.0:+.3f}`, `sum_delta={cb.get('score_sum_delta') or 0.0:+.3f}`)",
+        f"- **Single-Pass Ablation (`C_vs_B`, Qwen)**: `{cb_c.get('win',0)}W / {cb_c.get('loss',0)}L / {cb_c.get('tie',0)}T` (`net_wins={cb.get('lit2test_net_wins') or 0.0:+.3f}`, `sum_delta={cb.get('lit2test_score_sum_delta') or 0.0:+.3f}`)",
         f"- **ClaimNov Compositional Novelty Delta (`E_vs_D`)**: `{ed_u.get('claimnov_novelty_delta') or 0.0:+.3f}`",
-        f"- **AlphaIdeaBench Deltas (`E_vs_D`)**: `testability={aib_d.get('testability') or 0.0:+.3f}`, `context_grounding={aib_d.get('context_grounding') or 0.0:+.3f}`, `method_novelty={aib_d.get('method_novelty') or 0.0:+.3f}`",
+        f"- **AlphaIdeaBench Deltas (`E_vs_D`)**: `testability={aib_d.get('testability') or 0.0:+.3f}`, `context_grounding={aib_d.get('context_grounding') or 0.0:+.3f}`, `verification_feasibility={aib_d.get('verification_feasibility') or 0.0:+.3f}`, `method_novelty={aib_d.get('method_novelty') or 0.0:+.3f}`, `insight_novelty={aib_d.get('insight_novelty') or 0.0:+.3f}`",
         f"- **Original Keys Preserved (`E`)**: `{mech['orig_keys_kept_all']} / {mech['n_manuscripts']}` (`100%`)",
         f"- **Process Hype (`A -> D -> E`)**: `{mech['process_hype']['A']['occurrences']} -> {mech['process_hype']['D']['occurrences']} -> {mech['process_hype']['E']['occurrences']}`",
         f"- **Unverified External Entities (`A -> D -> E`)**: `{mech['unverified_entities']['A']['total']} -> {mech['unverified_entities']['D']['total']} -> {mech['unverified_entities']['E']['total']}`",

@@ -1,8 +1,9 @@
-"""Execute a locked Benchmark-50 wave (wave1/wave2/wave3) reusing frozen A/B/C/D drafts where available.
+"""Execute a locked Benchmark-50 wave (wave1/wave2/wave3) across Direct, AI-Scientist-v2, and E-DARA.
 
-Runs upgraded Arm E (closed-loop governance + post-patch consolidation + prerequisite isolation)
-and evaluates E_vs_D across all 3 calibrated blind judges (Qwen3.8-flash, DeepSeek-v4.1-flash, GLM-5.3-flash),
-producing unified metrics, 3-judge majority vote, deterministic mechanism audit stats, and old-vs-new Arm E diffs.
+Reuses frozen A/B/C/D drafts from v4/ext15 where available, generates missing Direct + AI-Scientist-v2
+proposals and symmetric B/C/D arms for brand-new Benchmark-50 topics, runs upgraded Arm E (closed-loop
+governance + post-patch consolidation + prerequisite isolation + statistical-power calibration), and
+evaluates E_vs_D across all 3 calibrated blind judges (Qwen3.8-flash, DeepSeek-v4.1-flash, GLM-5.3-flash).
 """
 from __future__ import annotations
 
@@ -11,12 +12,16 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 import json
+import os
 import shutil
+import subprocess
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
+from edara_mvp_eval.artifact_export import substitute
+from edara_mvp_eval.cli import _generate_direct
 from edara_mvp_eval.epistemic_audit import run_full_audit
 from edara_mvp_eval.factual_audit import audit_unverified_entities
 from edara_mvp_eval.host_adapter import (
@@ -26,7 +31,13 @@ from edara_mvp_eval.host_adapter import (
 )
 from edara_mvp_eval.llm_client import LLMRunner, ModelEndpoint
 from edara_mvp_eval.middleware import TrustworthyNoveltyMiddleware
-from edara_mvp_eval.paired_inputs import Evidence
+from edara_mvp_eval.paired_inputs import (
+    _MARKERS,
+    Evidence,
+    ai_citations,
+    direct_aliases,
+    project,
+)
 from edara_mvp_eval.paired_trial import (
     LIMITS,
     OUTPUT_TOKENS,
@@ -43,7 +54,7 @@ from edara_mvp_eval.paired_trial import (
     usage,
 )
 from edara_mvp_eval.schemas import FullAuditBundle, PriorWorkItem, TaskSpec
-from edara_mvp_eval.stage_b_evidence import write_json
+from edara_mvp_eval.stage_b_evidence import EvidenceStore, write_json
 from edara_mvp_eval.unified_eval import (
     CORE_AIB_DIMENSIONS,
     LIT2TEST_DIMENSIONS,
@@ -52,13 +63,249 @@ from edara_mvp_eval.unified_eval import (
     summarize_unified_rows,
 )
 
+_DASHSCOPE_RUNNER_SHIM = '''"""Run AI-Scientist-v2 ideation routing deepseek-flash calls to DashScope deepseek-v4.1-flash-1017."""
+from __future__ import annotations
+
+import os
+import runpy
+import sys
+from types import SimpleNamespace
+import openai
+import ai_scientist.llm as ai_llm
+
+
+class _CompletionsProxy:
+    def __init__(self, inner):
+        self._inner = inner
+
+    def create(self, *args, **kwargs):
+        if kwargs.get("model") == "deepseek-flash":
+            kwargs["model"] = "deepseek-v4.1-flash-1017"
+            extra = dict(kwargs.get("extra_body") or {})
+            extra.setdefault("thinking", {"type": "disabled"})
+            kwargs["extra_body"] = extra
+        resp = self._inner.create(*args, **kwargs)
+        usage_obj = getattr(resp, "usage", None)
+        if usage_obj is not None:
+            cd = getattr(usage_obj, "completion_tokens_details", None)
+            if cd is not None and getattr(cd, "reasoning_tokens", None) is None:
+                cd.reasoning_tokens = 0
+            pd = getattr(usage_obj, "prompt_tokens_details", None)
+            if pd is None:
+                usage_obj.prompt_tokens_details = SimpleNamespace(cached_tokens=0)
+            elif getattr(pd, "cached_tokens", None) is None:
+                pd.cached_tokens = 0
+        return resp
+
+
+class _ChatProxy:
+    def __init__(self, inner):
+        self.completions = _CompletionsProxy(inner.completions)
+
+
+class _DashScopeDeepSeekClient:
+    def __init__(self):
+        self._client = openai.OpenAI(
+            api_key=os.environ["DASHSCOPE_API_KEY"],
+            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        )
+        self.chat = _ChatProxy(self._client.chat)
+
+
+def _patched_create_client(model):
+    if model == "deepseek-flash":
+        print("Using DashScope DeepSeek API (deepseek-v4.1-flash-1017) as deepseek-flash.")
+        return _DashScopeDeepSeekClient(), "deepseek-flash"
+    return _orig_create_client(model)
+
+
+_orig_create_client = ai_llm.create_client
+ai_llm.create_client = _patched_create_client
+
+target_script = sys.argv[1]
+sys.argv = [target_script, *sys.argv[2:]]
+runpy.run_path(target_script, run_name="__main__")
+'''
+
+_NATIVE_COMMON_SHIM = '''"""Dynamic per-task boundary + key-free OpenAlex shim for AI-Scientist-v2 Benchmark-50 runs."""
+from __future__ import annotations
+
+from datetime import date, datetime, timezone
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import unicodedata
+import urllib.parse
+import urllib.request
+
+
+def canonical(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def digest(value):
+    data = bytes(value) if isinstance(value, (bytes, bytearray)) else (value if isinstance(value, str) else canonical(value)).encode("utf-8")
+    return hashlib.sha256(data).hexdigest()
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def read_json(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def write_json(path, value):
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    tmp = p.with_name(p.name + ".tmp")
+    tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\\n", encoding="utf-8")
+    os.replace(tmp, p)
+
+
+def append_receipt(path, receipt):
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    line = canonical(receipt) + "\\n"
+    with p.open("a", encoding="utf-8") as stream:
+        fcntl.flock(stream.fileno(), fcntl.LOCK_EX)
+        try:
+            stream.write(line)
+            stream.flush()
+            os.fsync(stream.fileno())
+        finally:
+            fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
+
+
+def _candidate_hashes(title: str, identifier: str = "") -> set[str]:
+    out: set[str] = set()
+    if title:
+        bare = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+        if bare:
+            out.add(hashlib.sha256(bare.encode("utf-8")).hexdigest())
+        uni = " ".join(re.findall(r"\\w+", unicodedata.normalize("NFKC", title).casefold()))
+        if uni:
+            out.add(hashlib.sha256(f"title:{uni}".encode("utf-8")).hexdigest())
+    if identifier:
+        text = urllib.parse.unquote(identifier).strip().casefold()
+        if text:
+            out.add(hashlib.sha256(f"identity:{text}".encode("utf-8")).hexdigest())
+            doi = re.search(r"10\\.\\d{4,9}/[^\\s?#]+", text)
+            if doi:
+                out.add(hashlib.sha256(f"doi:{doi.group(0).rstrip('./')}".encode("utf-8")).hexdigest())
+            arxiv = re.search(r"(?:arxiv[:/]|abs/|pdf/|^)(\\d{4}\\.\\d{4,5}|[a-z.-]+/\\d{7})(?:v\\d+)?(?:\\.pdf)?(?:$|[?#/])", text)
+            if arxiv:
+                out.add(hashlib.sha256(f"arxiv:{arxiv.group(1)}".encode("utf-8")).hexdigest())
+    return out
+
+
+def _is_blocked(title: str, pub_date: str, cutoff_date: str, forbidden: set[str], identifiers=()) -> bool:
+    if not title or (_candidate_hashes(title) & forbidden):
+        return True
+    if any(_candidate_hashes("", ident) & forbidden for ident in identifiers if ident):
+        return True
+    try:
+        stamp = f"{pub_date}-12-31" if len(pub_date) == 4 else pub_date
+        return date.fromisoformat(stamp) > date.fromisoformat(cutoff_date)
+    except ValueError:
+        return True
+
+
+def _reconstruct_openalex_abstract(inv) -> str:
+    if not isinstance(inv, dict) or not inv:
+        return ""
+    words = []
+    for w, positions in inv.items():
+        if isinstance(positions, list):
+            for pos in positions:
+                words.append((int(pos), str(w)))
+    words.sort()
+    return " ".join(w for _, w in words)[:1800]
+
+
+def literature_search(*, arm, case_id, query, limit, boundary_path, ledger_path, **_kwargs):
+    boundary = read_json(boundary_path)
+    cutoff_date = str(boundary.get("cutoff_date") or "2024-12-31")
+    forbidden = set(boundary.get("forbidden_identity_hashes") or [])
+    papers = []
+    provider = "openalex"
+    retained = []
+
+    q = urllib.parse.quote(query[:220])
+    url = (
+        f"https://api.openalex.org/works?search={q}"
+        f"&filter=to_publication_date:{cutoff_date}&per-page={max(1, min(int(limit), 20))}"
+        f"&select=id,ids,doi,title,publication_date,abstract_inverted_index,cited_by_count,authorships"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "EDARA-Benchmark50/1.0 (research benchmark)"})
+    try:
+        with urllib.request.urlopen(req, timeout=15.0) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        for item in data.get("results") or []:
+            title = str(item.get("title") or "")
+            pub = str(item.get("publication_date") or "")
+            aliases = [item.get("id"), item.get("doi"), *(item.get("ids") or {}).values()]
+            if _is_blocked(title, pub, cutoff_date, forbidden, aliases):
+                continue
+            abstract = _reconstruct_openalex_abstract(item.get("abstract_inverted_index"))
+            doi = item.get("doi") or (item.get("ids") or {}).get("doi")
+            retained.append({
+                "paper_id": str(item.get("id") or ""),
+                "title": title,
+                "date": pub,
+                "doi": doi,
+                "year": pub[:4] if pub else None,
+                "abstract": abstract,
+                "ids": [x for x in aliases if x],
+            })
+            authors = [
+                {"name": (a.get("author") or {}).get("display_name") or "Unknown"}
+                for a in (item.get("authorships") or [])[:5]
+                if isinstance(a, dict)
+            ]
+            papers.append({
+                "paperId": str(item.get("id") or ""),
+                "title": title,
+                "authors": authors,
+                "venue": "OpenAlex",
+                "year": pub[:4] if pub else "Unknown",
+                "abstract": abstract,
+                "citationCount": item.get("cited_by_count", "N/A"),
+            })
+    except Exception:
+        papers.clear()
+        retained.clear()
+
+    append_receipt(ledger_path, {
+        "schema_version": "search-receipt/v1",
+        "created_at": now(),
+        "arm": arm,
+        "case_id": case_id,
+        "query": query,
+        "provider": provider,
+        "date_cutoff": cutoff_date,
+        "kept_count": len(papers[: int(limit)]),
+        "kept_ids": [str(p.get("paperId") or p.get("title") or "")[:80] for p in papers[: int(limit)]],
+        "kept_sources": retained[: int(limit)],
+    })
+    return papers[: int(limit)], provider
+
+
+def deepseek_cost_usd(input_tokens, output_tokens):
+    return int(input_tokens) * 0.30 / 1_000_000 + int(output_tokens) * 1.20 / 1_000_000
+'''
+
 
 def _configure_endpoint(profile_path: Path, *, role: str, dry_run: bool) -> ModelEndpoint:
     if dry_run:
         return ModelEndpoint(model=f"dry-run-{role}")
     ep = ModelEndpoint.from_env_or_profile(profile_path=profile_path)
     low = ep.model.lower()
-    if role in {"editor", "audit"}:
+    if role in {"editor", "audit", "host_gen"}:
         if "deepseek" in low:
             ep = replace(ep, extra_body={"thinking": {"type": "disabled"}})
         elif "glm" in low:
@@ -83,6 +330,304 @@ def _make_runner(endpoint: ModelEndpoint, log_dir: Path, job: str, arm: str, sta
         r.reused = 0  # type: ignore[attr-defined]
         return r
     return TrialRunner(endpoint, log_dir, task_id=job, arm=arm, stage=stage, limit=limit)
+
+
+def _ensure_ai_scientist_shim(out_dir: Path) -> Path:
+    shim_dir = out_dir / "_ai_scientist_shim"
+    shim_dir.mkdir(parents=True, exist_ok=True)
+    nc = shim_dir / "native_common.py"
+    rd = shim_dir / "run_ideation_dashscope.py"
+    if not nc.is_file():
+        nc.write_text(_NATIVE_COMMON_SHIM, encoding="utf-8")
+    if not rd.is_file():
+        rd.write_text(_DASHSCOPE_RUNNER_SHIM, encoding="utf-8")
+    return shim_dir
+
+
+def _run_ai_scientist_one(task: TaskSpec, out_dir: Path, *, dry_run: bool) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    tid = task.task_id
+    runs_root = out_dir / "ai_scientist_runs"
+    tdir = runs_root / tid
+    tdir.mkdir(parents=True, exist_ok=True)
+    md_path = tdir / f"{tid}.md"
+    boundary_path = tdir / f"{tid}.boundary.json"
+    if not md_path.is_file():
+        md_content = (
+            f"# Title: {task.title}\n\n"
+            f"## Task ID & Source\n- task_id: `{tid}`\n- source_track: `{task.source_track}`\n"
+            f"- cutoff_date: `{task.cutoff_date}`\n\n"
+            f"## Keywords\n{task.field}\n\n"
+            f"## Research Problem & Constraints\n{task.prompt_context}\n"
+        )
+        md_path.write_text(md_content, encoding="utf-8")
+    if not boundary_path.is_file():
+        boundary = {
+            "protocol": "literature-boundary/v1",
+            "case_id": tid,
+            "cutoff_date": task.cutoff_date,
+            "forbidden_identity_hashes": task.forbidden_title_hashes,
+            "seed_document_sha256s": [],
+        }
+        write_json(boundary_path, boundary)
+
+    if dry_run:
+        payload = {
+            "Name": f"dry_run_{tid[:20]}",
+            "Title": f"AI-Scientist Dry-Run Proposal for {tid}",
+            "Short Hypothesis": "Targeted structural regularizer improves OOD performance under fixed budget.",
+            "Related Work": "Prior methods leave a gap under controlled shift.",
+            "Abstract": "We propose a minimal, falsifiable intervention and evaluate against matched baselines.",
+            "Experiments": "Compare proposed method vs baseline + matched-compute control across 5 seeds.",
+            "Risk Factors and Limitations": "Potential sensitivity to hyperparameter sweep budget.",
+            "task_id": tid,
+        }
+        return payload, []
+
+    out_json = tdir / f"{tid}.json"
+    if not (out_json.is_file() and json.loads(out_json.read_text(encoding="utf-8"))):
+        shim_dir = _ensure_ai_scientist_shim(out_dir)
+        ai_py = Path(os.environ.get("AI_SCIENTIST_PYTHON") or (WORKSPACE / "runtime/ai-scientist-v2-ideation/bin/python"))
+        native_root = Path(
+            os.environ.get("AI_SCIENTIST_NATIVE_ROOT")
+            or (WORKSPACE / "staging/03_active_benchmarks/external-native-eval-20261109")
+        )
+        source_dir = Path(os.environ.get("AI_SCIENTIST_SOURCE") or (native_root / "sources/ai-scientist-v2"))
+        script_path = source_dir / "ai_scientist/perform_ideation_temp_free.py"
+        if not ai_py.is_file() or not script_path.is_file():
+            raise FileNotFoundError(f"AI-Scientist runtime/source missing: {ai_py} / {script_path}")
+
+        produced_ok = False
+        last_err = ""
+        for attempt, reflections in ((1, 3), (2, 1)):
+            env = os.environ.copy()
+            env["PYTHONPATH"] = f"{shim_dir}:{native_root / 'common'}:{source_dir}"
+            env["PYTHONDONTWRITEBYTECODE"] = "1"
+            env["AI_SCIENTIST_CASE_ID"] = tid
+            env["AI_SCIENTIST_BOUNDARY_PATH"] = str(boundary_path)
+            env["AI_SCIENTIST_SEARCH_LEDGER"] = str(tdir / f"search_{attempt}.jsonl")
+            env["AI_SCIENTIST_TOOL_LEDGER"] = str(tdir / f"tool_{attempt}.jsonl")
+            env["AI_SCIENTIST_LLM_LEDGER"] = str(tdir / f"llm_{attempt}.jsonl")
+            cmd = [
+                str(ai_py),
+                str(shim_dir / "run_ideation_dashscope.py"),
+                str(script_path),
+                "--model", "deepseek-flash",
+                "--max-num-generations", "1",
+                "--num-reflections", str(reflections),
+                "--workshop-file", str(md_path),
+            ]
+            proc = subprocess.run(cmd, env=env, cwd=str(ROOT.parent), capture_output=True, text=True)
+            (tdir / f"run_{attempt}.log").write_text(
+                (proc.stdout or "") + "\n--- STDERR ---\n" + (proc.stderr or ""),
+                encoding="utf-8",
+            )
+            if proc.returncode == 0 and out_json.is_file():
+                try:
+                    ideas = json.loads(out_json.read_text(encoding="utf-8"))
+                    if isinstance(ideas, list) and ideas and isinstance(ideas[0], dict) and ideas[0].get("Title"):
+                        produced_ok = True
+                        break
+                except Exception as exc:
+                    last_err = str(exc)
+            last_err = f"rc={proc.returncode} tail={(proc.stderr or '')[-240:]}"
+        if not produced_ok:
+            raise RuntimeError(f"AI-Scientist generation failed for {tid}: {last_err}")
+
+    ideas_list = json.loads(out_json.read_text(encoding="utf-8"))
+    payload = dict(ideas_list[0])
+    payload["task_id"] = tid
+
+    seen_sources: dict[str, dict[str, Any]] = {}
+    for s_log in sorted(tdir.glob("search_*.jsonl")):
+        for line in s_log.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            for src in rec.get("kept_sources") or []:
+                pid = str(src.get("paper_id") or src.get("title") or "")
+                if not pid:
+                    continue
+                item = seen_sources.setdefault(pid, {
+                    "paper_id": pid,
+                    "title": src.get("title") or "",
+                    "quotes": [],
+                    "doi": src.get("doi"),
+                    "year": src.get("year") or (str(src.get("date") or "")[:4] or None),
+                })
+                ab = (src.get("abstract") or "").strip()
+                if ab and ab not in item["quotes"]:
+                    item["quotes"].append(ab)
+    return payload, list(seen_sources.values())
+
+
+def _prepare_new_topic_seed(
+    raw_task: TaskSpec,
+    out_dir: Path,
+    host_ep: ModelEndpoint,
+    *,
+    dry_run: bool,
+) -> dict[str, Any]:
+    tid = raw_task.task_id
+    seed_cache = out_dir / "host_gen" / tid / "seed_topic.json"
+    if seed_cache.is_file():
+        return load(seed_cache)
+
+    task = raw_task.model_copy(update={"strict_evidence": True})
+    t_gen_dir = out_dir / "host_gen" / tid
+    t_gen_dir.mkdir(parents=True, exist_ok=True)
+
+    exp_task_dir = ROOT / "outputs/repair_v3/expansion/tasks" / tid
+    if (exp_task_dir / "lookup").is_dir() and not (t_gen_dir / "lookup").exists():
+        shutil.copytree(exp_task_dir / "lookup", t_gen_dir / "lookup")
+
+    if (exp_task_dir / "prepared.json").is_file():
+        prepared_task = TaskSpec.model_validate(load(exp_task_dir / "prepared.json")["task"])
+    else:
+        prep_file = t_gen_dir / "prepared.json"
+        if prep_file.is_file():
+            prepared_task = TaskSpec.model_validate(load(prep_file)["task"])
+        else:
+            store = EvidenceStore(t_gen_dir, task, offline=dry_run)
+            prepared_task = store.prepare()
+            write_json(prep_file, {"task": prepared_task.model_dump(), "evidence_events": store.events})
+
+    papers = Evidence(task)
+    for p in task.prior_work:
+        papers.add(p)
+    for p in prepared_task.prior_work:
+        papers.add(p)
+
+    # 1. Direct proposal (reuse repair_v3/expansion/tasks/<tid>/direct.json if already produced)
+    direct_payload: dict[str, Any]
+    if (exp_task_dir / "direct.json").is_file() and load(exp_task_dir / "direct.json").get("status") == "produced":
+        direct_payload = load(exp_task_dir / "direct.json")["candidate"]
+    elif dry_run:
+        direct_payload = {
+            "title": f"Direct Dry-Run Proposal for {tid}",
+            "literature_gap": "Existing methods underperform under distribution shift.",
+            "hypothesis": "Explicit invariant regularization reduces worst-group error by >=5%.",
+            "method": "Introduce lightweight feature-space invariance penalty with matched compute.",
+            "minimal_test": "Evaluate on benchmark split vs ERM and compute-matched baseline across 5 seeds.",
+            "decisive_metric": "Worst-group accuracy and macro-F1 across 5 random seeds.",
+            "supporting_result": "Worst-group accuracy improves by >=5 percentage points.",
+            "falsifying_result": "Improvement <1.5 percentage points or worse than matched control.",
+            "related_work": "Builds on supplied pre-cutoff literature.",
+            "limitations": "Evaluated on medium-scale academic benchmarks.",
+            "resource_plan": "Single GPU within stated task budget.",
+        }
+    else:
+        d_raw_path = t_gen_dir / "direct_raw.json"
+        if d_raw_path.is_file():
+            direct_payload = load(d_raw_path)
+        else:
+            gen_runner = _make_runner(host_ep, t_gen_dir / "direct_gen", f"{tid}/direct", "A", "host_gen", 8, dry_run=dry_run)
+            direct_payload, _ = _generate_direct(prepared_task, gen_runner)
+            write_json(d_raw_path, direct_payload)
+
+    # 2. AI-Scientist-v2 proposal
+    ai_payload, ai_sources = _run_ai_scientist_one(task, out_dir, dry_run=dry_run)
+
+    # 3. Normalize citations and freeze shared symmetric topic evidence snapshot
+    ai_draft = project(ai_payload)
+    ai_alias = ai_citations(
+        ROOT,
+        tid,
+        ai_payload,
+        papers,
+        ai_sources,
+        task.prior_work,
+        extra_md_dirs=(out_dir / "ai_scientist_runs",),
+    )
+    ai_unres = sorted(set(tok.lower() for tok in _MARKERS.findall(json.dumps(ai_draft))) - ai_alias.keys())
+    ai_draft = substitute(ai_draft, _MARKERS, lambda m: ai_alias.get(m[0].lower(), "[unmapped citation]"))
+
+    d_draft = project(direct_payload)
+    d_alias = direct_aliases(direct_payload, papers)
+    for old_m, new_m in d_alias.items():
+        d_draft = {k: v.replace(old_m, new_m) for k, v in d_draft.items()}
+
+    originals = {
+        "direct": {
+            "status": "ready",
+            "stage": "proposal",
+            "version": digest(direct_payload),
+            "raw_sha256": digest(direct_payload),
+            "sha256": digest(d_draft),
+            "draft": d_draft,
+            "citation_map": d_alias,
+            "unmapped_citations": [],
+        },
+        "ai_scientist": {
+            "status": "ready",
+            "stage": "proposal",
+            "version": digest(ai_payload),
+            "raw_sha256": digest(ai_payload),
+            "sha256": digest(ai_draft),
+            "draft": ai_draft,
+            "citation_map": ai_alias,
+            "unmapped_citations": ai_unres,
+        },
+    }
+    seed = {
+        "task": task.model_dump(),
+        "development": False,
+        "evidence": papers.snapshot(),
+        "originals": originals,
+    }
+    if not dry_run:
+        write_json(seed_cache, seed)
+    print(f"[HostGen:new] {tid} -> direct & ai_scientist ready (evidence={len(papers.rows)} papers)", flush=True)
+    return seed
+
+
+def _prepare_missing_ai_scientist_for_cached_topic(
+    tid: str,
+    base_seed: dict[str, Any],
+    out_dir: Path,
+    *,
+    dry_run: bool,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Generate missing ai_scientist manuscript for a cached topic (e.g. ws_09) without mutating direct's frozen evidence."""
+    ai_seed_cache = out_dir / "host_gen" / tid / "seed_ai_scientist_supplement.json"
+    if ai_seed_cache.is_file():
+        saved = load(ai_seed_cache)
+        return saved["record"], saved["seed"]
+
+    task = TaskSpec.model_validate(base_seed["task"])
+    ev = Evidence.restore(task, base_seed["evidence"])
+    ai_payload, ai_sources = _run_ai_scientist_one(task, out_dir, dry_run=dry_run)
+    ai_draft = project(ai_payload)
+    ai_alias = ai_citations(
+        ROOT,
+        tid,
+        ai_payload,
+        ev,
+        ai_sources,
+        task.prior_work,
+        extra_md_dirs=(out_dir / "ai_scientist_runs",),
+    )
+    ai_unres = sorted(set(tok.lower() for tok in _MARKERS.findall(json.dumps(ai_draft))) - ai_alias.keys())
+    ai_draft = substitute(ai_draft, _MARKERS, lambda m: ai_alias.get(m[0].lower(), "[unmapped citation]"))
+    rec = {
+        "status": "ready",
+        "stage": "proposal",
+        "version": digest(ai_payload),
+        "raw_sha256": digest(ai_payload),
+        "sha256": digest(ai_draft),
+        "draft": ai_draft,
+        "citation_map": ai_alias,
+        "unmapped_citations": ai_unres,
+    }
+    ai_seed = {
+        "task": base_seed["task"],
+        "development": base_seed.get("development", False),
+        "evidence": ev.snapshot(),
+        "originals": {"ai_scientist": rec},
+    }
+    if not dry_run:
+        write_json(ai_seed_cache, {"record": rec, "seed": ai_seed})
+    print(f"[HostGen:supplement] {tid}/ai_scientist -> ready (evidence={len(ev.rows)} papers)", flush=True)
+    return rec, ai_seed
 
 
 def _seed_cached_manuscript(
@@ -110,12 +655,6 @@ def _seed_cached_manuscript(
         raise RuntimeError(f"SHA-256 mismatch seeding A.json for {task_id}/{host}")
     if b_loaded["initial_evidence_sha256"] != c_loaded["initial_evidence_sha256"]:
         raise RuntimeError(f"Evidence SHA-256 mismatch between B and C for {task_id}/{host}")
-
-    # Copy C's usage logs for shared initial audit accounting
-    src_c_audit = src_vdir / "C" / "audit"
-    dst_c_audit = dst_vdir / "C" / "audit"
-    if src_c_audit.is_dir() and not dst_c_audit.exists():
-        shutil.copytree(src_c_audit, dst_c_audit)
 
     # Copy ONLY the initial Round-0 structured audit for (original_A, initial_packet)
     task = TaskSpec.model_validate(seed["task"])
@@ -172,7 +711,6 @@ def _compute_mechanism_stats(jobs: list[tuple[str, str, dict, dict, str]], out_d
             stats["E1_orig_keys_kept_all"] += 1
         stats["E1_new_keys_added"] += len(set(e_draft.keys()) - set(a_draft.keys()))
 
-        # Check initial structured audit for blocking confounds
         init_key = digest([a_draft, ev.packet()])
         sa_path = vdir / "structured_audits" / f"{init_key}.json"
         targets: list[str] = []
@@ -292,6 +830,18 @@ def _majority_vote_status(statuses: list[str]) -> str:
     return "tie"
 
 
+def _sum_ai_scientist_ledger_cost(out_dir: Path) -> float:
+    total = 0.0
+    runs_dir = out_dir / "ai_scientist_runs"
+    if not runs_dir.is_dir():
+        return 0.0
+    for ledger in runs_dir.glob("*/llm_*.jsonl"):
+        for line in ledger.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                total += float(json.loads(line).get("estimated_cost_usd") or 0.0)
+    return round(total, 6)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wave", choices=("wave1", "wave2", "wave3", "wave1_2"), default="wave1")
@@ -310,6 +860,7 @@ def main() -> int:
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
 
+    host_ep = _configure_endpoint(args.editor_profile, role="host_gen", dry_run=args.dry_run)
     editor_ep = _configure_endpoint(args.editor_profile, role="editor", dry_run=args.dry_run)
     audit_ep = _configure_endpoint(args.audit_profile, role="audit", dry_run=args.dry_run)
     judges = {
@@ -324,6 +875,7 @@ def main() -> int:
         "dry_run": args.dry_run,
         "code": {p.name: path_hash(p) for p in sorted((ROOT / "src/edara_mvp_eval").glob("*.py"))},
         "models": {
+            "host_generator": host_ep.model,
             "editor": editor_ep.model,
             "audit": audit_ep.model,
             "judges": {k: ep.model for k, (ep, _) in judges.items()},
@@ -334,13 +886,13 @@ def main() -> int:
     write_json(out / "manifest.json", manifest_meta)
 
     b50 = load(ROOT / "data/benchmark_50_topics.json")["topics"]
+    b50_tasks_map = {t["task_id"]: TaskSpec.model_validate(t) for t in load(ROOT / "data/tasks_benchmark50.json")}
     allowed_waves = {"wave1", "wave2"} if args.wave == "wave1_2" else {args.wave}
     selected_entries = [e for e in b50 if e["wave"] in allowed_waves]
 
     v4_inputs = load(args.v4_dir / "inputs_core.json") if (args.v4_dir / "inputs_core.json").is_file() else {}
     ext_inputs = load(args.ext15_dir / "inputs_extension.json") if (args.ext15_dir / "inputs_extension.json").is_file() else {}
 
-    # Load old results for direct old-vs-new E comparison
     old_e_lookup: dict[tuple[str, str], dict[str, Any]] = {}
     if (args.v4_dir / "core_results.json").is_file():
         for r in load(args.v4_dir / "core_results.json").get("results", []):
@@ -357,57 +909,100 @@ def main() -> int:
                 "l2t": r["unified_comparisons"]["E_vs_D"]["lit2test"],
             }
 
+    # Phase 0: Seed cached v4/ext15 manuscripts and generate missing new25 / supplement originals
+    new_entries = [e for e in selected_entries if e["task_id"] not in v4_inputs and e["task_id"] not in ext_inputs]
+    new_seeds_by_tid: dict[str, dict[str, Any]] = {}
+    if new_entries:
+        print(f"[{args.wave}] Phase 0: Generating Direct + AI-Scientist-v2 originals for {len(new_entries)} new Benchmark-50 topics...", flush=True)
+        with ThreadPoolExecutor(max_workers=min(args.workers, 3)) as pool:
+            futs = {
+                e["task_id"]: pool.submit(_prepare_new_topic_seed, b50_tasks_map[e["task_id"]], out, host_ep, dry_run=args.dry_run)
+                for e in new_entries
+            }
+            for tid, fut in futs.items():
+                new_seeds_by_tid[tid] = fut.result()
+
     wave_inputs: dict[str, Any] = {}
     jobs: list[tuple[str, str, dict[str, Any], dict[str, Any], str]] = []
     for entry in selected_entries:
         tid = entry["task_id"]
         if tid in v4_inputs:
             src_name, src_dir, seed = "v4", args.v4_dir, v4_inputs[tid]
+            wave_inputs[tid] = seed
+            for host, rec in seed["originals"].items():
+                if rec["status"] == "ready":
+                    _seed_cached_manuscript(src_dir, out, tid, host, rec, seed)
+                    jobs.append((tid, host, rec, seed, src_name))
+                elif host == "ai_scientist":
+                    ai_rec, ai_seed = _prepare_missing_ai_scientist_for_cached_topic(tid, seed, out, dry_run=args.dry_run)
+                    vdir_ai = out / "versions" / tid / "ai_scientist"
+                    vdir_ai.mkdir(parents=True, exist_ok=True)
+                    cached(vdir_ai / "A.json", lambda r=ai_rec: r)
+                    jobs.append((tid, "ai_scientist", ai_rec, ai_seed, "v4_supplement"))
         elif tid in ext_inputs:
             src_name, src_dir, seed = "ext15", args.ext15_dir, ext_inputs[tid]
+            wave_inputs[tid] = seed
+            for host, rec in seed["originals"].items():
+                if rec["status"] != "ready":
+                    continue
+                _seed_cached_manuscript(src_dir, out, tid, host, rec, seed)
+                jobs.append((tid, host, rec, seed, src_name))
         else:
-            raise FileNotFoundError(f"Topic {tid} has no frozen input snapshot yet; generate host inputs first.")
-        wave_inputs[tid] = seed
-        for host, rec in seed["originals"].items():
-            if rec["status"] != "ready":
-                continue
-            _seed_cached_manuscript(src_dir, out, tid, host, rec, seed)
-            jobs.append((tid, host, rec, seed, src_name))
+            seed = new_seeds_by_tid[tid]
+            wave_inputs[tid] = seed
+            for host, rec in seed["originals"].items():
+                if rec["status"] != "ready":
+                    continue
+                vdir_h = out / "versions" / tid / host
+                vdir_h.mkdir(parents=True, exist_ok=True)
+                cached(vdir_h / "A.json", lambda r=rec: r)
+                jobs.append((tid, host, rec, seed, "new25"))
 
     write_json(out / f"inputs_{args.wave}.json", wave_inputs)
-    print(f"[{args.wave}] Seeded {len(selected_entries)} topics, {len(jobs)} ready manuscripts.", flush=True)
+    print(f"[{args.wave}] Prepared {len(selected_entries)} topics, {len(jobs)} ready manuscripts.", flush=True)
 
-    # Phase 1: Run upgraded Arm E
-    def _run_one_e(item: tuple[str, str, dict[str, Any], dict[str, Any], str]) -> dict[str, Any]:
+    # Phase 1: Run Arms B, C, D (cached for v4/ext15; executed for new25/supplement) + upgraded Arm E
+    def _run_one_arms(item: tuple[str, str, dict[str, Any], dict[str, Any], str]) -> dict[str, Any]:
         tid, host, rec, seed, src_name = item
         job = f"{tid}/{host}"
         task = TaskSpec.model_validate(seed["task"])
         vdir = out / "versions" / tid / host
-        lim = LIMITS["full"]
-        auditor = _make_runner(audit_ep, vdir / "E" / "audit", job, "E", "audit", lim["audit"], dry_run=args.dry_run)
-        editor = _make_runner(editor_ep, vdir / "E" / "editor", job, "E", "editor", lim["editor"], dry_run=args.dry_run)
-        editor_conf = _make_runner(editor_ep, vdir / "E" / "editor_confound", job, "E", "editor", lim["rounds"], dry_run=args.dry_run)
-        e_row = cached(
-            vdir / "E.json",
-            lambda: run_arm(
-                "E",
-                rec["draft"],
-                task,
-                seed["evidence"],
-                auditor,
-                editor,
-                out / "lookup" / tid / host,
-                audit_cache=vdir / "structured_audits",
-                editor_confound=editor_conf,
-            ),
-        )
+        audit_cache = vdir / "structured_audits"
+        audit_cache.mkdir(parents=True, exist_ok=True)
+        lookup_dir = out / "lookup" / tid / host
+        e_row: dict[str, Any] = {}
+        for arm in ("B", "C", "D", "E"):
+            lim = LIMITS["full" if arm in ("D", "E") else "local"]
+            auditor = _make_runner(audit_ep, vdir / arm / "audit", job, arm, "audit", lim["audit"], dry_run=args.dry_run)
+            editor = _make_runner(editor_ep, vdir / arm / "editor", job, arm, "editor", lim["editor"], dry_run=args.dry_run)
+            editor_conf = (
+                _make_runner(editor_ep, vdir / arm / "editor_confound", job, arm, "editor", lim["rounds"], dry_run=args.dry_run)
+                if arm in ("C", "E")
+                else None
+            )
+            res = cached(
+                vdir / f"{arm}.json",
+                lambda a=arm, au=auditor, ed=editor, ec=editor_conf: run_arm(
+                    a,
+                    rec["draft"],
+                    task,
+                    seed["evidence"],
+                    au,
+                    ed,
+                    lookup_dir,
+                    audit_cache=audit_cache if a in ("C", "E") else None,
+                    editor_confound=ec,
+                ),
+            )
+            if arm == "E":
+                e_row = res
         acts = [h.get("action") for h in (e_row.get("history") or [])]
         print(f"[Arm E] {job} ({src_name}) -> status={e_row['status']} actions={acts}", flush=True)
         return e_row
 
-    print(f"[{args.wave}] Phase 1: Running upgraded Arm E across {len(jobs)} manuscripts (workers={args.workers})...", flush=True)
+    print(f"[{args.wave}] Phase 1: Running trial arms (B/C/D where needed + upgraded E) across {len(jobs)} manuscripts (workers={args.workers})...", flush=True)
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        list(pool.map(_run_one_e, jobs))
+        list(pool.map(_run_one_arms, jobs))
 
     # Phase 2: Primary Unified Evaluation (Qwen3.8-flash: Lit2Test + AlphaIdeaBench + ClaimNov)
     qwen_ep, qwen_workers = judges["qwen3.8-flash"]
@@ -565,6 +1160,9 @@ def main() -> int:
 
     mech_stats = _compute_mechanism_stats(jobs, out)
     metered = {k: dict(v) for k, v in usage(out).items()}
+    ai_sci_gen_cost = _sum_ai_scientist_ledger_cost(out)
+    if ai_sci_gen_cost > 0:
+        metered["ai_scientist_ideation"] = {"cost_usd": ai_sci_gen_cost}
 
     write_json(out / f"{args.wave}_results.json", {"wave": args.wave, "results": primary_rows})
     write_json(out / f"{args.wave}_mechanism_stats.json", mech_stats)
@@ -581,7 +1179,6 @@ def main() -> int:
     }
     write_json(out / f"{args.wave}_crossjudge_3way.json", cross_payload)
 
-    # Render clean Markdown report
     def _fmt(v: Any) -> str:
         if v is None:
             return "—"
@@ -590,7 +1187,7 @@ def main() -> int:
         return f"{v:+.3f}"
 
     md = [
-        f"# Benchmark-50 `{args.wave}` Canary Evaluation Report (`N={len(per_ms)}` Manuscripts across `{len(selected_entries)}` Domains)",
+        f"# Benchmark-50 `{args.wave}` Multi-Host Evaluation Report (`N={len(per_ms)}` Manuscripts across `{len(selected_entries)}` Domains)",
         "",
         "## 1. Aggregate `E_vs_D` Across 3 Calibrated Blind Judges",
         "",
@@ -618,47 +1215,55 @@ def main() -> int:
         "",
         f"- **ClaimNov Compositional Novelty Delta**: `{_fmt(unified_qwen_summary.get('claimnov_novelty_delta'))}`",
         f"- **AlphaIdeaBench Deltas**: `testability={_fmt(aib_d.get('testability'))}`, `context_grounding={_fmt(aib_d.get('context_grounding'))}`, `verification_feasibility={_fmt(aib_d.get('verification_feasibility'))}`, `method_novelty={_fmt(aib_d.get('method_novelty'))}`, `insight_novelty={_fmt(aib_d.get('insight_novelty'))}`",
-        f"- **Process Hype Defects**: `D={mech_stats['E2_process_hype']['D']['manuscripts']} ms ({mech_stats['E2_process_hype']['D']['occurrences']})` -> `E={mech_stats['E2_process_hype']['E']['manuscripts']} ms ({mech_stats['E2_process_hype']['E']['occurrences']})`",
-        f"- **Unverified External Entities**: `D={mech_stats['E2_unverified_entities']['D']['total']}` -> `E={mech_stats['E2_unverified_entities']['E']['total']}`",
+        f"- **Process Hype Defects**: `A={mech_stats['E2_process_hype']['A']['occurrences']} -> D={mech_stats['E2_process_hype']['D']['occurrences']} -> E={mech_stats['E2_process_hype']['E']['occurrences']}`",
+        f"- **Unverified External Entities**: `A={mech_stats['E2_unverified_entities']['A']['total']} -> D={mech_stats['E2_unverified_entities']['D']['total']} -> E={mech_stats['E2_unverified_entities']['E']['total']}`",
         f"- **Blocking Confounds Addressed**: `D={mech_stats['E3_confounds']['D_addressed']}/{mech_stats['E3_confounds']['targets_required_n']}` -> `E={mech_stats['E3_confounds']['E_addressed']}/{mech_stats['E3_confounds']['targets_required_n']}`",
         f"- **Trajectory Integrity (`E`)**: `errors={mech_stats['E7_trajectory']['E_error_n']}`, `clean_closed_loop={mech_stats['E7_trajectory']['E_clean_closed_loop_n']}/{len(per_ms)}`, `consolidated={mech_stats['E7_trajectory']['E_consolidated_n']}`, `orig_keys_kept={mech_stats['E1_orig_keys_kept_all']}/{len(per_ms)}`",
         "",
-        "## 3. By Host (`3-Judge Majority`)",
+        "## 3. By Host (`Qwen3.8-flash Primary` & `3-Judge Majority`)",
         "",
-        "| Host | n | Win / Loss / Tie | Topic Net Wins | Score Sum Delta |",
-        "| --- | :---: | :---: | ---: | ---: |",
+        "| Host | n | Qwen W/L/T (`Net`, `Δsum`) | 3-Judge Majority W/L/T (`Net`, `Δsum`) |",
+        "| --- | :---: | :---: | :---: |",
     ]
     for h_name, h_map in by_host_summaries.items():
         ms_h = [m for m in per_ms if m["host"] == h_name]
-        s = h_map["majority_3way"]
-        c = s["counts"]
+        sq = h_map["qwen3.8-flash"]
+        cq = sq["counts"]
+        sm = h_map["majority_3way"]
+        cm = sm["counts"]
         md.append(
-            f"| `{h_name}` | {len(ms_h)} | `{c.get('win',0)}/{c.get('loss',0)}/{c.get('tie',0)}` | `{_fmt(s['topic_net_wins'])}` | `{_fmt(s['score_sum_delta'])}` |"
+            f"| `{h_name}` | {len(ms_h)} | `{cq.get('win',0)}/{cq.get('loss',0)}/{cq.get('tie',0)}` (`{_fmt(sq['topic_net_wins'])}`, `{_fmt(sq['score_sum_delta'])}`) "
+            f"| `{cm.get('win',0)}/{cm.get('loss',0)}/{cm.get('tie',0)}` (`{_fmt(sm['topic_net_wins'])}`, `{_fmt(sm['score_sum_delta'])}`) |"
         )
 
     md += [
         "",
-        "## 4. Manuscript-by-Manuscript Old `E` vs Upgraded `E` Comparison",
+        "## 4. Manuscript-by-Manuscript Breakdown",
         "",
-        "| Topic | Host | Old `E` Status / Verdict (`Δsum`) | New `E` Trajectory | Qwen | DeepSeek | GLM | **Majority (`Δsum`)** |",
-        "| --- | :---: | --- | --- | :---: | :---: | :---: | :---: |",
+        "| Topic | Host | Cohort | `E` Trajectory | Qwen | DeepSeek | GLM | **Majority (`Δsum`)** |",
+        "| --- | :---: | :---: | --- | :---: | :---: | :---: | :---: |",
     ]
     for m in per_ms:
-        old_str = f"`{m['old_e_status']}` / `{m['old_primary_status']}` (`{_fmt(m['old_primary_sum_delta'])}`)"
         traj_str = f"`{m['e_status']}` `{m['e_actions']}`"
         q_st = m["judges"]["qwen3.8-flash"]["status"]
         d_st = m["judges"]["deepseek-v4.1-flash"]["status"]
         g_st = m["judges"]["GLM-5.3-flash"]["status"]
         maj = m["judges"]["majority_3way"]
         md.append(
-            f"| `{m['task_id'][:34]}` | `{m['host']}` | {old_str} | {traj_str} | `{q_st}` | `{d_st}` | `{g_st}` | **`{maj['status']}` (`{_fmt(maj['score_sum_delta'])}`)** |"
+            f"| `{m['task_id'][:34]}` | `{m['host']}` | `{m['source_cohort']}` | {traj_str} | `{q_st}` | `{d_st}` | `{g_st}` | **`{maj['status']}` (`{_fmt(maj['score_sum_delta'])}`)** |"
         )
 
-    e_cost = metered.get("E", {}).get("cost_usd", 0.0)
-    j_cost = metered.get("blind", {}).get("cost_usd", 0.0)
+    e_cost = float(metered.get("E", {}).get("cost_usd", 0.0))
+    j_cost = float(metered.get("blind", {}).get("cost_usd", 0.0))
+    other_cost = sum(
+        float(v.get("cost_usd", 0.0))
+        for k, v in metered.items()
+        if k not in ("E", "blind") and isinstance(v, dict)
+    )
+    tot_cost = e_cost + j_cost + other_cost
     md += [
         "",
-        f"- **Metered Cost (USD)**: `Arm E = ${e_cost:.4f}`, `3-Judge Blind Eval = ${j_cost:.4f}`, `Total = ${e_cost + j_cost:.4f}`",
+        f"- **Metered Cost (USD)**: `New A/B/C/D = ${other_cost:.4f}`, `Arm E = ${e_cost:.4f}`, `3-Judge Blind Eval = ${j_cost:.4f}`, `Total = ${tot_cost:.4f}`",
     ]
     (out / f"{args.wave}_summary.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print(f"[{args.wave}] Completed! Summary written to {out / f'{args.wave}_summary.md'}", flush=True)
