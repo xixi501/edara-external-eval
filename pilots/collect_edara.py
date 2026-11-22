@@ -4,21 +4,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sqlite3
 from pathlib import Path
 
-WORK = Path("/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval")
+WORK = Path(os.environ.get("EDARA_EVAL_ROOT") or Path(__file__).resolve().parents[1])
+REFS = Path(os.environ.get("EDARA_REFS_ROOT") or WORK.parent)
 NATIVE15 = WORK / "outputs/hosts_v1/native15"
 
 LEGACY = {
-    "aiib-82": Path("/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/aiib82_arxiv_run/cases/"
-                    "aiib-82/topics/the-topic-of-this-paper-is-open-vocabula-b3161cec/research.db"),
-    "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40": Path(
-        "/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/"
-        "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40/topics/"
-        "propose-one-concrete-next-step-research--5a8e02ac/research.db"),
-    "ws_02_agentic_ai": Path("/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/"
-                             "ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/research.db"),
+    "aiib-82": REFS / "pilot3_runs/edara/aiib82_arxiv_run/cases/aiib-82/topics/the-topic-of-this-paper-is-open-vocabula-b3161cec/research.db",
+    "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40": (
+        REFS / "pilot3_runs/edara/smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40/topics/propose-one-concrete-next-step-research--5a8e02ac/research.db"
+    ),
+    "ws_02_agentic_ai": REFS / "pilot3_runs/edara/ws_02_agentic_ai/topics/towards-agentic-ai-for-science-hypothesi-18263a5e/research.db",
 }
 RANK = {"plan_reviewed": 3, "proposal_reviewed": 2, "inconclusive": 1}
 

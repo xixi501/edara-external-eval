@@ -4,7 +4,8 @@
   <img src="https://img.shields.io/badge/python-3.10%2B-245fce?style=flat-square" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/middleware-Host--Agnostic%20Plugin-257452?style=flat-square" alt="Host-Agnostic Plugin">
   <img src="https://img.shields.io/badge/benchmark-50%20Topics%20%C3%97%2010%20Domains-1d4aa4?style=flat-square" alt="Benchmark-50">
-  <img src="https://img.shields.io/badge/tests-130%20passed-2da44e?style=flat-square" alt="130 Tests Passed">
+  <img src="https://img.shields.io/badge/tests-131%20passed-2da44e?style=flat-square" alt="131 Tests Passed">
+  <img src="https://img.shields.io/badge/license-MIT-5e6c82?style=flat-square" alt="MIT License">
 </p>
 
 **`edara-external-eval`** 是从主框架 [`xixi501/edara`](https://github.com/xixi501/edara) 提炼出的**零侵入、跨宿主通用的科研提案认知治理外挂与统一盲评基准（Trustworthy & Compositional Novelty Middleware）**。
@@ -98,7 +99,15 @@ PYTHONPATH=src python -m edara_mvp_eval.cli govern \
     - 未核验外部幻觉实体：从 `D: 367 处` 压降至 **`E: 169 处`（`-54.0%`）**；
     - 原宿主 JSON 字段保留率：**`68 / 68`（`100%`）**，混杂判别臂准确落入实验设计字段率 **`94.7%`**。
 - **Unified `v4` 核心队列（`N=38`）**（[`results/unified_pilot_20261119_v4/core_summary.md`](results/unified_pilot_20261119_v4/core_summary.md)）：`E_vs_D` **`25 胜 / 7 负 / 6 平`**（净胜率 **`+0.489`**，总分差 **`+1.383`**）；其中 `AI-Scientist` 宿主 **`13 胜 / 1 负 / 0 平`（`+0.857`）**，`E-DARA` 宿主 **`7 胜 / 1 负 / 1 平`（`+0.667`）**。
-- **固定 50 题跨 10 领域主基准规范**：详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)（正在分波次扩展 `EvoScientist` 等多范式宿主对照）。
+- **固定 50 题跨 10 领域主基准规范**：详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)，最新分波次跨宿主（含 `AI-Scientist-v2` 与 `EvoScientist v2.1.2`）自动汇总图表见 [`results/paper_ready/PAPER_SUMMARY_REPORT.md`](results/paper_ready/PAPER_SUMMARY_REPORT.md)。
+
+### 一键导出论文 LaTeX 三线表与矢量图
+
+完成任意波次评测后，运行以下命令即可零成本离线合并所有已完成波次与四大宿主，生成 `booktabs` LaTeX 表格（`.tex`）与高清 SVG 矢量图：
+
+```bash
+python pilots/generate_paper_artifacts.py --results-dir results --out-dir results/paper_ready
+```
 
 ---
 

@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 
-WORK = Path("/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval")
+WORK = Path(os.environ.get("EDARA_EVAL_ROOT") or Path(__file__).resolve().parents[1])
 AI = WORK / "outputs/hosts_v1/ai_scientist_v1"
 OUT = WORK / "outputs/hosts_v1/ai_scientist_15_evidence.json"
 

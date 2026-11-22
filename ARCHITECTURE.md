@@ -1,125 +1,67 @@
-# 架构说明
+# 系统架构说明（Architecture）
 
-本仓库包含两个互相配合的产物：
+`edara-external-eval` 包含两个紧密协同的核心子系统：
 
-1. **同稿配对评测框架**：在冻结原稿上派生处理臂与对照臂，盲评三个轴，汇总配对效果。
-2. **可信新颖性治理外挂（middleware）**：对任意提案做证据、缺口、规格与混淆项审计，再做有界修补，可挂到不同宿主。
+1. **宿主无关的可信与组合新颖性治理中间件（Trustworthy & Compositional Novelty Middleware）**：无需侵入上游科研 Agent 内部状态，对任意 JSON 研究提案进行句子级证据核查、外部未核验实体剥离、假设特异同源混杂对照臂诊断、统计功效校准与 Schema 无损修订。
+2. **同稿五臂对称对照与三评委盲评套件（Benchmark-50 Unified Evaluation Suite）**：在固定 10 大领域 × 50 道课题上，对同一份冻结原稿派生对称预算对照臂，由三位事前校准的独立盲评模型进行正反双向去偏评审。
 
-两者共享同一套数据契约和模型客户端；评测框架把外挂当作被检验的组件之一。
+---
 
-## 1. 数据流
+## 1. 端到端数据流与同稿五臂协议
 
-```
-                   data/inputs_core.json（冻结的 38 份原稿 + 证据包）
-                                   │
-                         ┌─────────┴─────────┐
-                         │  paired_trial.py  │  冻结 A，派生 B/C/D/E，锁预算
-                         └─────────┬─────────┘
-              ┌──────────────────┼───────────────────┐
-              ▼                  ▼                   ▼
-      B 常规审阅+局部补丁   C 外挂审计+局部补丁   D 自检索改写 / E 完整路由
-              │                  │                   │
-              └──────────┬───────┴──────────┬────────┘
-                         ▼                  ▼
-                 paired_review.py     stage_b_meter.py
-               （三轴盲评、三次投票） （逐请求记录、可重放）
-                         │
-                         ▼
-                 core_results.json → core_summary.md/json → results/
+```mermaid
+flowchart TD
+    T["Benchmark-50 课题与预截止日期文献池<br/>(25 Lit2Test + 25 AlphaIdeaBench · 10 Domains)"] --> H["四大上游宿主生成冻结原稿 (Arm A)<br/>Direct LLM · AI-Scientist-v2 · EvoScientist v2.1.2 · E-DARA"]
+    H --> B["Arm B：单轮常规审阅 + 局部补丁 (≤4 处)"]
+    H --> C["Arm C：单轮结构化认知审计 + 局部补丁 (C_vs_B 消融)"]
+    H --> D["Arm D：多轮自检索重写强基线<br/>(≤3 轮 · ≤2 次检索 · 同输出上限)"]
+    H --> E["Arm E：完整闭环治理中间件<br/>(guided_revise / seek_evidence / local_patch / clarify / regenerate)"]
+    D --> P["共享检索文献并集与匿名化映射 (shared_full_pool)"]
+    E --> P
+    P --> J["三独立裁判正反双向盲评 (E_vs_D)<br/>Qwen3.8-flash · DeepSeek-v4.1-flash · GLM-5.3-flash"]
+    J --> R["一键论文制表与矢量可视化 (paper_artifacts.py)<br/>LaTeX booktabs 三线表 · 10 领域热力图 · 机制台账"]
 ```
 
-## 2. 分层与模块职责
+---
 
-### 2.1 契约层
+## 2. 模块分层职责
 
-| 模块 | 职责 |
-|---|---|
-| `schemas.py` | 全仓共享的 Pydantic 契约：任务、提案、审计结果、判定项、费用记录。任何跨模块的数据结构先在这里定义。 |
-| `paired_inputs.py` | 冻结原稿与证据包：加载 `inputs_*.json`、正文哈希、证据准入（日期、去重、来源）。 |
-| `tasks_loader.py` | 15 题三轨任务集的构建与加载。 |
-
-### 2.2 治理外挂
+### 2.1 公共接入与跨宿主适配层
 
 | 模块 | 职责 |
-|---|---|
-| `epistemic_audit.py` | 审计总入口 `run_full_audit`：三态证据审计、缺口前提的反例检索、ClaimNov、AlphaIdeaBench 轴、完整性 gate，最后组装 `FullAuditBundle`。 |
-| `confound_audit.py` | 假设特异性混淆项审计：列出能产生同一观测的替代解释与能分开二者的实验臂；缺失项转成规格缺陷并排在诊断第一位。 |
-| `spec_locator.py` | IdeaAMBIG 式规格缺陷定位：阈值、数据划分、基线与消融、失败区间、指标与判败规则。 |
-| `claimnov_adapter.py` | ClaimNov 的运行时适配：串行抽取、JSON 容错、BM25 回退。 |
-| `governance.py` | 贡献审计：核心/组件、已覆盖/有差异/未决。 |
-| `feedback.py` | 五动作路由（搜证/澄清/局部修补/重构/保留）与状态机。 |
-| `middleware.py` | 外挂主流程：审计 → 有界修补 → 重新审计；诊断字典 `_build_diag` 是编辑器的唯一输入。 |
+| :--- | :--- |
+| `plugin.py` | 宿主无关 Python API 入口 `govern_proposal()`，支持一行代码接入任意自定义 JSON 提案字典。 |
+| `cli.py` | `edara-mvp` 命令行入口（`govern` 单稿治理、基准任务准备与离线干跑校验）。 |
+| `host_adapter.py` | 跨宿主字段语义角色识别（自动适配 `Direct`、`AI-Scientist-v2`、`EvoScientist`、`E-DARA` 的异构键名）、原生字段 100% 保留护栏、文献锚点与对照设计防丢失校验。 |
+| `schemas.py` | 全仓统一 Pydantic 数据契约：课题规范、文献条目、认知审计包、混杂诊断与费用计量记录。 |
 
-### 2.3 评测框架
+### 2.2 认识论与实验设计审计层
 
 | 模块 | 职责 |
-|---|---|
-| `paired_trial.py` | 五臂试验主流程：预算、缓存、模型端点、逐稿判定、汇总。`TrialRunner` 是带预算和重放的客户端。 |
-| `paired_review.py` | 三轴判读：诚实 `(R−E)/K`、可信 0–3、新颖 −1/0/+1；机械归一化、三次投票、配对差判定。 |
-| `paired_calibration.py` | 54 个方向已知的校准案例（每轴 12 实质 + 6 表达）。 |
-| `stage_b_meter.py` | 逐请求记录、所有权、重启后可重放；费用按请求归属。 |
-| `stage_b_evidence.py` | 冻结证据的版本化准备与摘要。 |
-| `stage_b_review.py` | 早期整篇判定器（三轴 v2/v3 rubric），保留用于历史对照。 |
-| `baselines.py` | 自省改写、检索改写等对照实现。 |
-| `pairwise.py` | Lit2Test 式双向换序盲评。 |
-| `reeval.py` | 只重评、不重新生成。 |
+| :--- | :--- |
+| `epistemic_audit.py` | 综合审计主入口 `run_full_audit`：协调三态认识论核查、文献缺口反例检验、规格完整性与组合新颖性审计。 |
+| `factual_audit.py` | 句子级事实归因核查、未入库外部幻觉实体检测（`audit_unverified_entities`）、跨字段定量阈值冲突检查及虚假流程词清理。 |
+| `confound_audit.py` | 假设特异混杂变量审计：识别能产生同等预期现象的同源替代解释，并生成最小可判别对照臂（`discriminating_control`）。 |
+| `claimnov_adapter.py` | 组合新颖度（`ClaimNov`）提取与比对适配，内置离线 BM25 回退。 |
+| `governance.py` | 核心主张与组件级文献覆盖度判定及预截止日期准入规则（`admissible`）。 |
 
-### 2.4 基础层
+### 2.3 有界闭环路由与同稿评测层
 
 | 模块 | 职责 |
-|---|---|
-| `llm_client.py` | OpenAI 兼容客户端：ModelProfile、环境变量、超时、重试、费用计量、离线 fixture。 |
-| `stage_b_evidence.py` / `literature_scout.py` | 截止日前文献检索与证据准入，防泄漏。 |
-| `canonical_render.py` / `artifact_export.py` | 把不同宿主的产物渲染到同一模板，并把原生引用替换为可解析的匿名编号。 |
-| `cli.py` | 历史 15 题 MVP 的 CLI 入口；配对试验用 `pilots/run_paired_isolated.py`。 |
+| :--- | :--- |
+| `feedback.py` | 五动作有界状态机（`guided_revise`、`seek_evidence`、`local_patch`、`clarify`、`regenerate`）及修补后一致性合并触发器。 |
+| `middleware.py` | 审计诊断组装（`_build_diag`）与多轮证据反馈执行器。 |
+| `paired_trial.py` | 同稿五臂（`A/B/C/D/E`）受控预算试验引擎、核心数学机制保护、统计功效匹配与逐请求计量客户端 `TrialRunner`。 |
+| `unified_eval.py` | 三轴统一盲评器：`Lit2Test` 正反序折叠五维对比、`AlphaIdeaBench` 5 维量表与 `ClaimNov` 组合新颖度差值。 |
+| `tasks_loader.py` | 跨 10 领域对称 **Benchmark-50** 加载器及防泄漏文献边界导出。 |
+| `paper_artifacts.py` | 跨波次结果去重聚合、10,000 次题目加权 Bootstrap 置信区间计算、LaTeX `booktabs` 三线表与 SVG 矢量图生成。 |
 
-## 3. 五臂与两个比较
+---
 
-| 臂 | 输入 | 处理 | 比较 |
-|---|---|---|---|
-| A | 冻结原稿 | 无 | 参照 |
-| B | 原稿 + 通用审阅 | 局部补丁 ≤4 | C 的对照 |
-| C | 原稿 + 外挂审计 | 局部补丁 ≤4 + 混淆项强制追加 | **C − B** |
-| D | 原稿 + 自检索 | 整稿改写 ≤3 轮、2 次检索 | E 的对照 |
-| E | 原稿 + 完整外挂 | 五动作路由，同 D 预算 | **E − D** |
+## 3. 核心实验公平性不变量
 
-B/C 共用编辑器、提示词、证据包与四处上限；D/E 共用检索入口、整稿改写权限与资源上限。评委看不到臂别、诊断与编辑理由。
-
-## 4. 关键不变量
-
-1. **原稿冻结**：正文哈希写入 `inputs_*.json`，任何改动直接报错。
-2. **同题配对**：两个臂必须来自同一份原稿；B/C 的初始证据哈希必须一致。
-3. **盲评**：评委只看匿名稿、任务和统一证据包。
-4. **三次投票**：正序、倒序、正序重采样；多数配对差，不一致记未决。
-5. **预算可核验**：每个请求落盘，`verify_paired_trial.py` 独立核对原稿、证据、编辑/调用上限。
-6. **失败保留**：改稿失败、预算耗尽保留最后有效稿并记录，不静默丢弃。
-7. **协议绑定**：manifest 记录协议版本与代码哈希；改动必须开新目录。
-8. **不覆盖历史**：旧 run、旧响应、旧费用不改写。
-
-## 5. 目录
-
-```
-src/edara_mvp_eval/   外挂与评测实现（见第 2 节）
-pilots/               运行入口：freeze/calibrate/core 与独立核验
-tests/                单元测试（108 项）
-analyses/             历史分析脚本与报告
-docs/                 协议、贡献证据表、历史交接、文档索引
-data/                 冻结输入、校准案例、任务清单
-results/              正式试验的汇总、逐稿判定、核验
-configs/              两个模型端点的 profile（不含凭据）
-```
-
-## 6. 从哪里开始读
-
-1. `README.md`：项目定位与复现命令。
-2. `HANDOFF.md`：当前状态、结论、未决与运行手册。
-3. 本文件：模块与数据流。
-4. `docs/EVAL_PROTOCOL_V1_2_ZH.md`：判读规则的具体定义。
-5. `results/RESULTS_20261118_ZH.md`：本轮结果与解读。
-
-## 7. 已知边界
-
-- 单一评委模型，跨模型泛化未验证。
-- 诚实轴校准不稳定，本轮没有正式数字。
-- E 的整稿重构与 D 的差异未做动作消融。
-- 原始运行目录（逐请求响应、审计缓存）不随仓库分发。
+1. **原稿哈希锁定**：所有对比臂（`B/C/D/E`）严格从同一份 SHA-256 校验通过的宿主原稿 `Arm A` 出发。
+2. **模型与资源对称**：`Arm D`（强基线）与 `Arm E`（治理中间件）锁死同一编辑器底座、同一温度、同一 `thinking` 开关、同一最大轮数（`≤3`）、同一文献检索上限（`≤2`）与单次输出上限（`4096` tokens）。
+3. **证据池对称盲评**：盲评 `E_vs_D` 时统一合并 `D` 与 `E` 检索到的文献并集（`shared_full_pool`），统一重映射匿名引用编号 `[Sxxxx]`，评委不可见臂别标识与修订轨迹。
+4. **双向换序消偏**：每对比较均执行 `forward (D vs E)` 与 `reverse (E vs D)`；凡正反序结论不一致（`order_sensitive`）一律保守折算为平局（`tie`）。
+5. **角色独立与多裁判交叉**：主裁判 `Qwen3.8-flash` 与生成/编辑（`DeepSeek-v4.1-flash`）、内部审计（`GLM-5.3-flash`）完全跨模型家族隔离，并同步报告三评委多数投票（`3-Judge Majority Vote`）。

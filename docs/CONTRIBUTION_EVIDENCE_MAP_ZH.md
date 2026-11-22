@@ -41,13 +41,13 @@
 
 ### 对应代码入口
 
-- 原生总体结构：[ARCHITECTURE.md](/workspace/edara/repos/framework/docs/ARCHITECTURE.md)。
-- 原生认知边界、分阶段要求与独立评审：[reviews.py](/workspace/edara/repos/framework/src/edara/framework/research/reviews.py)、[stage_rubrics_v8.py](/workspace/edara/repos/framework/src/edara/framework/design/stage_rubrics_v8.py)、[stage_rubrics_v9.py](/workspace/edara/repos/framework/src/edara/framework/design/stage_rubrics_v9.py)。
-- 原生新颖性比较：[candidate_comparison.py](/workspace/edara/repos/framework/src/edara/framework/research/candidate_comparison.py)、[idea_portfolio.py](/workspace/edara/repos/framework/src/edara/framework/research/idea_portfolio.py)。两种协议要依据具体 run 的冻结配置区分，不能把所有能力累加成每次都启用。
-- 原生问题路由：[repair_routing.py](/workspace/edara/repos/framework/src/edara/framework/research/repair_routing.py)。
-- 外挂三态审计与结构：[epistemic_audit.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/epistemic_audit.py)、[schemas.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/schemas.py)。
-- 外挂贡献审计、干预与反馈：[governance.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/governance.py)、[middleware.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/middleware.py)、[feedback.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/feedback.py)。
-- 外挂现有评测入口：[stage_b.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/stage_b.py)、[stage_b_review.py](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/src/edara_mvp_eval/stage_b_review.py)。
+- 原生总体结构：[`xixi501/edara` `docs/ARCHITECTURE.md`](https://github.com/xixi501/edara/blob/main/docs/ARCHITECTURE.md)。
+- 原生认知边界、分阶段要求与独立评审：`src/edara/framework/research/reviews.py`、`src/edara/framework/design/stage_rubrics_v8.py`、`src/edara/framework/design/stage_rubrics_v9.py`（位于主框架仓库 `xixi501/edara`）。
+- 原生新颖性比较：`src/edara/framework/research/candidate_comparison.py`、`src/edara/framework/research/idea_portfolio.py`（位于主框架仓库 `xixi501/edara`）。两种协议要依据具体 run 的冻结配置区分，不能把所有能力累加成每次都启用。
+- 原生问题路由：`src/edara/framework/research/repair_routing.py`（位于主框架仓库 `xixi501/edara`）。
+- 外挂三态审计与结构：[epistemic_audit.py](../src/edara_mvp_eval/epistemic_audit.py)、[schemas.py](../src/edara_mvp_eval/schemas.py)。
+- 外挂贡献审计、干预与反馈：[governance.py](../src/edara_mvp_eval/governance.py)、[middleware.py](../src/edara_mvp_eval/middleware.py)、[feedback.py](../src/edara_mvp_eval/feedback.py)。
+- 外挂评测与论文汇总入口：[paired_trial.py](../src/edara_mvp_eval/paired_trial.py)、[unified_eval.py](../src/edara_mvp_eval/unified_eval.py)、[paper_artifacts.py](../src/edara_mvp_eval/paper_artifacts.py)。
 
 ## 3. 论文贡献与现有证据
 
@@ -69,7 +69,7 @@
 - 协议记录指出该轮 24 个最终产物的贡献审计均无合格准入证据；Strict Gate 全为零、ClaimNov veto 全为零。不能据此确认新颖性或进行稳定门禁排序。
 - 这验证了外挂对不同来源文本的处理，不等于外部 Agent 已在自身工作流中响应外挂反馈。
 
-来源：[v4 summary](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/pilot3_full_compare_v4/summary.md)、[v4 results](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/pilot3_full_compare_v4/results.json)、[Stage B 协议中的历史指标解释](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/STAGE_B_PROTOCOL.md)。本次直接从 results 核对了六组过度断言总数。
+来源：历史运行归档 `outputs/pilot3_full_compare_v4/`（`summary.md`、`results.json`）。本次直接从 results 核对了六组过度断言总数。
 
 ### Stage B 十五题：同一基础生成器上的五组比较
 
@@ -87,7 +87,7 @@
 
 这轮已完成 75 份候选评价，但没有 E-DARA 或外部科研 Agent 的十五题原生比较。它也不是跨基础模型实验。不同题目来源不等于不同宿主。
 
-来源：[结项报告](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/REPORT_ZH.md)、[逐题结果](/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval/outputs/mvp15_ablation_v2/results.json)。
+来源：历史运行归档 `outputs/mvp15_ablation_v2/`（`REPORT_ZH.md`、`results.json`）。
 
 ### 原生 E-DARA 产物与资格对应（后续核对已补齐）
 
@@ -98,7 +98,7 @@
 - Workshop 的旧 round6 日志为预算暂停；后续 `ws-budget-resume.log`、对应库与交付快照一致记录 `plan_reviewed` / `qualified_plan_available`，已完成原生 Plan 闭环。当前三题外评仍使用 Proposal，不能解释为三个终态 Plan 的比较。
 - 论文应分别报告生成产物、审查完成、原生资格与外部质量；内部严格通过不是全部样本能否接受外评的前提。
 
-来源：[导入产物](/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/edara_outputs.jsonl)、[原生导出检查器](/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/collect.py)、[SmallARI 日志](/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/smallari-round3.log)、[Workshop 日志](/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/ws-round6.log)、[AIIB outcome](/workspace/edara/staging/04_external_eval_refs/pilot3_runs/edara/aiib82_arxiv_run2/outcomes/aiib-82.json)。
+来源：历史原生运行归档 `pilot3_runs/edara/`（`edara_outputs.jsonl`、`collect.py`、`smallari-round3.log`、`ws-round6.log`、`aiib82_arxiv_run2/outcomes/aiib-82.json`）。
 
 ## 4. 应如何解释“从系统提炼外挂”
 

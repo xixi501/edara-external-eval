@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -22,7 +23,8 @@ from edara.framework.policy.runtime import build, freeze_runtime_config, load_pr
 from edara.framework.scout.boundary import FILE, validate
 from edara.framework.ui.policy_worker import validate_research_preparation
 
-AIIB_INPUTS = Path("/workspace/edara/data/aiib-pilot-20261105/prepared/inputs")
+WORKSPACE = Path(os.environ.get("EDARA_WORKSPACE") or Path(__file__).resolve().parents[3])
+AIIB_INPUTS = Path(os.environ.get("AIIB_INPUTS_DIR") or (WORKSPACE / "data/aiib-pilot-20261105/prepared/inputs"))
 
 
 def sha256(path: Path) -> str:

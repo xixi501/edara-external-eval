@@ -1,0 +1,151 @@
+{
+  "waves_included": [
+    "wave1"
+  ],
+  "n_topics": 10,
+  "n_manuscripts": 32,
+  "overall_qwen": {
+    "n_manuscripts": 32,
+    "n_topics": 10,
+    "win": 16,
+    "loss": 8,
+    "tie": 8,
+    "topic_net_wins": 0.2583,
+    "topic_net_wins_ci95": [
+      0.0917,
+      0.4167
+    ],
+    "score_sum_delta": 1.35,
+    "score_sum_delta_ci95": [
+      0.6917,
+      1.9833
+    ]
+  },
+  "overall_majority": {
+    "n_manuscripts": 32,
+    "n_topics": 10,
+    "win": 12,
+    "loss": 9,
+    "tie": 11,
+    "topic_net_wins": 0.0917,
+    "topic_net_wins_ci95": [
+      -0.1167,
+      0.3
+    ],
+    "score_sum_delta": 0.7819,
+    "score_sum_delta_ci95": [
+      0.0486,
+      1.4917
+    ]
+  },
+  "external_agents_qwen": {
+    "n_manuscripts": 20,
+    "n_topics": 10,
+    "win": 11,
+    "loss": 3,
+    "tie": 6,
+    "topic_net_wins": 0.4,
+    "topic_net_wins_ci95": [
+      0.1,
+      0.7
+    ],
+    "score_sum_delta": 1.75,
+    "score_sum_delta_ci95": [
+      0.8,
+      2.775
+    ]
+  },
+  "by_host_qwen": {
+    "ai_scientist": {
+      "n_manuscripts": 10,
+      "n_topics": 10,
+      "win": 6,
+      "loss": 1,
+      "tie": 3,
+      "topic_net_wins": 0.5,
+      "topic_net_wins_ci95": [
+        0.0,
+        0.9
+      ],
+      "score_sum_delta": 2.8,
+      "score_sum_delta_ci95": [
+        1.1,
+        4.35
+      ]
+    },
+    "evoscientist": {
+      "n_manuscripts": 10,
+      "n_topics": 10,
+      "win": 5,
+      "loss": 2,
+      "tie": 3,
+      "topic_net_wins": 0.3,
+      "topic_net_wins_ci95": [
+        -0.2,
+        0.8
+      ],
+      "score_sum_delta": 0.7,
+      "score_sum_delta_ci95": [
+        -0.5,
+        1.85
+      ]
+    },
+    "direct": {
+      "n_manuscripts": 10,
+      "n_topics": 10,
+      "win": 4,
+      "loss": 4,
+      "tie": 2,
+      "topic_net_wins": 0.0,
+      "topic_net_wins_ci95": [
+        -0.5,
+        0.6
+      ],
+      "score_sum_delta": 1.0,
+      "score_sum_delta_ci95": [
+        -0.6,
+        2.85
+      ]
+    },
+    "edara": {
+      "n_manuscripts": 2,
+      "n_topics": 2,
+      "win": 1,
+      "loss": 1,
+      "tie": 0,
+      "topic_net_wins": 0.0,
+      "topic_net_wins_ci95": [
+        -1.0,
+        1.0
+      ],
+      "score_sum_delta": -1.75,
+      "score_sum_delta_ci95": [
+        -4.5,
+        1.0
+      ]
+    }
+  },
+  "mechanism_totals": {
+    "n_manuscripts": 32,
+    "orig_keys_kept": 32,
+    "orig_keys_kept_rate": 1.0,
+    "process_hype_occurrences": {
+      "A": 14,
+      "B": 12,
+      "C": 10,
+      "D": 42,
+      "E": 3
+    },
+    "unverified_entities_total": {
+      "A": 165,
+      "B": 170,
+      "C": 131,
+      "D": 175,
+      "E": 51
+    },
+    "confounds_required": 0,
+    "confounds_D_addressed": 0,
+    "confounds_E_addressed": 0,
+    "total_cost_usd": 5.4823
+  }
+}

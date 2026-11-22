@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 444" width="860" height="444" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24" y="32" font-size="17" font-weight="700" fill="#111827">E-DARA Middleware (Arm E) vs. Matched Retrieval-Refine Baseline (Arm D)</text>
+<text x="24" y="52" font-size="12.5" fill="#4b5563">Primary Blind Judge (Qwen3.8-flash, Order-Swapped Bidirectional Folding) — Win / Tie / Loss Share &amp; Net Win Rate</text>
+<text x="24" y="93" font-size="13" font-weight="500" fill="#1f2937">AI-Scientist-v2 (N=10)</text>
+<rect x="250" y="76" width="228.0" height="24" rx="3" fill="#15803d"/>
+<rect x="478.0" y="76" width="114.0" height="24" fill="#cbd5e1"/>
+<rect x="592.0" y="76" width="38.0" height="24" rx="3" fill="#dc2626"/>
+<text x="364.0" y="92" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">6W</text>
+<text x="535.0" y="92" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">3T</text>
+<text x="611.0" y="92" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">1L</text>
+<text x="648" y="92" font-size="12.5" font-weight="700" fill="#15803d">Net +0.500 (ΔSum +2.80)</text>
+<text x="24" y="147" font-size="13" font-weight="500" fill="#1f2937">EvoScientist (v2.1.2) (N=10)</text>
+<rect x="250" y="130" width="190.0" height="24" rx="3" fill="#15803d"/>
+<rect x="440.0" y="130" width="114.0" height="24" fill="#cbd5e1"/>
+<rect x="554.0" y="130" width="76.0" height="24" rx="3" fill="#dc2626"/>
+<text x="345.0" y="146" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">5W</text>
+<text x="497.0" y="146" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">3T</text>
+<text x="592.0" y="146" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">2L</text>
+<text x="648" y="146" font-size="12.5" font-weight="700" fill="#15803d">Net +0.300 (ΔSum +0.70)</text>
+<text x="24" y="201" font-size="13" font-weight="500" fill="#1f2937">Direct LLM (N=10)</text>
+<rect x="250" y="184" width="152.0" height="24" rx="3" fill="#15803d"/>
+<rect x="402.0" y="184" width="76.0" height="24" fill="#cbd5e1"/>
+<rect x="478.0" y="184" width="152.0" height="24" rx="3" fill="#dc2626"/>
+<text x="326.0" y="200" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">4W</text>
+<text x="440.0" y="200" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">2T</text>
+<text x="554.0" y="200" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">4L</text>
+<text x="648" y="200" font-size="12.5" font-weight="700" fill="#475569">Net +0.000 (ΔSum +1.00)</text>
+<text x="24" y="255" font-size="13" font-weight="500" fill="#1f2937">E-DARA (Native) (N=2)</text>
+<rect x="250" y="238" width="190.0" height="24" rx="3" fill="#15803d"/>
+<rect x="440.0" y="238" width="0.0" height="24" fill="#cbd5e1"/>
+<rect x="440.0" y="238" width="190.0" height="24" rx="3" fill="#dc2626"/>
+<text x="345.0" y="254" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">1W</text>
+<text x="535.0" y="254" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">1L</text>
+<text x="648" y="254" font-size="12.5" font-weight="700" fill="#475569">Net +0.000 (ΔSum -1.75)</text>
+<text x="24" y="309" font-size="13" font-weight="700" fill="#1f2937">External Agents Combined (N=20)</text>
+<rect x="250" y="292" width="209.0" height="24" rx="3" fill="#15803d"/>
+<rect x="459.0" y="292" width="114.0" height="24" fill="#cbd5e1"/>
+<rect x="573.0" y="292" width="57.0" height="24" rx="3" fill="#dc2626"/>
+<text x="354.5" y="308" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">11W</text>
+<text x="516.0" y="308" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">6T</text>
+<text x="601.5" y="308" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">3L</text>
+<text x="648" y="308" font-size="12.5" font-weight="700" fill="#15803d">Net +0.400 (ΔSum +1.75)</text>
+<text x="24" y="363" font-size="13" font-weight="700" fill="#1f2937">Overall All Hosts (N=32)</text>
+<rect x="250" y="346" width="190.0" height="24" rx="3" fill="#15803d"/>
+<rect x="440.0" y="346" width="95.0" height="24" fill="#cbd5e1"/>
+<rect x="535.0" y="346" width="95.0" height="24" rx="3" fill="#dc2626"/>
+<text x="345.0" y="362" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">16W</text>
+<text x="487.5" y="362" font-size="11" font-weight="600" fill="#334155" text-anchor="middle">8T</text>
+<text x="582.5" y="362" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">8L</text>
+<text x="648" y="362" font-size="12.5" font-weight="700" fill="#15803d">Net +0.258 (ΔSum +1.35)</text>
+<rect x="250" y="416" width="12" height="12" rx="2" fill="#15803d"/>
+<text x="268" y="426" font-size="11.5" fill="#374151">Arm E Wins</text>
+<rect x="355" y="416" width="12" height="12" rx="2" fill="#cbd5e1"/>
+<text x="373" y="426" font-size="11.5" fill="#374151">Tie (incl. order-sensitive)</text>
+<rect x="540" y="416" width="12" height="12" rx="2" fill="#dc2626"/>
+<text x="558" y="426" font-size="11.5" fill="#374151">Arm D Wins</text>
+</svg>

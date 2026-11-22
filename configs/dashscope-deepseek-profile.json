@@ -1,0 +1,22 @@
+{
+  "account_id": "dashscope-deepseek",
+  "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "context_margin": 4096,
+  "context_window": 131072,
+  "credential_env": "DASHSCOPE_API_KEY",
+  "model": "deepseek-v4.1-flash-1017",
+  "model_family": "deepseek",
+  "parameters": {
+    "max_tokens": 4096,
+    "temperature": 0
+  },
+  "pricing": {
+    "cached_input_microusd_per_million": 0,
+    "currency_basis": "USD",
+    "input_microusd_per_million": 300000,
+    "output_microusd_per_million": 1200000
+  },
+  "profile_id": "dashscope-deepseek-v4.1-flash-v1",
+  "reasoning_in_output": false,
+  "timeout_seconds": 900.0
+}

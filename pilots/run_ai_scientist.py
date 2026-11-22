@@ -10,12 +10,13 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-REPO = Path("/workspace/edara/staging/04_external_eval_refs")
+WORKSPACE = Path(os.environ.get("EDARA_WORKSPACE") or Path(__file__).resolve().parents[3])
+REPO = Path(os.environ.get("EDARA_REFS_ROOT") or Path(__file__).resolve().parents[2])
 WRAPPER = REPO / ".venv/bin/python"
 LOGGED = REPO / "pilot3_runs/run_logged.py"
-NATIVE = Path("/workspace/edara/staging/03_active_benchmarks/external-native-eval-20261109")
+NATIVE = Path(os.environ.get("AI_SCIENTIST_NATIVE_ROOT") or (WORKSPACE / "staging/03_active_benchmarks/external-native-eval-20261109"))
 SOURCE = NATIVE / "sources/ai-scientist-v2"
-AISCI = Path("/workspace/edara/runtime/ai-scientist-v2-ideation/bin/python")
+AISCI = Path(os.environ.get("AI_SCIENTIST_PYTHON") or (WORKSPACE / "runtime/ai-scientist-v2-ideation/bin/python"))
 SCRIPT = SOURCE / "ai_scientist/perform_ideation_temp_free.py"
 TOPICS = REPO / "edara_mvp_eval/outputs/hosts_v1/ai_scientist_topics"
 SHIM = REPO / "edara_mvp_eval/outputs/hosts_v1/ai_scientist_shim"

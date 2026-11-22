@@ -1,8 +1,10 @@
 [project]
 name = "edara-mvp-eval"
-version = "0.1.0"
-description = "15-task MVP evaluation harness and Trustworthy-Novelty middleware prototype"
+version = "0.2.0"
+description = "Host-agnostic Trustworthy & Compositional Novelty Middleware and Benchmark-50 Unified Evaluation Suite"
+readme = "README.md"
 requires-python = ">=3.10"
+license = {file = "LICENSE"}
 dependencies = [
   "pydantic>=2.7",
   "pyyaml>=6.0",
@@ -15,12 +17,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
 benchmarks = [
   "alphaideabench",
 ]
 
 [project.scripts]
 edara-mvp = "edara_mvp_eval.cli:app"
+edara-paper-report = "edara_mvp_eval.paper_artifacts:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

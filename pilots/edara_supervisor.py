@@ -17,17 +17,18 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-REPO = Path("/workspace/edara/staging/04_external_eval_refs")
-PY = Path("/workspace/edara/runtime/core/bin/python")
+WORKSPACE = Path(os.environ.get("EDARA_WORKSPACE") or Path(__file__).resolve().parents[3])
+WORK = Path(os.environ.get("EDARA_EVAL_ROOT") or Path(__file__).resolve().parents[1])
+REPO = Path(os.environ.get("EDARA_REFS_ROOT") or WORK.parent)
+PY = Path(os.environ.get("EDARA_CORE_PYTHON") or (WORKSPACE / "runtime/core/bin/python"))
 LOGGED = REPO / "pilot3_runs/run_logged.py"
-WORK = Path("/workspace/edara/staging/04_external_eval_refs/edara_mvp_eval")
 CACHE = WORK / "outputs/tasks_mvp15.json"
 INPUTS = WORK / "outputs/hosts_v1/edara_cases"
 CONFIG = REPO / "pilot3_runs/edara/aiib82-arxiv-config.json"
 PARSER = REPO / "pilot3_runs/edara/aiib82-config.json"
 OUT = WORK / "outputs/hosts_v1/native15"
 CONTINUE = REPO / "pilot3_runs/edara/switch_arxiv_and_run.py"
-FRAMEWORK = "/workspace/edara/repos/framework/src"
+FRAMEWORK = str(WORKSPACE / "repos/framework/src")
 ENV = {**os.environ, "PYTHONPATH": FRAMEWORK, "PYTHONDONTWRITEBYTECODE": "1"}
 
 TASKS = (
