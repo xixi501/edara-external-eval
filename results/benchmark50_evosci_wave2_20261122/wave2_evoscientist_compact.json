@@ -1,0 +1,1247 @@
+{
+  "schema_version": "edara.wave-compact-summary/v1",
+  "source_dir": "benchmark50_evosci_wave2_20261122",
+  "wave": "wave2",
+  "cohort_kind": "evoscientist",
+  "n_topics": 20,
+  "n_manuscripts": 20,
+  "qwen_unified_summary": {
+    "counts": {
+      "loss": 6,
+      "win": 7,
+      "tie": 7
+    },
+    "topics": 20,
+    "lit2test_net_wins": 0.05,
+    "lit2test_net_wins_ci95": [
+      -0.3,
+      0.4
+    ],
+    "lit2test_score_sum_delta": 0.725,
+    "lit2test_score_sum_delta_ci95": [
+      -0.125,
+      1.575
+    ],
+    "lit2test_dimension_deltas": {
+      "grounding": 0.15,
+      "hypothesis_specificity": -0.075,
+      "minimality_feasibility": -0.15,
+      "decisive_metric": 0.175,
+      "falsifiability": 0.625
+    },
+    "alphaideabench_dimension_deltas": {
+      "context_grounding": -0.05,
+      "testability": 0.05,
+      "verification_feasibility": 0.2,
+      "method_novelty": -0.2,
+      "insight_novelty": 0.15
+    },
+    "claimnov_novelty_delta": 0.005405
+  },
+  "mechanism_stats": {
+    "n_manuscripts": 20,
+    "E1_orig_keys_kept_all": 20,
+    "E2_process_hype": {
+      "A": {
+        "manuscripts": 9,
+        "occurrences": 25
+      },
+      "B": {
+        "manuscripts": 9,
+        "occurrences": 24
+      },
+      "C": {
+        "manuscripts": 7,
+        "occurrences": 17
+      },
+      "D": {
+        "manuscripts": 12,
+        "occurrences": 71
+      },
+      "E": {
+        "manuscripts": 1,
+        "occurrences": 1
+      }
+    },
+    "E2_unverified_entities": {
+      "A": {
+        "manuscripts": 18,
+        "total": 76
+      },
+      "B": {
+        "manuscripts": 19,
+        "total": 84
+      },
+      "C": {
+        "manuscripts": 14,
+        "total": 61
+      },
+      "D": {
+        "manuscripts": 20,
+        "total": 86
+      },
+      "E": {
+        "manuscripts": 12,
+        "total": 22
+      }
+    }
+  },
+  "usage": {
+    "A": {
+      "attempts": 140,
+      "failures": 0,
+      "calls": 140,
+      "prompt_tokens": 905330,
+      "completion_tokens": 241388,
+      "cost_usd": 0.5612646000000002
+    },
+    "D": {
+      "attempts": 112,
+      "failures": 0,
+      "calls": 112,
+      "prompt_tokens": 1011480,
+      "completion_tokens": 219144,
+      "cost_usd": 0.417992972796
+    },
+    "E": {
+      "attempts": 1358,
+      "failures": 0,
+      "calls": 1358,
+      "prompt_tokens": 3266174,
+      "completion_tokens": 633608,
+      "cost_usd": 0.881252247874001
+    },
+    "B": {
+      "attempts": 40,
+      "failures": 0,
+      "calls": 40,
+      "prompt_tokens": 367516,
+      "completion_tokens": 50607,
+      "cost_usd": 0.10821158998799998
+    },
+    "blind": {
+      "attempts": 1039,
+      "failures": 0,
+      "calls": 1039,
+      "prompt_tokens": 4462763,
+      "completion_tokens": 2084613,
+      "cost_usd": 3.703891940935999
+    },
+    "C": {
+      "attempts": 635,
+      "failures": 0,
+      "calls": 635,
+      "prompt_tokens": 1395951,
+      "completion_tokens": 238259,
+      "cost_usd": 0.31998821577199993
+    }
+  },
+  "manuscripts": [
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_001_cache_compression_llms_long_context__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "local_patch"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -3.0,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": -0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -4.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": -1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "survey_03_rag_systems",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "local_patch",
+        "clarify",
+        "seek_evidence"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.0,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "ws_09_world_models_simulation",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.0,
+          "dimension_deltas": {
+            "grounding": 1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": -1.0,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -4.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": -0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_025_audio_visual_multimodal_aligned_language_visual__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": -0.5
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": -0.6667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_013_motion_generation_human_editing_flow__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 4.0,
+          "dimension_deltas": {
+            "grounding": 1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 4.0,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.6667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "survey_14_diffusion_3d_generation",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": -1.0,
+            "falsifiability": 0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": -0.5,
+            "falsifiability": 1.0
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": -0.1667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_040_critic_reinforcement_actor_critic_actor_continuo__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "regenerate"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": 0.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "survey_04_llm_agent_collaboration",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.5,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "survey_06_llm_safety_jailbreak",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -0.5,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.5
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": -0.1667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_006_backdoor_attacks_perspective_attack_triggers__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.5,
+          "dimension_deltas": {
+            "grounding": 1.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.5,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": 1.0,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_009_detection_out_of_distribution_ood_post_hoc_in_di__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": -0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": 0.0,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_014_spurious_correlations_features_networks_activati__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "clarify"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -3.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -0.5,
+            "falsifiability": -0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -0.5,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_023_quantization_quantization_aware_fine_tuning_diff__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": -0.5
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_030_pruning_language_llms_however_layer_wise__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "retain_and_test"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.0,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -0.5,
+            "falsifiability": -1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -5.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": -1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -0.5,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -3.1667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_012_series_time_anomaly_anomalies_detection__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.5,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.6667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "ws_38_temporal_graph_learning",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "regenerate",
+        "local_patch"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 1.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 0.5,
+            "falsifiability": 1.0
+          }
+        },
+        "majority": {
+          "status": "tie",
+          "order_sensitive": false,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_029_bottleneck_concept_concepts_information_cbms__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "seek_evidence",
+        "local_patch"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -5.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": -1.5,
+            "decisive_metric": -1.0,
+            "falsifiability": -0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 0.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.8333,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_005_memorization_deep_generalization_necessary_funda__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "budget_exhausted",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "seek_evidence"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.0,
+          "dimension_deltas": {
+            "grounding": 0.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": 1.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -4.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": -1.0,
+            "falsifiability": -1.0
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.5,
+          "dimension_deltas": {
+            "grounding": -0.5,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": -1.0,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -2.6667,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "smallari_expansion40_019_protein_language_structural_structure_sequence__v02_expansion40",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "clarify",
+        "seek_evidence",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "tie",
+          "order_sensitive": true,
+          "score_sum_delta": 1.0,
+          "dimension_deltas": {
+            "grounding": 1.0,
+            "hypothesis_specificity": -1.0,
+            "minimality_feasibility": 0.0,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.0,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": 0.5,
+            "decisive_metric": 0.5,
+            "falsifiability": 0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {
+            "grounding": 1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -0.5,
+            "decisive_metric": 1.0,
+            "falsifiability": 0.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 1.5,
+          "dimension_deltas": {}
+        }
+      }
+    },
+    {
+      "wave": "wave2",
+      "task_id": "ws_18_scientific_foundation_models",
+      "host": "evoscientist",
+      "e_status": "changed",
+      "e_actions": [
+        "guided_revise",
+        "local_patch",
+        "clarify",
+        "guided_revise"
+      ],
+      "judges": {
+        "qwen3.8-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 4.5,
+          "dimension_deltas": {
+            "grounding": 0.5,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.5,
+            "falsifiability": 2.0
+          }
+        },
+        "deepseek-v4.1-flash": {
+          "status": "loss",
+          "order_sensitive": false,
+          "score_sum_delta": -1.5,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": 0.0,
+            "minimality_feasibility": -1.0,
+            "decisive_metric": 0.0,
+            "falsifiability": 0.5
+          }
+        },
+        "GLM-5.3-flash": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 3.0,
+          "dimension_deltas": {
+            "grounding": -1.0,
+            "hypothesis_specificity": -0.5,
+            "minimality_feasibility": 1.0,
+            "decisive_metric": 1.5,
+            "falsifiability": 2.0
+          }
+        },
+        "majority": {
+          "status": "win",
+          "order_sensitive": false,
+          "score_sum_delta": 2.0,
+          "dimension_deltas": {}
+        }
+      }
+    }
+  ]
+}

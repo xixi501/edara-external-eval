@@ -8,92 +8,92 @@
 <text x="712.0" y="70" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle">E-DARA (Native)</text>
 <text x="24" y="104" font-size="12" fill="#1f2937">D01: LLM Reasoning, RAG &amp; Long-Context</text>
 <rect x="287" y="84" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="104" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+5.50</text>
+<text x="346.0" y="104" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.33</text>
 <rect x="409" y="84" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="468.0" y="104" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.50</text>
-<rect x="531" y="84" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="590.0" y="104" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-2.00</text>
-<rect x="653" y="84" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="712.0" y="104" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
+<text x="468.0" y="104" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.33</text>
+<rect x="531" y="84" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="590.0" y="104" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
+<rect x="653" y="84" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="712.0" y="104" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
 <text x="24" y="138" font-size="12" fill="#1f2937">D02: Multimodal, Vision-Language &amp; Spe</text>
 <rect x="287" y="118" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="138" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+4.50</text>
+<text x="346.0" y="138" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.83</text>
 <rect x="409" y="118" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="468.0" y="138" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-2.50</text>
+<text x="468.0" y="138" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.67</text>
 <rect x="531" y="118" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="590.0" y="138" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.50</text>
+<text x="590.0" y="138" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.33</text>
 <rect x="653" y="118" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="138" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 <text x="24" y="172" font-size="12" fill="#1f2937">D03: Diffusion, Flow &amp; Generative Mode</text>
 <rect x="287" y="152" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="172" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.50</text>
-<rect x="409" y="152" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="468.0" y="172" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-2.00</text>
+<text x="346.0" y="172" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.17</text>
+<rect x="409" y="152" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="468.0" y="172" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.83</text>
 <rect x="531" y="152" width="118" height="30" rx="4" fill="#166534"/>
-<text x="590.0" y="172" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+7.00</text>
+<text x="590.0" y="172" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.67</text>
 <rect x="653" y="152" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 <text x="24" y="206" font-size="12" fill="#1f2937">D04: Reinforcement Learning, Robotics </text>
 <rect x="287" y="186" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="206" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+4.50</text>
-<rect x="409" y="186" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="468.0" y="206" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.50</text>
+<text x="346.0" y="206" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.00</text>
+<rect x="409" y="186" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="468.0" y="206" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.17</text>
 <rect x="531" y="186" width="118" height="30" rx="4" fill="#bbf7d0"/>
 <text x="590.0" y="206" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.50</text>
 <rect x="653" y="186" width="118" height="30" rx="4" fill="#bbf7d0"/>
 <text x="712.0" y="206" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.00</text>
 <text x="24" y="240" font-size="12" fill="#1f2937">D05: Trustworthy AI, Safety &amp; Fairness</text>
-<rect x="287" y="220" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="346.0" y="240" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.50</text>
+<rect x="287" y="220" width="118" height="30" rx="4" fill="#166534"/>
+<text x="346.0" y="240" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.83</text>
 <rect x="409" y="220" width="118" height="30" rx="4" fill="#166534"/>
-<text x="468.0" y="240" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.00</text>
+<text x="468.0" y="240" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+1.67</text>
 <rect x="531" y="220" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="590.0" y="240" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.50</text>
+<text x="590.0" y="240" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-2.00</text>
 <rect x="653" y="220" width="118" height="30" rx="4" fill="#fecaca"/>
 <text x="712.0" y="240" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-4.50</text>
 <text x="24" y="274" font-size="12" fill="#1f2937">D06: Adaptation, Continual &amp; OOD Robus</text>
-<rect x="287" y="254" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="274" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+4.50</text>
-<rect x="409" y="254" width="118" height="30" rx="4" fill="#166534"/>
-<text x="468.0" y="274" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.50</text>
-<rect x="531" y="254" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="590.0" y="274" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-1.50</text>
+<rect x="287" y="254" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="346.0" y="274" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
+<rect x="409" y="254" width="118" height="30" rx="4" fill="#f1f5f9"/>
+<text x="468.0" y="274" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">+0.17</text>
+<rect x="531" y="254" width="118" height="30" rx="4" fill="#f1f5f9"/>
+<text x="590.0" y="274" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">+0.00</text>
 <rect x="653" y="254" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="274" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 <text x="24" y="308" font-size="12" fill="#1f2937">D07: Efficiency, Compression &amp; ML Syst</text>
-<rect x="287" y="288" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="346.0" y="308" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.50</text>
-<rect x="409" y="288" width="118" height="30" rx="4" fill="#f1f5f9"/>
-<text x="468.0" y="308" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">+0.00</text>
-<rect x="531" y="288" width="118" height="30" rx="4" fill="#166534"/>
-<text x="590.0" y="308" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.00</text>
+<rect x="287" y="288" width="118" height="30" rx="4" fill="#fecaca"/>
+<text x="346.0" y="308" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.67</text>
+<rect x="409" y="288" width="118" height="30" rx="4" fill="#fecaca"/>
+<text x="468.0" y="308" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.50</text>
+<rect x="531" y="288" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="590.0" y="308" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.50</text>
 <rect x="653" y="288" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="308" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 <text x="24" y="342" font-size="12" fill="#1f2937">D08: Graph, Geometric &amp; Temporal ML</text>
 <rect x="287" y="322" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="346.0" y="342" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
-<rect x="409" y="322" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="468.0" y="342" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.00</text>
+<text x="346.0" y="342" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.83</text>
+<rect x="409" y="322" width="118" height="30" rx="4" fill="#166534"/>
+<text x="468.0" y="342" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+1.67</text>
 <rect x="531" y="322" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="590.0" y="342" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-1.50</text>
+<text x="590.0" y="342" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-0.83</text>
 <rect x="653" y="322" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="342" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 <text x="24" y="376" font-size="12" fill="#1f2937">D09: Interpretability, Causality &amp; The</text>
-<rect x="287" y="356" width="118" height="30" rx="4" fill="#166534"/>
-<text x="346.0" y="376" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+6.00</text>
-<rect x="409" y="356" width="118" height="30" rx="4" fill="#166534"/>
-<text x="468.0" y="376" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+3.50</text>
-<rect x="531" y="356" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="590.0" y="376" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-1.00</text>
-<rect x="653" y="356" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
-<text x="712.0" y="376" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
+<rect x="287" y="356" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="346.0" y="376" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.33</text>
+<rect x="409" y="356" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="468.0" y="376" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
+<rect x="531" y="356" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="590.0" y="376" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.17</text>
+<rect x="653" y="356" width="118" height="30" rx="4" fill="#166534"/>
+<text x="712.0" y="376" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.50</text>
 <text x="24" y="410" font-size="12" fill="#1f2937">D10: AI for Science &amp; Biomedicine</text>
-<rect x="287" y="390" width="118" height="30" rx="4" fill="#fecaca"/>
-<text x="346.0" y="410" font-size="11.5" font-weight="600" fill="#7f1d1d" text-anchor="middle">-2.00</text>
-<rect x="409" y="390" width="118" height="30" rx="4" fill="#bbf7d0"/>
-<text x="468.0" y="410" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+0.50</text>
+<rect x="287" y="390" width="118" height="30" rx="4" fill="#bbf7d0"/>
+<text x="346.0" y="410" font-size="11.5" font-weight="600" fill="#14532d" text-anchor="middle">+1.33</text>
+<rect x="409" y="390" width="118" height="30" rx="4" fill="#166534"/>
+<text x="468.0" y="410" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.00</text>
 <rect x="531" y="390" width="118" height="30" rx="4" fill="#166534"/>
-<text x="590.0" y="410" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+4.50</text>
+<text x="590.0" y="410" font-size="11.5" font-weight="600" fill="#ffffff" text-anchor="middle">+2.17</text>
 <rect x="653" y="390" width="118" height="30" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
 <text x="712.0" y="410" font-size="11" fill="#94a3b8" text-anchor="middle">—</text>
 </svg>

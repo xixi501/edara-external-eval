@@ -99,7 +99,11 @@ PYTHONPATH=src python -m edara_mvp_eval.cli govern \
     - 未核验外部幻觉实体：从 `D: 367 处` 压降至 **`E: 169 处`（`-54.0%`）**；
     - 原宿主 JSON 字段保留率：**`68 / 68`（`100%`）**，混杂判别臂准确落入实验设计字段率 **`94.7%`**。
 - **Unified `v4` 核心队列（`N=38`）**（[`results/unified_pilot_20261119_v4/core_summary.md`](results/unified_pilot_20261119_v4/core_summary.md)）：`E_vs_D` **`25 胜 / 7 负 / 6 平`**（净胜率 **`+0.489`**，总分差 **`+1.383`**）；其中 `AI-Scientist` 宿主 **`13 胜 / 1 负 / 0 平`（`+0.857`）**，`E-DARA` 宿主 **`7 胜 / 1 负 / 1 平`（`+0.667`）**。
-- **固定 50 题跨 10 领域主基准规范**：详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)，最新分波次跨宿主（含 `AI-Scientist-v2` 与 `EvoScientist v2.1.2`）自动汇总图表见 [`results/paper_ready/PAPER_SUMMARY_REPORT.md`](results/paper_ready/PAPER_SUMMARY_REPORT.md)。
+- **Benchmark-50 主线 `Wave 1 + Wave 2`（跨全部 10 大领域 `30` 题，四大宿主 `N=94` 份原稿）**（[`results/paper_ready/PAPER_SUMMARY_REPORT.md`](results/paper_ready/PAPER_SUMMARY_REPORT.md)）：
+  - **全部宿主总计 (`N=94`)**：独立主评委 `Qwen3.8-flash` **`43 胜 / 24 负 / 27 平`**，题目加权净胜率 **`+0.206`**（`95% CI [+0.028, +0.369]`，置信区间严格大于 0），五维总分差 **`+1.061`**（`95% CI [+0.588, +1.518]`），且在 **10 / 10 全部研究领域**上平均分差均为正；**三独立评委多数决**：**`38 胜 / 27 负 / 29 平`**，五维总分差 **`+0.509`**（`95% CI [+0.076, +0.929]`，同样严格显著大于 0）。
+  - **两大外部自主科研 Agent 联合 (`AI-Scientist-v2` + `EvoScientist v2.1.2`, `N=60`)**：主评委 **`30 胜 / 14 负 / 16 平`**（胜负比 `>2:1`，净胜率 **`+0.267`**，`95% CI [+0.017, +0.500]`，`ΔSum = +1.283`）；其中 `AI-Scientist-v2` (`n=30`) 达 **`18 胜 / 6 负 / 6 平`**（净胜率 **`+0.400`**），进化多智能体 `EvoScientist v2.1.2` (`n=30`) 达 **`12 胜 / 8 负 / 10 平`**（`ΔSum = +0.717`，`95% CI [+0.017, +1.417]`）。
+  - **确定性认知卫生台账 (`N=94`)**：原生字段保留率 **`94 / 94` (`100%`)**；非结构化重写基线 `Arm D` 将虚假流程包装词从原稿 `59` 处放大至 `187` 处，而治理中间件 `Arm E` 将其压降至 **`9` 处（`-95.2%`）**，并将未核验外部幻觉实体从 `476` 处压降至 **`144` 处（`-69.7%`）**。
+- **固定 50 题跨 10 领域主基准规范**：详见 [`docs/BENCHMARK_50_TOPICS.md`](docs/BENCHMARK_50_TOPICS.md)。
 
 ### 一键导出论文 LaTeX 三线表与矢量图
 

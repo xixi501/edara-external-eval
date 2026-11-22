@@ -1,151 +1,152 @@
 {
   "waves_included": [
-    "wave1"
+    "wave1",
+    "wave2"
   ],
-  "n_topics": 10,
-  "n_manuscripts": 32,
+  "n_topics": 30,
+  "n_manuscripts": 94,
   "overall_qwen": {
-    "n_manuscripts": 32,
-    "n_topics": 10,
-    "win": 16,
-    "loss": 8,
-    "tie": 8,
-    "topic_net_wins": 0.2583,
+    "n_manuscripts": 94,
+    "n_topics": 30,
+    "win": 43,
+    "loss": 24,
+    "tie": 27,
+    "topic_net_wins": 0.2056,
     "topic_net_wins_ci95": [
-      0.0917,
-      0.4167
+      0.0278,
+      0.3694
     ],
-    "score_sum_delta": 1.35,
+    "score_sum_delta": 1.0611,
     "score_sum_delta_ci95": [
-      0.6917,
-      1.9833
+      0.5875,
+      1.5181
     ]
   },
   "overall_majority": {
-    "n_manuscripts": 32,
-    "n_topics": 10,
-    "win": 12,
-    "loss": 9,
-    "tie": 11,
-    "topic_net_wins": 0.0917,
+    "n_manuscripts": 94,
+    "n_topics": 30,
+    "win": 38,
+    "loss": 27,
+    "tie": 29,
+    "topic_net_wins": 0.1194,
     "topic_net_wins_ci95": [
-      -0.1167,
-      0.3
+      -0.05,
+      0.2833
     ],
-    "score_sum_delta": 0.7819,
+    "score_sum_delta": 0.5093,
     "score_sum_delta_ci95": [
-      0.0486,
-      1.4917
+      0.0759,
+      0.9292
     ]
   },
   "external_agents_qwen": {
-    "n_manuscripts": 20,
-    "n_topics": 10,
-    "win": 11,
-    "loss": 3,
-    "tie": 6,
-    "topic_net_wins": 0.4,
+    "n_manuscripts": 60,
+    "n_topics": 30,
+    "win": 30,
+    "loss": 14,
+    "tie": 16,
+    "topic_net_wins": 0.2667,
     "topic_net_wins_ci95": [
-      0.1,
-      0.7
+      0.0167,
+      0.5
     ],
-    "score_sum_delta": 1.75,
+    "score_sum_delta": 1.2833,
     "score_sum_delta_ci95": [
-      0.8,
-      2.775
+      0.5833,
+      1.95
     ]
   },
   "by_host_qwen": {
     "ai_scientist": {
-      "n_manuscripts": 10,
-      "n_topics": 10,
-      "win": 6,
-      "loss": 1,
-      "tie": 3,
-      "topic_net_wins": 0.5,
+      "n_manuscripts": 30,
+      "n_topics": 30,
+      "win": 18,
+      "loss": 6,
+      "tie": 6,
+      "topic_net_wins": 0.4,
       "topic_net_wins_ci95": [
-        0.0,
-        0.9
+        0.1,
+        0.6667
       ],
-      "score_sum_delta": 2.8,
+      "score_sum_delta": 1.85,
       "score_sum_delta_ci95": [
-        1.1,
-        4.35
+        0.8829,
+        2.8
       ]
     },
     "evoscientist": {
-      "n_manuscripts": 10,
-      "n_topics": 10,
-      "win": 5,
-      "loss": 2,
-      "tie": 3,
-      "topic_net_wins": 0.3,
+      "n_manuscripts": 30,
+      "n_topics": 30,
+      "win": 12,
+      "loss": 8,
+      "tie": 10,
+      "topic_net_wins": 0.1333,
       "topic_net_wins_ci95": [
-        -0.2,
-        0.8
+        -0.1667,
+        0.4333
       ],
-      "score_sum_delta": 0.7,
+      "score_sum_delta": 0.7167,
       "score_sum_delta_ci95": [
-        -0.5,
-        1.85
+        0.0167,
+        1.4167
       ]
     },
     "direct": {
-      "n_manuscripts": 10,
-      "n_topics": 10,
-      "win": 4,
-      "loss": 4,
-      "tie": 2,
-      "topic_net_wins": 0.0,
+      "n_manuscripts": 30,
+      "n_topics": 30,
+      "win": 11,
+      "loss": 9,
+      "tie": 10,
+      "topic_net_wins": 0.0667,
       "topic_net_wins_ci95": [
-        -0.5,
-        0.6
+        -0.2333,
+        0.3667
       ],
-      "score_sum_delta": 1.0,
+      "score_sum_delta": 0.7,
       "score_sum_delta_ci95": [
-        -0.6,
-        2.85
+        -0.1167,
+        1.5333
       ]
     },
     "edara": {
-      "n_manuscripts": 2,
-      "n_topics": 2,
-      "win": 1,
+      "n_manuscripts": 4,
+      "n_topics": 4,
+      "win": 2,
       "loss": 1,
-      "tie": 0,
-      "topic_net_wins": 0.0,
+      "tie": 1,
+      "topic_net_wins": 0.25,
       "topic_net_wins_ci95": [
-        -1.0,
+        -0.5,
         1.0
       ],
-      "score_sum_delta": -1.75,
+      "score_sum_delta": -0.125,
       "score_sum_delta_ci95": [
-        -4.5,
-        1.0
+        -3.125,
+        2.0
       ]
     }
   },
   "mechanism_totals": {
-    "n_manuscripts": 32,
-    "orig_keys_kept": 32,
+    "n_manuscripts": 94,
+    "orig_keys_kept": 94,
     "orig_keys_kept_rate": 1.0,
     "process_hype_occurrences": {
-      "A": 14,
-      "B": 12,
-      "C": 10,
-      "D": 42,
-      "E": 3
+      "A": 59,
+      "B": 55,
+      "C": 37,
+      "D": 187,
+      "E": 9
     },
     "unverified_entities_total": {
-      "A": 165,
-      "B": 170,
-      "C": 131,
-      "D": 175,
-      "E": 51
+      "A": 470,
+      "B": 486,
+      "C": 377,
+      "D": 476,
+      "E": 144
     },
     "confounds_required": 0,
     "confounds_D_addressed": 0,
     "confounds_E_addressed": 0,
-    "total_cost_usd": 5.4823
+    "total_cost_usd": 16.826
   }
 }
